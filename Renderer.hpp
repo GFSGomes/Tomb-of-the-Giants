@@ -17,5 +17,5 @@ struct Renderer {
     Renderer();
     ~Renderer();
 
-    void Display();
+    void DisplaySprite();
 };

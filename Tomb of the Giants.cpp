@@ -2,7 +2,9 @@
 
 int main()
 {
-	MainMenu mainMenu;
 
+	std::ios_base::sync_with_stdio(false);
+	
+	MainMenu mainMenu;
 	mainMenu.Initialize();
 }

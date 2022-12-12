@@ -4,7 +4,21 @@
 struct Entity : GameObject {
 
 	float health;
-	float damage;
+	float maxHealth;
+	float mana;
+	float maxMana;
+
+	float physical_pwr;
+	float physical_def;
+	
+	float magical_pwr;
+	float magical_def;
+
+	float accuracy;
+	float flee;
+
+	std::vector<Ability> abilities;
+
 	bool alive;
 
 	Entity();

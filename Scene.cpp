@@ -66,8 +66,7 @@ void Scene::Interaction()
 		{
 			while (player->posX == enemy->posX && player->posY == enemy->posY)
 			{
-				// Enconter
-				// Combat
+				
 			}
 		}
 

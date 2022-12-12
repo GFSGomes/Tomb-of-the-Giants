@@ -47,7 +47,7 @@ void Player::Actions(char input)
 
 	if (isTorchActive)
 	{
-		torchDuration > 1 ? torchDuration-- : isTorchActive = false;
+		torchDuration > 0 ? torchDuration-- : isTorchActive = false;
 	}
 
 	UpdateFOV();

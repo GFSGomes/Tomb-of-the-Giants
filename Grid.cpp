@@ -16,6 +16,12 @@ Grid::~Grid()
 
 void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::shared_ptr<Player> player)
 {
+	std::cout << "   ┌";
+	for (short i = 0; i < GridSizeX; i++)
+	{std::cout << "──";}
+	std::cout << "┐   ";
+	std::cout << "\n";
+
 	for (short y = 0; y < sizeY; y++)
 	{
 		std::cout << "   |";
@@ -78,11 +84,11 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					{
 						if (player->isTorchActive)
 						{
-							icon = "■";
+							icon = "●";
 						}
 						else
 						{
-							icon = "□";
+							icon = "●";
 						}
 					}
 
@@ -128,4 +134,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 		}
 		std::cout << "|\n";
 	}
+
+	std::cout << "   └";
+	for (short i = 0; i < GridSizeX; i++)
+	{std::cout << "──";}
+	std::cout << "┘   ";
 }

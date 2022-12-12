@@ -9,7 +9,7 @@ Renderer::~Renderer() {
 
 }
 
-void Renderer::Display() {
+void Renderer::DisplaySprite() {
 
 	switch (sprite) {
         case Sprite::NONE: break;

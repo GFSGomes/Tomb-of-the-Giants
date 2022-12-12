@@ -19,7 +19,7 @@ void MainMenu::Initialize()
 	{
 		system("cls");
 
-		renderer.Display();
+		renderer.DisplaySprite();
 
 		switch (index)
 		{
