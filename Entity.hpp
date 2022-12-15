@@ -17,8 +17,6 @@ struct Entity : GameObject {
 	float accuracy;
 	float flee;
 
-	std::vector<Ability> abilities;
-
 	bool alive;
 
 	Entity();

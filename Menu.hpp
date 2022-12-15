@@ -13,5 +13,5 @@ struct Menu
 	Menu();
 	virtual ~Menu() = 0;
 
-	virtual void Initialize();
+	virtual void Initialize() = 0;
 };

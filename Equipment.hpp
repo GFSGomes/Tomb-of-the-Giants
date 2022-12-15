@@ -4,9 +4,9 @@
 
 struct Equipment : Item
 {
-	Equipment();
+	Equipment(const char*);
 	virtual ~Equipment() = 0;
 
-	void Use();
+	short Use();
 	virtual void Equip();
 };

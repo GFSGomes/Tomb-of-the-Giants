@@ -139,31 +139,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ability.cpp" />
+    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="EncounterMenu.cpp" />
     <ClCompile Include="EncounterMenu.hpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenu.hpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="Slot.cpp" />
     <ClCompile Include="Tomb of the Giants.cpp" />
     <ClCompile Include="Torch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ability.hpp" />
+    <ClInclude Include="Attack.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Equipment.hpp" />
     <ClInclude Include="GameMenu.hpp" />
     <ClInclude Include="Grid.hpp" />
+    <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Light.hpp" />
     <ClInclude Include="Menu.hpp" />
@@ -171,10 +180,12 @@
     <ClInclude Include="Common.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="GameObject.hpp" />
+    <ClInclude Include="Potion.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SceneManager.hpp" />
     <ClInclude Include="Settings.hpp" />
+    <ClInclude Include="Slot.hpp" />
     <ClInclude Include="Torch.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

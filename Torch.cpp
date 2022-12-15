@@ -1,6 +1,6 @@
 #include "Torch.hpp"
 
-Torch::Torch()
+Torch::Torch() : Item("Torch",1)
 {
 	renderer.sprite = Sprite::TORCH;
 }
@@ -10,9 +10,7 @@ Torch::~Torch()
 
 }
 
-void Torch::Use()
+short Torch::Use()
 {
-	short duration = rand() % 50 + 5;
-
-	//player.torchDuration += duration;
+	return rand() % 50 + 5;
 }

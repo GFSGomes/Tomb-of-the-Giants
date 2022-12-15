@@ -3,8 +3,9 @@
 
 struct Item : GameObject
 {
-	Item();
-	virtual ~Item() = 0;
+	short stack;
 
-	virtual void Use();
+	Item(const char*, short);
+	virtual ~Item() = 0;
+	virtual short Use();
 };
