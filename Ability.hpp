@@ -4,6 +4,10 @@
 
 struct Ability
 {
+	float damageMultiplier;
+	float criticalMultiplier;
+	float accuracy;
+
 	Ability();
 	~Ability();
 

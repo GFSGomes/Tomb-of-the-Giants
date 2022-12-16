@@ -1,6 +1,8 @@
 #include "MainMenu.hpp"
 #include "Settings.hpp"
 
+MainMenu mainMenu;
+
 MainMenu::MainMenu()
 {
 	renderer.sprite = Sprite::TITLE;

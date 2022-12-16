@@ -1,4 +1,5 @@
 #include "Inventory.hpp"
+#include <limits>
 
 Inventory::Inventory() : Container{}, hoveredSlot{nullptr}, selectedSlot{nullptr}, organize{false}, remove{false}
 {
@@ -98,26 +99,6 @@ void Inventory::AddItem(Item* _item, short _amount)
 	}
 }
 
-void Inventory::RemoveItem(Item* item)
-{
-	// Atualmente removendo um slot inteiro;
-	/* Tentar estabelecer uma quantidade à ser removida. Boa sorte. */
-	if (!Container.empty())
-	{
-		for (int i = 0; i < Container.size(); i++)
-		{
-			if (Container[i].item == item)
-			{
-				index = 0;
-				std::cout << "\n\nItem removed: " << Container[i].item->name << "\n";
-				Container.erase(Container.begin() + i);
-			}
-		}
-		Container.shrink_to_fit();
-		_getch();
-	}
-}
-
 int Inventory::GetItemIndex(Slot* _slot)
 {
 	for (int i = 0; i < Container.size(); i++)
@@ -126,6 +107,56 @@ int Inventory::GetItemIndex(Slot* _slot)
 		{
 			return i;
 		}
+	}
+}
+
+void Inventory::DiscardItem(Item* _item)
+{
+	system("cls");
+	std::cout << "\n";
+	std::cout << "   >> How many " << _item->name << " do you want to discard?" << "\n";
+	std::cout << "\n   > ";
+
+	short amount;
+
+	while (true)
+	{
+		std::cin >> amount;
+
+		if (!std::cin)
+		{
+			std::cout << "   >> Please, enter a integer: " << std::endl;
+			std::cout << "\n   > ";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			continue;
+		}
+
+		if (!Container.empty())
+		{
+			for (int i = 0; i < Container.size(); i++)
+			{
+				if (Container[i].item == _item)
+				{
+					if (Container[i].amount > amount)
+					{
+						std::cout << "\n   >> " << amount << " " << Container[i].item->name << "'s has been discarded;" << "\n";
+						Container[i].amount -= amount;
+						return;
+					}
+
+					if (Container[i].amount <= amount)
+					{
+						index = 0;
+						std::cout << "\n   >> Item discarded: " << Container[i].item->name << "\n";
+						Container.erase(Container.begin() + i);
+					}
+				}
+			}
+			Container.shrink_to_fit();
+			_getch();
+		}
+		return;
 	}
 }
 
@@ -199,7 +230,7 @@ void Inventory::Initialize()
 			{
 				if (remove)
 				{
-					RemoveItem(hoveredSlot->item);
+					DiscardItem(hoveredSlot->item);
 				}
 
 				if (organize)

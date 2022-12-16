@@ -1,5 +1,6 @@
 #include "Potion.hpp"
 #include "Inventory.hpp"
+#include "MainMenu.hpp"
 
 int main()
 {
@@ -13,5 +14,7 @@ int main()
 	inv.AddItem(healthPotion, 5);
 	inv.AddItem(manaPotion, 6);
 
-	inv.Initialize();
+	//inv.Initialize();
+
+	mainMenu.Initialize();
 }

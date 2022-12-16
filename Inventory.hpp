@@ -16,7 +16,7 @@ struct Inventory : Menu
 	~Inventory();
 
 	void AddItem(Item*, short);
-	void RemoveItem(Item*);
+	void DiscardItem(Item*);
 	int GetItemIndex(Slot*);
 	void OrganizeSlots();
 	void Initialize();

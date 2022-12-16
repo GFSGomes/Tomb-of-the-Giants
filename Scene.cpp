@@ -1,5 +1,6 @@
 #include "Scene.hpp"
 #include "GameMenu.hpp"
+#include "EncounterMenu.hpp"
 
 Scene::Scene(short gridSizeX, short gridSizeY) : grid{gridSizeX, gridSizeY}, currentScene{false}
 {
@@ -64,9 +65,9 @@ void Scene::Interaction()
 	{
 		if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
 		{
-			while (player->posX == enemy->posX && player->posY == enemy->posY)
+			if (player->posX == enemy->posX && player->posY == enemy->posY)
 			{
-				
+				encounterMenu.Initialize(player, enemy);
 			}
 		}
 
@@ -91,5 +92,6 @@ void Scene::LoadScene()
 		gameMenu.Initialize();
 		grid.UpdateGrid(SceneOBJ, player);
 		gameMenu.Input(player);
+		Interaction();
 	}
 }

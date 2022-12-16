@@ -11,3 +11,5 @@ struct MainMenu : Menu
 
 	void Initialize();
 };
+
+extern MainMenu mainMenu;

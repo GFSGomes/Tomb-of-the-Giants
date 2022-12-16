@@ -13,5 +13,6 @@ Attack::~Attack()
 
 std::string Attack::Use(std::shared_ptr<Entity> attacker, std::shared_ptr<Entity> target)
 {
+	target->health -= attacker->physical_pwr;
 	return std::string(attacker->name) + " attacked: " + std::string(target->name) + " lost " + std::to_string(attacker->physical_pwr) + " of Health\n";
 }
