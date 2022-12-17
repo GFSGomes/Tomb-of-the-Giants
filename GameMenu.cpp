@@ -160,7 +160,7 @@ void GameMenu::Input(std::shared_ptr<Player> player)
 		{
 			if (DebugMode)
 			{
-				player->health++;
+				player->cur_health++;
 			}
 
 		} break;

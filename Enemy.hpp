@@ -3,7 +3,8 @@
 
 struct Enemy : Entity
 {
-	Enemy(const char*);
+	Enemy(const char*, short);
+
 	~Enemy();
 
 	void Actions(bool);

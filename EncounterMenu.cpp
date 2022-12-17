@@ -76,11 +76,11 @@ void EncounterMenu::Initialize(std::shared_ptr<Player> player, std::shared_ptr<E
 		std::cout << "   " << enemy->name << "\n";
 
 		std::cout << "   ";
-		for (int i = 0; i < enemy->health; i++)
+		for (int i = 0; i < enemy->cur_health; i++)
 		{
 			std::cout << "=";
 		}
-		for (int i = 0; i < (enemy->maxHealth - enemy->health); i++)
+		for (int i = 0; i < (enemy->max_health - enemy->cur_health); i++)
 		{
 			std::cout << "-";
 		}
