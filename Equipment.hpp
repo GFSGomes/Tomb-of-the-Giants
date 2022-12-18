@@ -7,6 +7,5 @@ struct Equipment : Item
 	Equipment(const char*);
 	virtual ~Equipment() = 0;
 
-	short Use();
-	virtual void Equip();
+	void Use();
 };

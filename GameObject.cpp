@@ -1,6 +1,6 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject() : name{"GameObject"}, posX{0}, posY{0}, active{false}, renderer{}
+GameObject::GameObject() : name{"GameObject"}, posX{0}, posY{0}, active{false}
 {
 
 }

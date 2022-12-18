@@ -139,8 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ability.cpp" />
-    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="EncounterMenu.cpp" />
     <ClCompile Include="EncounterMenu.hpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -166,8 +164,6 @@
     <ClCompile Include="Torch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ability.hpp" />
-    <ClInclude Include="Attack.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Equipment.hpp" />
     <ClInclude Include="GameMenu.hpp" />

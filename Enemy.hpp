@@ -3,7 +3,9 @@
 
 struct Enemy : Entity
 {
-	Enemy(const char*, short);
+	Sprite sprite;
+
+	Enemy(const char*, short, Sprite);
 
 	~Enemy();
 

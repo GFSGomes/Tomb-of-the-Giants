@@ -10,12 +10,12 @@ enum class Sprite {
     ICON_TARGET, ICON_SWORD, ICON_AXE,
 };
 
-struct Renderer {
-
-    Sprite sprite;
-	
+struct Renderer 
+{
     Renderer();
     ~Renderer();
 
-    void DisplaySprite();
+    void DisplaySprite(Sprite);
 };
+
+extern Renderer renderer;

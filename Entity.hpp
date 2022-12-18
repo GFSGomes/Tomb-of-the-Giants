@@ -40,4 +40,5 @@ struct Entity : GameObject {
 
 	virtual void Actions();
 	void UpdateStatus(bool);
+	void DisplayStatus();
 };

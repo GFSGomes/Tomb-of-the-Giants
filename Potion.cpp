@@ -10,7 +10,7 @@ Potion::~Potion()
 
 }
 
-short Potion::Use()
+void Potion::Use()
 {
-	return 0;
+
 }

@@ -15,6 +15,28 @@ void Entity::Actions()
 
 }
 
+void Entity::DisplayStatus()
+{
+	std::cout << name << " (" << level << ")\n";
+	std::cout << "Exp : " << cur_experience << "/" << max_experience << "\n";
+
+	std::cout << "HP ";
+	for (short i = 0; i < cur_health; i++) std::cout << "=";
+	for (short i = 0; i < cur_health - max_health; i++) std::cout << "-";
+	std::cout << "\n";
+
+	std::cout << "MP ";
+	for (short i = 0; i < cur_mana; i++) std::cout << "=";
+	for (short i = 0; i < cur_mana - max_mana; i++) std::cout << "-";
+	std::cout << "\n";
+
+	std::cout << " CON | " << CON << "   Physical Damage | " << physical_damage << "\n";
+	std::cout << " INT | " << INT << "   Magical Damage  | " << magical_damage  << "\n";
+	std::cout << " RES | " << RES << "   Physical Resistance | " << physical_damage << "\n";
+	std::cout << " WIS | " << WIS << "   Magical Resistance  | " << magical_resistance << "\n";
+	std::cout << " DEX | " << DEX << "   Dodge | " << dodge_rate << "   Critical Chance | " << critical_rate << "   Flee | " << flee_rate << "\n";
+}
+
 void Entity::UpdateStatus(bool _levelUp)	
 {											// LEVEL 10				// LEVEL 25
 	max_health = 15 + CON * 1.5;			// 30.0	HP				52.5 HP

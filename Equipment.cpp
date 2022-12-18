@@ -10,12 +10,7 @@ Equipment::~Equipment()
 
 }
 
-short Equipment::Use()
+void Equipment::Use()
 {
-	return 0;
-}
-
-void Equipment::Equip()
-{
-
+	
 }

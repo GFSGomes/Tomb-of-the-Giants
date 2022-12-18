@@ -8,9 +8,7 @@ SceneManager::SceneManager()
 {
 	Scene scene_00{8, 8};
 	scene_00.AddObject(std::make_shared<Player>(PLAYER)); //Ponteiro para o player
-	scene_00.AddObject(std::make_shared<Enemy>("Wolf", 1));
-	scene_00.AddObject(std::make_shared<Enemy>("Wolf", 1));
-	scene_00.AddObject(std::make_shared<Enemy>("Wolf", 1));
+	scene_00.AddObject(std::make_shared<Enemy>("Spider", 1, Sprite::SPIDER));
 	scene_00.player->SpawnAt(0, 0);
 	Scenes = {scene_00};
 }
@@ -32,7 +30,7 @@ void SceneManager::StartGame()
 			{
 				if (!GameOver)
 				{
-					Scenes[i + 1].LoadScene();
+					Scenes[i++].LoadScene();
 				}
 			}
 		}

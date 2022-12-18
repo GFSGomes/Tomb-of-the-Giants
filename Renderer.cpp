@@ -1,6 +1,8 @@
 #pragma once
 #include "Renderer.hpp"
 
+Renderer renderer;
+
 Renderer::Renderer() {
 
 }
@@ -9,9 +11,9 @@ Renderer::~Renderer() {
 
 }
 
-void Renderer::DisplaySprite() {
+void Renderer::DisplaySprite(Sprite _sprite) {
 
-	switch (sprite) {
+	switch (_sprite) {
         case Sprite::NONE: break;
 
         // EQUIPMENT:
