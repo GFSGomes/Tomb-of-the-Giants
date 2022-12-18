@@ -1,8 +1,7 @@
 #pragma once
 #include <iostream>
 
-enum class Sprite 
-{
+enum class Sprite {
     NONE,
     OH_SWORD, OH_AXE,
     TORCH,
@@ -11,12 +10,12 @@ enum class Sprite
     ICON_TARGET, ICON_SWORD, ICON_AXE,
 };
 
-struct Renderer 
-{
+struct Renderer {
+
+    Sprite sprite;
+	
     Renderer();
     ~Renderer();
 
-    void DisplaySprite(Sprite);
+    void DisplaySprite();
 };
-
-extern Renderer renderer;

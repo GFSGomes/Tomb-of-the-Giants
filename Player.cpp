@@ -7,8 +7,6 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, FOV
 	strcpy_s(name, _name);
 	CreateFOV();
 	UpdateFOV();
-
-	UpdateStatus(true);
 }
 
 Player::~Player()

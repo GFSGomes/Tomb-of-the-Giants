@@ -4,6 +4,8 @@
 
 struct MainMenu : Menu
 {
+	Renderer renderer;
+
 	MainMenu();
 	~MainMenu();
 

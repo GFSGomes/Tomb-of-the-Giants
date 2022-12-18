@@ -116,8 +116,6 @@ void GameMenu::Input(std::shared_ptr<Player> player)
 	switch (input)
 	{
 		case 27: active = !active; break;
-
-		case 'c': case 'C': player->DisplayStatus(); _getch(); break;
 		
 		case 'w': case 'W':
 		{

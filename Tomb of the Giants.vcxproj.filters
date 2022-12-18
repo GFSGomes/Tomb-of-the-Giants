@@ -102,6 +102,9 @@
     <ClCompile Include="Ability.cpp">
       <Filter>Arquivos de Origem\Abilities</Filter>
     </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>Arquivos de Origem\Abilities</Filter>
+    </ClCompile>
     <ClCompile Include="Potion.cpp">
       <Filter>Arquivos de Origem\Objects</Filter>
     </ClCompile>
@@ -110,15 +113,6 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>Arquivos de Origem\Menus\InventorySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Sword.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Sword.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +167,9 @@
     <ClInclude Include="Ability.hpp">
       <Filter>Arquivos de Cabeçalho\Abilities</Filter>
     </ClInclude>
+    <ClInclude Include="Attack.hpp">
+      <Filter>Arquivos de Cabeçalho\Abilities</Filter>
+    </ClInclude>
     <ClInclude Include="Potion.hpp">
       <Filter>Arquivos de Cabeçalho\Objects</Filter>
     </ClInclude>
@@ -181,9 +178,6 @@
     </ClInclude>
     <ClInclude Include="Inventory.hpp">
       <Filter>Arquivos de Cabeçalho\Menus\InventorySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

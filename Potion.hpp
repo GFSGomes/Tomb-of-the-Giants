@@ -5,5 +5,5 @@ struct Potion : Item
 	Potion(const char*);
 	~Potion();
 
-	void Use();
+	short Use();
 };

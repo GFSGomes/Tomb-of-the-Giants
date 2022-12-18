@@ -14,33 +14,12 @@ EncounterMenu::~EncounterMenu()
 
 void EncounterMenu::Battle(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy)
 {
-	std::string log_0 = "";
-	std::string log_1 = "";
-	
-	bool swapTurn = false;
-
 	while (active)
 	{
 		system("cls");
-		std::cout << "\n";
-
-		std::cout << "   << Battle Log >>" << "\n";
-		std::cout << "   " << log_0 << "\n";
-		std::cout << "   " << log_1 << "\n";
-
-		std::cout << "   << IN BATTLE >>" << "\n";
-
-		std::cout << "   " << enemy->name << "\n";
-
-		std::cout << "   ";
-		for (int i = 0; i < enemy->cur_health; i++){std::cout << "=";}
-		for (int i = 0; i < (enemy->max_health - enemy->cur_health); i++){std::cout << "-";}
-
-		std::cout << "\n";
-		renderer.DisplaySprite(enemy->sprite);
-		std::cout << "\n";
-
-		std::cout << "   < What do you want to do? >" << "\n\n";
+		std::cout << "   --- In combat with " << enemy->name << " ---" << "\n";
+		enemy->renderer.DisplaySprite();
+		std::cout << "   What do you want to do?" << "\n";
 
 		switch (index)
 		{
@@ -70,8 +49,6 @@ void EncounterMenu::Battle(std::shared_ptr<Player> player, std::shared_ptr<Enemy
 				{
 					case 0: 
 						// Skill 1
-						// log_0 = player->skill
-						// log_1 = enemy->skill
 						break;
 
 					case 1:
@@ -95,20 +72,24 @@ void EncounterMenu::Initialize(std::shared_ptr<Player> player, std::shared_ptr<E
 	while (active)
 	{
 		system("cls");
-		std::cout << "\n";
-		std::cout << "   << You bumped into an enemy! >>" << "\n";
+		std::cout << "   --- You bumped into an enemy ---" << "\n";
 		std::cout << "   " << enemy->name << "\n";
 
 		std::cout << "   ";
-		for (int i = 0; i < enemy->cur_health; i++){std::cout << "=";}
-		for (int i = 0; i < (enemy->max_health - enemy->cur_health); i++){std::cout << "-";}
+		for (int i = 0; i < enemy->cur_health; i++)
+		{
+			std::cout << "=";
+		}
+		for (int i = 0; i < (enemy->max_health - enemy->cur_health); i++)
+		{
+			std::cout << "-";
+		}
 
-		std::cout << "\n";
-		renderer.DisplaySprite(enemy->sprite);
-		std::cout << "\n";
+		std::cout << "\n\n";
 
+		enemy->renderer.DisplaySprite();
 
-		std::cout << "   < What do you want to do? >" << "\n\n";
+		std::cout << "   What do you want to do?" << "\n\n";
 
 		switch (index)
 		{

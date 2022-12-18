@@ -3,9 +3,8 @@
 
 struct Attack : Ability
 {
-
 	Attack();
 	~Attack();
 
-	std::string Use(Entity*, Entity*);
+	std::string Use(std::shared_ptr<Entity>,std::shared_ptr<Entity>);
 };

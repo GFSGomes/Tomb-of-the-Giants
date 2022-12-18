@@ -1,21 +1,17 @@
 #pragma once
 #include "Renderer.hpp"
 
-Renderer renderer;
-
-Renderer::Renderer()
-{
+Renderer::Renderer() {
 
 }
 
-Renderer::~Renderer() 
-{
+Renderer::~Renderer() {
 
 }
 
-void Renderer::DisplaySprite(Sprite _sprite) {
+void Renderer::DisplaySprite() {
 
-	switch (_sprite) {
+	switch (sprite) {
         case Sprite::NONE: break;
 
         // EQUIPMENT:

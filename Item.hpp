@@ -7,6 +7,5 @@ struct Item : GameObject
 
 	Item(const char*, short);
 	virtual ~Item() = 0;
-	
-	virtual void Use();
+	virtual short Use();
 };

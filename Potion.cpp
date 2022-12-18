@@ -1,7 +1,6 @@
 #include "Potion.hpp"
-#include "Player.hpp"
 
-Potion::Potion(const char* _name) : Item(_name, 5) //Stack
+Potion::Potion(const char* _name) : Item(_name, 3) //Stack
 {
 	strcpy_s(name, _name);
 }
@@ -11,7 +10,7 @@ Potion::~Potion()
 
 }
 
-void Potion::Use()
+short Potion::Use()
 {
-	
+	return 0;
 }

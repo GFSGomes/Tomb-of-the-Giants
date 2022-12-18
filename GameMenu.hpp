@@ -5,8 +5,6 @@
 
 struct GameMenu : Menu
 {
-	Renderer renderer;
-
 	GameMenu();
 	~GameMenu();
 
