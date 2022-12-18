@@ -10,7 +10,7 @@ Item::~Item()
 
 }
 
-short Item::Use()
+void Item::Use()
 {
-	return 0;
+
 }

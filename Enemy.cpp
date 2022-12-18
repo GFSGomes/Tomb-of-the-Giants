@@ -1,12 +1,13 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy(const char* _name, short _level)
+Enemy::Enemy(const char* _name, short _level, Sprite _sprite)
 {
 	strcpy_s(name,_name);
 
 	level = _level;
+	UpdateStatus(true);
 
-	CON = INT = RES = WIS = DEX = level;
+	sprite = _sprite;
 }
 
 Enemy::~Enemy()

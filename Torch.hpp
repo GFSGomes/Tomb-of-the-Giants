@@ -6,5 +6,5 @@ struct Torch : Item
 	Torch();
 	~Torch();
 
-	short Use();
+	void Use();
 };

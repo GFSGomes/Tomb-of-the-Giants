@@ -8,7 +8,7 @@ struct GameObject {
 	short posX;
 	short posY;
 	bool active;
-	Renderer renderer;
+	Sprite sprite;
 
 	GameObject();
 	virtual ~GameObject() = 0;

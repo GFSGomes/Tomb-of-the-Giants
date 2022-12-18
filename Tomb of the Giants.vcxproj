@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ability.cpp" />
-    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="EncounterMenu.cpp" />
     <ClCompile Include="EncounterMenu.hpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -162,12 +161,14 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Slot.cpp" />
+    <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Sword.hpp" />
     <ClCompile Include="Tomb of the Giants.cpp" />
     <ClCompile Include="Torch.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ability.hpp" />
-    <ClInclude Include="Attack.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Equipment.hpp" />
     <ClInclude Include="GameMenu.hpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Settings.hpp" />
     <ClInclude Include="Slot.hpp" />
     <ClInclude Include="Torch.hpp" />
+    <ClInclude Include="Weapon.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

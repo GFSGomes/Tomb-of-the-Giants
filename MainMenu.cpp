@@ -1,11 +1,12 @@
 #include "MainMenu.hpp"
 #include "Settings.hpp"
+#include "Renderer.hpp"
 
 MainMenu mainMenu;
 
 MainMenu::MainMenu()
 {
-	renderer.sprite = Sprite::TITLE;
+
 }
 
 MainMenu::~MainMenu()
@@ -21,7 +22,7 @@ void MainMenu::Initialize()
 	{
 		system("cls");
 
-		renderer.DisplaySprite();
+		renderer.DisplaySprite(Sprite::TITLE);
 
 		switch (index)
 		{

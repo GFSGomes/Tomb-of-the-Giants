@@ -1,11 +1,10 @@
 #pragma once
 #include "Ability.hpp"
 
-struct Attack : Ability
+struct DoubleStrike : Ability
 {
-
-	Attack();
-	~Attack();
+	DoubleStrike();
+	~DoubleStrike();
 
 	std::string Use(Entity*, Entity*);
 };

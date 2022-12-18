@@ -1,17 +1,16 @@
 #include "Ability.hpp"
 
-Ability::Ability()
+Ability::Ability() : name{'\0'}, damage{0}, heal{0}, buff{0}, debuff{0}, requiredAccuracy{100}
 {
 
 }
-
 
 Ability::~Ability()
 {
 
 }
 
-void Ability::Use()
+std::string Ability::Use()
 {
 
 }

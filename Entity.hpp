@@ -39,5 +39,6 @@ struct Entity : GameObject {
 	virtual ~Entity() = 0;
 
 	virtual void Actions();
-	void UpdateStatus(bool);
+	virtual void UpdateStatus(bool);
+	virtual void DisplayStatus();
 };
