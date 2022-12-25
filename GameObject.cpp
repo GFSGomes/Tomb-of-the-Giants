@@ -1,6 +1,6 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject() : name{"GameObject"}, posX{0}, posY{0}, active{false}
+GameObject::GameObject() : name{'\0'}, description{'\0'}, posX{0}, posY{0}, active{false}, sprite{Sprite::NONE}
 {
 
 }
@@ -16,7 +16,7 @@ void GameObject::SpawnAt(short _posX, short _posY)
 	posY = _posY;
 }
 
-void GameObject::SpawnRandom() 
+void GameObject::SpawnRandom()
 {
 	posX = rand() % GridSizeX;
 	posY = rand() % GridSizeY;

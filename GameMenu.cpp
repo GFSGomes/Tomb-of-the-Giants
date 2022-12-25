@@ -171,7 +171,7 @@ void GameMenu::Input(std::shared_ptr<Player> player)
 			{
 				case 0: break;
 				case 1: break;
-				case 2: break;
+				case 2: player->inventory.Initialize();  break;
 				case 3: settings.Initialize(); break;
 				case 4: break;
 

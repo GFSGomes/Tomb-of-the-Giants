@@ -31,6 +31,12 @@
     <Filter Include="Arquivos de Origem\Menus\InventorySystem">
       <UniqueIdentifier>{d32fe852-640f-4b03-bab3-5f67d80973a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Database">
+      <UniqueIdentifier>{6febab37-b296-4ad4-b190-00b7e046cc94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Database">
+      <UniqueIdentifier>{a50b6f32-241e-4880-95fc-4b56e45c6bab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tomb of the Giants.cpp">
@@ -102,12 +108,24 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Arquivos de Origem\Menus\InventorySystem</Filter>
     </ClCompile>
+    <ClCompile Include="Ability.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Arquivos de Origem\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Arquivos de Origem\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemDatabase.cpp">
+      <Filter>Arquivos de Origem\Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.hpp">
       <Filter>Arquivos de Cabeçalho\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Common.hpp">
+    <ClInclude Include="Global.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entity.hpp">
@@ -160,6 +178,18 @@
     </ClInclude>
     <ClInclude Include="Inventory.hpp">
       <Filter>Arquivos de Cabeçalho\Menus\InventorySystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.hpp">
+      <Filter>Arquivos de Cabeçalho\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.hpp">
+      <Filter>Arquivos de Cabeçalho\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemDatabase.hpp">
+      <Filter>Arquivos de Cabeçalho\Database</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,17 +7,17 @@ struct Inventory : Menu
 {
 	bool remove;
 	bool organize;
-	Slot* hoveredSlot;
-	Slot* selectedSlot;
 	std::vector<Slot> Container;
+	std::shared_ptr<Slot> hoveredSlot;
+	std::shared_ptr<Slot> selectedSlot;
 
 	Inventory();
 
 	~Inventory();
 
-	void AddItem(Item*, short);
-	void DiscardItem(Item*);
-	int GetItemIndex(Slot*);
+	void AddItem(std::shared_ptr<Item>, short);
+	void DiscardItem(std::shared_ptr<Item>);
+	int GetSlotIndex(std::shared_ptr<Slot>);
 	void OrganizeSlots();
 	void Initialize();
 };

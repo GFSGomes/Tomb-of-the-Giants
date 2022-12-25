@@ -1,5 +1,5 @@
 #include "Grid.hpp"
-#include "Torch.hpp"
+#include "ItemDatabase.hpp"
 
 struct Scene
 {

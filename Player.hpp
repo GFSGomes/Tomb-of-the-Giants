@@ -1,10 +1,10 @@
 #pragma once
 #include "Entity.hpp"
 #include "Light.hpp"
-#include "Item.hpp"
 #include <vector>
 
-struct Player : Entity {
+struct Player : Entity 
+{
 
 	short torchDuration;
 	bool isTorchActive;
@@ -12,6 +12,7 @@ struct Player : Entity {
 	short FOV3[8];
 	short FOV7[28];
 	short FOV7_X[13];
+	std::vector<std::shared_ptr<Item>> items;
 	std::vector<std::shared_ptr<Light>> FOV;
 	std::vector<std::shared_ptr<Item>> Inventory;
 

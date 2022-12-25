@@ -2,7 +2,7 @@
 
 Enemy::Enemy(const char* _name, short _level, Sprite _sprite) : sprite{_sprite}
 {
-	strcpy_s(name,_name);
+	name = _name;
 
 	level = _level - 1;
 

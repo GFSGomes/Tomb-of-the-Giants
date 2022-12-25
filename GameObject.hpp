@@ -1,13 +1,16 @@
 #pragma once
-#include "Common.hpp"
 #include "Renderer.hpp"
+#include "Global.hpp"
+#include <memory>
+#include <string>
 
-struct GameObject {
-
-	char name[33];
+struct GameObject 
+{
 	short posX;
 	short posY;
 	bool active;
+	std::string name;
+	std::string description;
 	Sprite sprite;
 
 	GameObject();

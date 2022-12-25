@@ -2,6 +2,7 @@
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include "Item.hpp"
+#include "Equipment.hpp"
 
 extern short GridSizeX;
 extern short GridSizeY;

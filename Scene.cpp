@@ -1,6 +1,7 @@
 #include "Scene.hpp"
 #include "GameMenu.hpp"
 #include "EncounterMenu.hpp"
+#include "Equipment.hpp"
 
 Scene::Scene(short gridSizeX, short gridSizeY) : grid{gridSizeX, gridSizeY}, currentScene{false}
 {
@@ -73,9 +74,19 @@ void Scene::Interaction()
 
 		if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJ[i]))
 		{
-			if (std::shared_ptr<Torch> torch = std::dynamic_pointer_cast<Torch>(SceneOBJ[i]))
+			if (player->posX == item->posX && player->posY == item->posY)
 			{
-				torch->Use();
+				if (std::shared_ptr<Torch> torch = std::dynamic_pointer_cast<Torch>(SceneOBJ[i]))
+				{
+					torch->Use();
+				}
+
+				else
+				{
+					player->inventory.AddItem((std::shared_ptr<Item>) item, 1);
+				}
+
+				SceneOBJ.erase(SceneOBJ.begin() + i);
 			}
 		}
 	}

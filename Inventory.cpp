@@ -11,7 +11,7 @@ Inventory::~Inventory()
 
 }
 
-void Inventory::AddItem(Item* _item, short _amount)
+void Inventory::AddItem(std::shared_ptr<Item> _item, short _amount)
 {
 	while (_amount > _item->stack)
 	{
@@ -30,7 +30,7 @@ void Inventory::AddItem(Item* _item, short _amount)
 			for (short i = 0; i < Container.size(); i++)
 			{
 				// Se houver Item no inventário:
-				if (Container[i].item == _item)
+				if (Container[i].item->name == _item->name)
 				{
 					for (short j = 0; j < Container.size(); j++)
 					{
@@ -41,7 +41,7 @@ void Inventory::AddItem(Item* _item, short _amount)
 
 							// Se o restante de _amount ultrapassar o _item.stack,
 							// preenche-o e cria um novo Slot com o restante.
-							if (Container[j].amount + _amount >= Container[j].item->stack)
+							if (Container[j].amount + _amount > Container[j].item->stack)
 							{
 								short over = Container[j].amount - Container[j].item->stack;
 
@@ -68,7 +68,7 @@ void Inventory::AddItem(Item* _item, short _amount)
 				{
 					for (short j = 0; j < Container.size(); j++)
 					{
-						if (Container[j].item == _item)
+						if (Container[j].item->name == _item->name)
 						{
 							if (Container[j].amount < Container[j].item->stack)
 							{
@@ -99,23 +99,22 @@ void Inventory::AddItem(Item* _item, short _amount)
 	}
 }
 
-int Inventory::GetItemIndex(Slot* _slot)
+int Inventory::GetSlotIndex(std::shared_ptr<Slot> _slot)
 {
 	for (int i = 0; i < Container.size(); i++)
 	{
-		if (&Container[i] == _slot)
+		if (std::make_shared<Slot>(Container[i])->item == _slot->item)
 		{
 			return i;
 		}
 	}
 }
 
-void Inventory::DiscardItem(Item* _item)
+void Inventory::DiscardItem(std::shared_ptr<Item> _item)
 {
-	system("cls");
 	std::cout << "\n";
-	std::cout << "   >> How many " << _item->name << " do you want to discard?" << "\n";
-	std::cout << "\n   > ";
+	std::cout << "   How many " << _item->name << " do you want to discard?" << "\n";
+	std::cout << "   > ";
 
 	short amount;
 
@@ -125,8 +124,8 @@ void Inventory::DiscardItem(Item* _item)
 
 		if (!std::cin)
 		{
-			std::cout << "   >> Please, enter a integer: " << std::endl;
-			std::cout << "\n   > ";
+			std::cout << "   Please, enter a integer:" << std::endl;
+			std::cout << "   > ";
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			continue;
@@ -136,11 +135,10 @@ void Inventory::DiscardItem(Item* _item)
 		{
 			for (int i = 0; i < Container.size(); i++)
 			{
-				if (Container[i].item == _item)
+				if (Container[i].item->name == _item->name)
 				{
 					if (Container[i].amount > amount)
 					{
-						std::cout << "\n   >> " << amount << " " << Container[i].item->name << "'s has been discarded;" << "\n";
 						Container[i].amount -= amount;
 						return;
 					}
@@ -148,13 +146,11 @@ void Inventory::DiscardItem(Item* _item)
 					if (Container[i].amount <= amount)
 					{
 						index = 0;
-						std::cout << "\n   >> Item discarded: " << Container[i].item->name << "\n";
 						Container.erase(Container.begin() + i);
 					}
 				}
 			}
 			Container.shrink_to_fit();
-			_getch();
 		}
 		return;
 	}
@@ -174,7 +170,7 @@ void Inventory::OrganizeSlots()
 
 			else // Caso Enter novamente, troca o slot/item selecionado pelo hovered atual.
 			{
-				std::iter_swap(Container.begin() + GetItemIndex(selectedSlot), Container.begin() + GetItemIndex(hoveredSlot));
+				std::iter_swap(Container.begin() + GetSlotIndex(selectedSlot), Container.begin() + GetSlotIndex(hoveredSlot));
 				selectedSlot = nullptr;
 			}
 		}
@@ -183,31 +179,43 @@ void Inventory::OrganizeSlots()
 
 void Inventory::Initialize()
 {
-	while (input != 'q')
+	active = true;
+
+	while (active)
 	{
 		system("cls");
 
-		organize ? std::cout << " |Tab| Organize [X] " : std::cout << " |Tab| Organize [ ] ";
-		remove ? std::cout << " |Bksp| Remove [X]\n\n" : std::cout << " |Bksp| Remove [ ]\n\n";
+			std::cout << "\n";
+			std::cout << "   [ESC] RETURN" << "\n";
+			
+		organize ? 
+			std::cout << "   [TAB] Organize (X)" : 
+			std::cout << "   [TAB] Organize ( )";
+		remove ? 		     
+			std::cout << "   [BKS] Remove (X)" : 
+			std::cout << "   [BKS] Remove ( )";
+
+			std::cout << "\n";
+			std::cout << "\n";
 
 		for (int i = 0; i < Container.size(); i++)
 		{
 			// Indicador: HOVERED
 			if (i == index)
 			{
-				hoveredSlot = &Container[index];
+				hoveredSlot = std::make_shared<Slot>(Container[index]);
 
-				std::cout << " > ";
+				std::cout << "  > ";
 			}
 			else
 			{
-				std::cout << "   ";
+				std::cout << "    ";
 			}
 
 			std::cout << "" << Container[i].item->name << " (" << Container[i].amount << ")";
 
 			// Indicador: SELECTED
-			if (&Container[i] == selectedSlot)
+			if (std::make_shared<Slot>(Container[index]) == selectedSlot)
 			{
 				std::cout << " <\n";
 			}
@@ -215,7 +223,11 @@ void Inventory::Initialize()
 			{
 				std::cout << "\n";
 			}
-
+		}
+		if (selectedSlot)
+		{
+			std::cout << "    S:";
+			std::cout << selectedSlot->item->name << "\n";
 		}
 
 		input = _getch();
@@ -244,6 +256,11 @@ void Inventory::Initialize()
 
 			}
 			break;
+			
+			case 27: 
+				active = false;
+				selectedSlot = nullptr;
+				break;
 
 			default: break;
 		}

@@ -1,8 +1,9 @@
 #pragma once
 #include "GameObject.hpp"
+#include "Inventory.hpp"
 
-struct Entity : GameObject {
-
+struct Entity : GameObject 
+{
 	short level;
 	short freeStatPoints;
 	float max_experience;
@@ -15,25 +16,26 @@ struct Entity : GameObject {
 	short DEX; // Increases Dodge, Critical Chance and slightly increases Flee rate;
 
 	float max_health;
+	float cur_health;
 	float physical_damage;
-	float max_mana;
-	float magical_damage;
-
 	float physical_resistance;
+
+	float max_mana;
+	float cur_mana;
+	float magical_damage;
 	float magical_resistance;
 
 	float dodge_rate;
 	float critical_rate;
 	float flee_rate;
 
-	float cur_health;
-	float cur_mana;
-
 	short state_stun;
 	short state_poison;
 	short state_confusion;
 	
 	bool alive;
+
+	Inventory inventory;
 
 	Entity();
 	virtual ~Entity() = 0;

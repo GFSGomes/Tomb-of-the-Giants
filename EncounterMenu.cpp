@@ -21,7 +21,7 @@ void EncounterMenu::Battle(std::shared_ptr<Player> player, std::shared_ptr<Enemy
 	while (active)
 	{
 		system("cls");
-		std::cout << "   << BATTLE LOG>>" << "\n";
+		std::cout << "   << BATTLE LOG >>" << "\n";
 		
 		std::cout << "   > " << log_0 << "\n";
 		std::cout << "   > " << log_1 << "\n";

@@ -2,10 +2,10 @@
 
 struct Slot
 {
-	Item* item;
+	std::shared_ptr<Item> item;
 	short amount;
 
-	Slot(Item*, short);
+	Slot(std::shared_ptr<Item>, short);
 
 	~Slot();
 };

@@ -1,7 +1,14 @@
 #pragma once
 #include "Entity.hpp"
 
-Entity::Entity() : max_health{5}, cur_health{max_health}, physical_damage{1}, alive{true} {
+Entity::Entity() : level{0}, freeStatPoints{0}, max_experience{0}, cur_experience{0},
+CON{0}, INT{0}, RES{0}, WIS{0}, DEX{0},
+max_health{0}, cur_health{0}, physical_damage{0}, physical_resistance{0},
+max_mana{0}, cur_mana{0}, magical_damage{0}, magical_resistance{0},
+dodge_rate{0}, critical_rate{0}, flee_rate{0},
+state_stun{0}, state_confusion{0}, state_poison{0},
+alive{true}
+{
 
 }
 

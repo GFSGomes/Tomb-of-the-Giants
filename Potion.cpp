@@ -2,7 +2,7 @@
 
 Potion::Potion(const char* _name) : Item(_name, 3) //Stack
 {
-	strcpy_s(name, _name);
+	name = _name;
 }
 
 Potion::~Potion()

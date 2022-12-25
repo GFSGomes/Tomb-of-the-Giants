@@ -24,7 +24,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 
 	for (short y = 0; y < sizeY; y++)
 	{
-		std::cout << "   |";
+		std::cout << "   │";
 
 		for (short x = 0; x < sizeX; x++)
 		{
@@ -48,7 +48,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 							}
 							if (player->isTorchActive)
 							{
-								icon = '.';
+								icon = "·";
 							}
 
 							for (short j = 0; j < SceneOBJ.size(); j++)
@@ -72,7 +72,21 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 								{
 									if (item->posX == fov->posX && item->posY == fov->posY)
 									{
-									
+										if (fov->proximityReveal)
+										{
+											icon = "▫";
+										}
+										if (player->isTorchActive)
+										{
+											if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(SceneOBJ[j]))
+											{
+												icon = "▲";
+											}
+											else
+											{
+												icon = "♦";
+											}
+										}
 									}
 								}
 							}
@@ -82,19 +96,12 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					// Darkness
 					if (std::shared_ptr<Player> player = std::dynamic_pointer_cast<Player>(SceneOBJ[i]))
 					{
-						if (player->isTorchActive)
-						{
-							icon = "●";
-						}
-						else
-						{
-							icon = "●";
-						}
+						icon = "●";
 					}
 
 					if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
 					{
-						if (enemy->alive)
+						if (enemy->active)
 						{
 							if (DebugMode) // DEBUG
 							{
@@ -114,8 +121,8 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						}
 					}
 				}
-
 			}
+
 			if (count >= 0)
 			{
 				if (icon != "\0")
@@ -132,7 +139,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 				std::cout << "  ";
 			}
 		}
-		std::cout << "|\n";
+		std::cout << "│\n";
 	}
 
 	std::cout << "   └";
