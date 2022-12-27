@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.hpp"
 #include "Inventory.hpp"
+#include "Job.hpp"
 
 struct Entity : GameObject 
 {
@@ -36,6 +37,7 @@ struct Entity : GameObject
 	bool alive;
 
 	Inventory inventory;
+	Job job;
 
 	Entity();
 	virtual ~Entity() = 0;

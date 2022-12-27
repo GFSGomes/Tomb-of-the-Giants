@@ -1,7 +1,8 @@
 #include "Scene.hpp"
 #include "GameMenu.hpp"
-#include "EncounterMenu.hpp"
 #include "Equipment.hpp"
+#include "EncounterMenu.hpp"
+#include "Torch.hpp"
 
 Scene::Scene(short gridSizeX, short gridSizeY) : grid{gridSizeX, gridSizeY}, currentScene{false}
 {

@@ -1,15 +1,15 @@
 #pragma once
 #include "Entity.hpp"
 
-Entity::Entity() : level{0}, freeStatPoints{0}, max_experience{0}, cur_experience{0},
+Entity::Entity() : level{0}, freeStatPoints{0}, max_experience{50}, cur_experience{0},
 CON{0}, INT{0}, RES{0}, WIS{0}, DEX{0},
 max_health{0}, cur_health{0}, physical_damage{0}, physical_resistance{0},
 max_mana{0}, cur_mana{0}, magical_damage{0}, magical_resistance{0},
 dodge_rate{0}, critical_rate{0}, flee_rate{0},
 state_stun{0}, state_confusion{0}, state_poison{0},
-alive{true}
+alive{true}, job{Archetype::WARRIOR}
 {
-
+	UpdateStatus(true);
 }
 
 Entity::~Entity()
@@ -24,15 +24,16 @@ void Entity::Actions()
 
 void Entity::DisplayStatus()
 {
-	std::cout << name << " (" << level << ")\n";
-	std::cout << "Exp : " << cur_experience << "/" << max_experience << "\n";
+	std::cout << " " << name << " (" << level << ")" << "\n";
+	std::cout << " " << job.GetJobName() << "\n";
+	std::cout << " Exp : " << cur_experience << "/" << max_experience << "\n";
 
-	std::cout << "HP ";
+	std::cout << " HP ";
 	for (short i = 0; i < cur_health; i++) std::cout << "=";
 	for (short i = 0; i < cur_health - max_health; i++) std::cout << "-";
 	std::cout << "\n";
 
-	std::cout << "MP ";
+	std::cout << " MP ";
 	for (short i = 0; i < cur_mana; i++) std::cout << "=";
 	for (short i = 0; i < cur_mana - max_mana; i++) std::cout << "-";
 	std::cout << "\n";
@@ -65,11 +66,12 @@ void Entity::UpdateStatus(bool _levelUp)
 	{
 		level++;
 		cur_experience = 0;
-		max_experience *= 0.15;
+		max_experience *= 1.15;
 
 		cur_health	= max_health;
 		cur_mana	= max_mana;
 
+		CON++; INT++; DEX++; WIS++; RES++;
 		UpdateStatus(false);
 	}
 }

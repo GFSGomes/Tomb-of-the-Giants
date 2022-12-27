@@ -29,28 +29,24 @@ void Inventory::AddItem(std::shared_ptr<Item> _item, short _amount)
 		{
 			for (short i = 0; i < Container.size(); i++)
 			{
-				// Se houver Item no inventário:
+				// Se o Item já está no Inventário:
 				if (Container[i].item->name == _item->name)
 				{
+					// Procurando um Slot não-cheio:
 					for (short j = 0; j < Container.size(); j++)
 					{
-						// Encontra um Slot não-cheio, para adicionar o restante de _amount:
-						if (Container[j].amount < Container[j].item->stack)
+						if (Container[j].amount <= Container[j].item->stack)
 						{
 							Container[j].amount += _amount;
 
-							// Se o restante de _amount ultrapassar o _item.stack,
-							// preenche-o e cria um novo Slot com o restante.
-							if (Container[j].amount + _amount > Container[j].item->stack)
+							// Caso ultrapassar:
+							if (Container[j].amount > Container[j].item->stack)
 							{
 								short over = Container[j].amount - Container[j].item->stack;
-
 								Container[j].amount -= over;
 
 								if (over > 0)
-								{
 									Container.push_back(Slot(_item, over));
-								}
 							}
 							return;
 						}
@@ -74,7 +70,7 @@ void Inventory::AddItem(std::shared_ptr<Item> _item, short _amount)
 							{
 								Container[j].amount += _amount;
 
-								if (Container[j].amount + _amount >= Container[j].item->stack)
+								if (Container[j].amount >= Container[j].item->stack)
 								{
 									short over = Container[j].amount - Container[j].item->stack;
 
@@ -217,7 +213,7 @@ void Inventory::Initialize()
 			// Indicador: SELECTED
 			if (std::make_shared<Slot>(Container[index]) == selectedSlot)
 			{
-				std::cout << " <\n";
+				std::cout << " <\n"; // Não está saindo.
 			}
 			else
 			{
@@ -226,7 +222,6 @@ void Inventory::Initialize()
 		}
 		if (selectedSlot)
 		{
-			std::cout << "    S:";
 			std::cout << selectedSlot->item->name << "\n";
 		}
 

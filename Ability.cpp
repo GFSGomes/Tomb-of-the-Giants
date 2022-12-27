@@ -1,17 +1,16 @@
 #include "Ability.hpp"
 
-Ability::Ability() : cost{0}
+Ability::Ability()
 {
 
 }
-
 
 Ability::~Ability()
 {
 
 }
 
-std::string Ability::Use()
+std::string Ability::CastAbility(Skill _skill)
 {
 	return "";
 }

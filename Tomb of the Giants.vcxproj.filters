@@ -13,183 +13,177 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Arquivos de Origem\Objects">
-      <UniqueIdentifier>{6ec3b433-16b6-4bcd-838d-a1c958c73d3c}</UniqueIdentifier>
+    <Filter Include="Arquivos de Cabeçalho\ObjectSystem">
+      <UniqueIdentifier>{fc0574e0-40e1-4089-a2cd-6129ef08ab50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Objects">
-      <UniqueIdentifier>{44625200-971a-4fe4-8f25-e6436b303f63}</UniqueIdentifier>
+    <Filter Include="Arquivos de Cabeçalho\ObjectSystem\Derived">
+      <UniqueIdentifier>{733750c4-4a2e-451e-8b2e-8bfb74618f54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Menus">
-      <UniqueIdentifier>{7ec526ff-326d-4bcb-bafb-3e50f1ce50ae}</UniqueIdentifier>
+    <Filter Include="Arquivos de Origem\ObjectSystem">
+      <UniqueIdentifier>{3b6bed17-63cc-4330-8e4f-0a8ac731204a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Origem\Menus">
-      <UniqueIdentifier>{e46f4ece-49c4-421e-9c96-98f55b883c0a}</UniqueIdentifier>
+    <Filter Include="Arquivos de Origem\MenuSystem">
+      <UniqueIdentifier>{bf4a3b41-689d-48c1-9a89-68b410fff04b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Menus\InventorySystem">
-      <UniqueIdentifier>{a99675e3-1976-4427-ae29-247be0143a6e}</UniqueIdentifier>
+    <Filter Include="Arquivos de Cabeçalho\MenuSystem">
+      <UniqueIdentifier>{915e7093-c877-45b1-8d50-185968ca9a4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Origem\Menus\InventorySystem">
-      <UniqueIdentifier>{d32fe852-640f-4b03-bab3-5f67d80973a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Database">
-      <UniqueIdentifier>{6febab37-b296-4ad4-b190-00b7e046cc94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Origem\Database">
-      <UniqueIdentifier>{a50b6f32-241e-4880-95fc-4b56e45c6bab}</UniqueIdentifier>
+    <Filter Include="Arquivos de Origem\ObjectSystem\Derived">
+      <UniqueIdentifier>{040a42b6-ed2d-4c22-b8dc-8ce884eb304d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Tomb of the Giants.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Torch.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Arquivos de Origem\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.hpp">
-      <Filter>Arquivos de Cabeçalho\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Arquivos de Origem\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="Settings.cpp">
-      <Filter>Arquivos de Origem\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="GameMenu.cpp">
-      <Filter>Arquivos de Origem\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="EncounterMenu.hpp">
-      <Filter>Arquivos de Cabeçalho\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="EncounterMenu.cpp">
-      <Filter>Arquivos de Origem\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="Equipment.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Potion.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Slot.cpp">
-      <Filter>Arquivos de Origem\Menus\InventorySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>Arquivos de Origem\Menus\InventorySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Ability.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Sword.cpp">
-      <Filter>Arquivos de Origem\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemDatabase.cpp">
-      <Filter>Arquivos de Origem\Database</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GameObject.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Global.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Grid.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Item.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
+    <ClInclude Include="Inventory.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Scene.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Torch.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.hpp">
-      <Filter>Arquivos de Cabeçalho\Menus</Filter>
-    </ClInclude>
-    <ClInclude Include="Settings.hpp">
-      <Filter>Arquivos de Cabeçalho\Menus</Filter>
-    </ClInclude>
-    <ClInclude Include="GameMenu.hpp">
-      <Filter>Arquivos de Cabeçalho\Menus</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Equipment.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Potion.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Slot.hpp">
-      <Filter>Arquivos de Cabeçalho\Menus\InventorySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.hpp">
-      <Filter>Arquivos de Cabeçalho\Menus\InventorySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Ability.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Sword.hpp">
-      <Filter>Arquivos de Cabeçalho\Objects</Filter>
+    <ClInclude Include="EncounterMenu.hpp">
+      <Filter>Arquivos de Cabeçalho\MenuSystem</Filter>
     </ClInclude>
-    <ClInclude Include="ItemDatabase.hpp">
-      <Filter>Arquivos de Cabeçalho\Database</Filter>
+    <ClInclude Include="GameMenu.hpp">
+      <Filter>Arquivos de Cabeçalho\MenuSystem</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenu.hpp">
+      <Filter>Arquivos de Cabeçalho\MenuSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.hpp">
+      <Filter>Arquivos de Cabeçalho\MenuSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.hpp">
+      <Filter>Arquivos de Cabeçalho\MenuSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipment.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Potion.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Torch.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.hpp">
+      <Filter>Arquivos de Cabeçalho\ObjectSystem\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemDB.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Slot.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Tomb of the Giants.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipment.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Ability.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="EncounterMenu.cpp">
+      <Filter>Arquivos de Origem\MenuSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMenu.cpp">
+      <Filter>Arquivos de Origem\MenuSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Arquivos de Origem\MenuSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Arquivos de Origem\MenuSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Arquivos de Origem\MenuSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Potion.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Torch.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Arquivos de Origem\ObjectSystem\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemDB.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

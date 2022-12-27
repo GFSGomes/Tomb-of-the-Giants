@@ -1,3 +1,4 @@
+#pragma once
 #include "Menu.hpp"
 #include "Slot.hpp"
 #include <vector>

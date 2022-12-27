@@ -22,22 +22,22 @@ void Settings::Initialize()
 
 		std::cout << "\n";
 
-		std::cout			  << "   Settings" << "\n\n";
+		std::cout			  << "   SETTINGS" << "\n\n";
 		switch (index)
 		{
 			case 0:
 			{
 				DebugMode ? 
-					std::cout << "  > Debug Mode [X]" << "\n" : 
-					std::cout << "  > Debug Mode [ ]" << "\n";
-					std::cout << "     Back" << "\n";
+					std::cout << "  > Debug Mode (X)" << "\n" : 
+					std::cout << "  > Debug Mode ( )" << "\n";
+					std::cout << "    Back" << "\n";
 				break;
 			}
 			case 1:
 			{
 				DebugMode ?
-					std::cout << "     Debug Mode [X]" << "\n" :
-					std::cout << "     Debug Mode [ ]" << "\n";
+					std::cout << "    Debug Mode (X)" << "\n" :
+					std::cout << "    Debug Mode ( )" << "\n";
 					std::cout << "  > Back" << "\n";
 				break;
 			}

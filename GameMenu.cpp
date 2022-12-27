@@ -37,49 +37,49 @@ void GameMenu::Initialize()
 			case 0:
 			{
 				std::cout << "  > Character" << "\n";
-				std::cout << "     Abilities" << "\n";
-				std::cout << "     Inventory" << "\n";
-				std::cout << "     Settings" << "\n";
-				std::cout << "     Leave Game" << "\n";
+				std::cout << "    Abilities" << "\n";
+				std::cout << "    Inventory" << "\n";
+				std::cout << "    Settings" << "\n";
+				std::cout << "    Leave Game" << "\n";
 			}				    
 			break;			    
 							    
 			case 1:			    
 			{				    
-				std::cout << "     Character  " << "\n";
+				std::cout << "    Character  " << "\n";
 				std::cout << "  > Abilities" << "\n";
-				std::cout << "     Inventory" << "\n";
-				std::cout << "     Settings" << "\n";
-				std::cout << "     Leave Game" << "\n";
+				std::cout << "    Inventory" << "\n";
+				std::cout << "    Settings" << "\n";
+				std::cout << "    Leave Game" << "\n";
 			}				    
 			break;			    
 							    
 			case 2:			    
 			{				    
-				std::cout << "     Character" << "\n";
-				std::cout << "     Abilities" << "\n";
+				std::cout << "    Character" << "\n";
+				std::cout << "    Abilities" << "\n";
 				std::cout << "  > Inventory" << "\n";
-				std::cout << "     Settings" << "\n";
-				std::cout << "     Leave Game" << "\n";
+				std::cout << "    Settings" << "\n";
+				std::cout << "    Leave Game" << "\n";
 			}				    
 			break;			    
 							    
 			case 3:			    
 			{				    
-				std::cout << "     Character" << "\n";
-				std::cout << "     Abilities" << "\n";
-				std::cout << "     Inventory" << "\n";
+				std::cout << "    Character" << "\n";
+				std::cout << "    Abilities" << "\n";
+				std::cout << "    Inventory" << "\n";
 				std::cout << "  > Settings" << "\n";
-				std::cout << "     Leave Game" << "\n";
+				std::cout << "    Leave Game" << "\n";
 			}				    
 			break;			    
 							    
 			case 4:			    
 			{				    
-				std::cout << "     Character" << "\n";
-				std::cout << "     Abilities" << "\n";
-				std::cout << "     Inventory" << "\n";
-				std::cout << "     Settings" << "\n";
+				std::cout << "    Character" << "\n";
+				std::cout << "    Abilities" << "\n";
+				std::cout << "    Inventory" << "\n";
+				std::cout << "    Settings" << "\n";
 				std::cout << "  > Leave Game" << "\n";
 			}
 			break;
@@ -91,22 +91,23 @@ void GameMenu::Initialize()
 void GameMenu::Input(std::shared_ptr<Player> player)
 {
 	std::cout << "\n";
+	std::cout << "\n";
 
 	if (player->isTorchActive)
 	{
-		std::cout << "     [W]   To       [T] Torch ((X) " << player->torchDuration << ")" << "\n";
+		std::cout << "     [W]   To       [T] Torch (X) " << player->torchDuration << "\n";
 		std::cout << "   [A|S|D] Move     Your torch is lit." << "\n";
 	}
 	else
 	{
-		std::cout << "     [W]   To       [T] Torch (( ) " << player->torchDuration << ")" << "\n";
+		std::cout << "     [W]   To       [T] Torch ( ) " << player->torchDuration << "\n";
 		std::cout << "   [A|S|D] Move" << "\n";
 	}
 
 	if (DebugMode)
 	{
 		std::cout << "\n";
-		std::cout << "   DevTools\n";
+		std::cout << "   Debug:\n";
 		std::cout << "   [1] Torch +10\n";
 		std::cout << "   [2] Health +1\n";
 	}
@@ -167,22 +168,35 @@ void GameMenu::Input(std::shared_ptr<Player> player)
 
 		case '\r':
 		{
-			switch (index)
+			if (active)
 			{
-				case 0: break;
-				case 1: break;
-				case 2: player->inventory.Initialize();  break;
-				case 3: settings.Initialize(); break;
-				case 4: break;
+				switch (index)
+				{
+					case 0:
+					{
+						// Temporary - Create a CharacterMenu instead.
+						system("cls");
+						player->DisplayStatus();
+						_getch();
+					} break;
 
-				default: return;
+					case 1: break;
+					case 2: player->inventory.Initialize(); break;
+					case 3: settings.Initialize(); break;
+					case 4: break;
+
+					default: return;
+				}
+
+				input = '\0';
+				index = 0;
+				active = false;
 			}
-
-			input = '\0';
-			index = 0;
-			active = false;
 		}
 
-		default: player->Actions(input); break;
+		default: 
+			if (!active)
+				player->Actions(input);
+		break;
 	}
 }

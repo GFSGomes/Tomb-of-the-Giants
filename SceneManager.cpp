@@ -1,5 +1,4 @@
 #include "SceneManager.hpp"
-#include "ItemDatabase.hpp"
 
 bool GameOver = false;
 
@@ -7,12 +6,16 @@ SceneManager sceneManager;
 
 SceneManager::SceneManager()
 {
-	Scene scene_00{8, 8};
-	scene_00.AddObject(std::make_shared<Player>(PLAYER)); //Ponteiro para o player
-	scene_00.AddObject(std::make_shared<Sword>(shortSword));
-	scene_00.AddObject(std::make_shared<Sword>(shortSword));
-	scene_00.AddObject(std::make_shared<Sword>(shortSword));
-	scene_00.AddObject(std::make_shared<Sword>(shortSword));
+	Scene scene_00{12, 6};
+	scene_00.AddObject(std::make_shared<Player>(PLAYER)); // Ponteiro para o player
+	scene_00.AddObject(std::make_shared<Weapon>(shortSword));
+	scene_00.AddObject(std::make_shared<Weapon>(shortSword));
+	scene_00.AddObject(std::make_shared<Weapon>(shortSword));
+	scene_00.AddObject(std::make_shared<Weapon>(shortSword));
+	scene_00.AddObject(std::make_shared<Weapon>(longSword));
+	scene_00.AddObject(std::make_shared<Weapon>(longSword));
+	scene_00.AddObject(std::make_shared<Weapon>(longSword));
+	scene_00.AddObject(std::make_shared<Weapon>(longSword));
 	scene_00.player->SpawnAt(0, 0);
 	Scenes = {scene_00};
 }

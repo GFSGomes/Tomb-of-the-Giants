@@ -1,12 +1,15 @@
 #pragma once
 #include <string>
 
+enum class Skill
+{
+	ATTACK, POMMEL_STRIKE,
+};
+
 struct Ability
 {
-	short cost;
-
 	Ability();
-	virtual ~Ability() = 0;
+	~Ability();
 
-	virtual std::string Use();
+	std::string CastAbility(Skill);
 };

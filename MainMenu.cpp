@@ -28,21 +28,21 @@ void MainMenu::Initialize()
 			case 0:
 			{
 				std::cout << "  > Start Game" << "\n";
-				std::cout << "     Settings" << "\n";
-				std::cout << "     Quit Game" << "\n";
+				std::cout << "    Settings" << "\n";
+				std::cout << "    Quit Game" << "\n";
 				break;
 			}
 			case 1:
 			{
-				std::cout << "     Start Game" << "\n";
+				std::cout << "    Start Game" << "\n";
 				std::cout << "  > Settings" << "\n";
-				std::cout << "     Quit Game" << "\n";
+				std::cout << "    Quit Game" << "\n";
 				break;
 			}
 			case 2:
 			{
-				std::cout << "     Start Game" << "\n";
-				std::cout << "     Settings" << "\n";
+				std::cout << "    Start Game" << "\n";
+				std::cout << "    Settings" << "\n";
 				std::cout << "  > Quit Game" << "\n";
 				break;
 			}

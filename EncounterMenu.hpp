@@ -1,7 +1,7 @@
 #pragma once
 #include "Menu.hpp"
-#include "Player.hpp"
 #include "Enemy.hpp"
+#include "Player.hpp"
 
 struct EncounterMenu : Menu
 {

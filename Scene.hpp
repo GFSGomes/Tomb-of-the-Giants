@@ -1,5 +1,6 @@
+#pragma once
 #include "Grid.hpp"
-#include "ItemDatabase.hpp"
+#include "ItemDB.hpp"
 
 struct Scene
 {

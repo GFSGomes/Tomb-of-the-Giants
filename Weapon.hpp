@@ -1,11 +1,17 @@
 #pragma once
 #include "Equipment.hpp"
-#include "Ability.hpp"
+
+enum class WeaponType
+{
+	SWORD, AXE, STAFF, BOW
+};
 
 struct Weapon : Equipment
 {
-	std::vector<std::shared_ptr<Ability>> Skill;
+	WeaponType weaponType;
+	short b_might;
+	short b_magic;
 
-	Weapon(const char*);
-	virtual ~Weapon() = 0;
+	Weapon(WeaponType, const char*, const char*, short, short);
+	~Weapon();
 };

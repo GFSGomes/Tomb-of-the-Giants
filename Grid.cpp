@@ -19,12 +19,12 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 	std::cout << "   ┌";
 	for (short i = 0; i < GridSizeX; i++)
 	{std::cout << "──";}
-	std::cout << "┐   ";
+	std::cout << "─┐   ";
 	std::cout << "\n";
 
 	for (short y = 0; y < sizeY; y++)
 	{
-		std::cout << "   │";
+		std::cout << "   │ ";
 
 		for (short x = 0; x < sizeX; x++)
 		{
@@ -145,5 +145,5 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 	std::cout << "   └";
 	for (short i = 0; i < GridSizeX; i++)
 	{std::cout << "──";}
-	std::cout << "┘   ";
+	std::cout << "─┘   ";
 }

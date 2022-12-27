@@ -21,7 +21,7 @@ void EncounterMenu::Battle(std::shared_ptr<Player> player, std::shared_ptr<Enemy
 	while (active)
 	{
 		system("cls");
-		std::cout << "   << BATTLE LOG >>" << "\n";
+		std::cout << "   BATTLE LOG" << "\n";
 		
 		std::cout << "   > " << log_0 << "\n";
 		std::cout << "   > " << log_1 << "\n";
@@ -37,18 +37,18 @@ void EncounterMenu::Battle(std::shared_ptr<Player> player, std::shared_ptr<Enemy
 		renderer.DisplaySprite(enemy->sprite);
 		std::cout << "\n";
 
-		std::cout << "   < What do you want to do? >" << "\n\n";
+				std::cout << "   What do you want to do?" << "\n\n";
 
 		switch (index)
 		{
 			case 0:
-				std::cout << "  > Attack" << "\n";
+				std::cout << "   > Attack" << "\n";
 				std::cout << "     Run" << "\n";
 				break;
 
 			case 1:
 				std::cout << "     Attack" << "\n";
-				std::cout << "  > Run" << "\n";
+				std::cout << "   > Run" << "\n";
 				break;
 
 		}
@@ -92,7 +92,7 @@ void EncounterMenu::Initialize(std::shared_ptr<Player> player, std::shared_ptr<E
 	while (active)
 	{
 		system("cls");
-		std::cout << "   << You bumped into an enemy >>" << "\n";
+		std::cout << "   You bumped into an enemy" << "\n";
 		std::cout << "   " << enemy->name << "\n";
 
 		std::cout << "   ";
@@ -103,18 +103,18 @@ void EncounterMenu::Initialize(std::shared_ptr<Player> player, std::shared_ptr<E
 		renderer.DisplaySprite(enemy->sprite);
 		std::cout << "\n";
 
-		std::cout << "   < What do you want to do? >" << "\n\n";
+		std::cout << "   What do you want to do?" << "\n\n";
 
 		switch (index)
 		{
 			case 0:
-				std::cout << "  > Start Battle!" << "\n";
+				std::cout << "   > Start Battle!" << "\n";
 				std::cout << "     Run!" << "\n";
 				break;
 
 			case 1:
 				std::cout << "     Start Battle!" << "\n";
-				std::cout << "  > Run!" << "\n";
+				std::cout << "   > Run!" << "\n";
 				break;
 
 			default: break;
