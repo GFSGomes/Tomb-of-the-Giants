@@ -28,16 +28,16 @@ void Settings::Initialize()
 			case 0:
 			{
 				DebugMode ? 
-					std::cout << "  > Debug Mode (X)" << "\n" : 
-					std::cout << "  > Debug Mode ( )" << "\n";
+					std::cout << "  > Debug Mode [X]" << "\n" : 
+					std::cout << "  > Debug Mode [ ]" << "\n";
 					std::cout << "    Back" << "\n";
 				break;
 			}
 			case 1:
 			{
 				DebugMode ?
-					std::cout << "    Debug Mode (X)" << "\n" :
-					std::cout << "    Debug Mode ( )" << "\n";
+					std::cout << "    Debug Mode [X]" << "\n" :
+					std::cout << "    Debug Mode [ ]" << "\n";
 					std::cout << "  > Back" << "\n";
 				break;
 			}

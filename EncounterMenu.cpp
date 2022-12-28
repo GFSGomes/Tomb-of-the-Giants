@@ -30,14 +30,19 @@ void EncounterMenu::Battle(std::shared_ptr<Player> player, std::shared_ptr<Enemy
 		std::cout << "   " << enemy->name << "\n";
 
 		std::cout << "   ";
-		for (int i = 0; i < enemy->cur_health; i++)std::cout << "=";
-		for (int i = 0; i < (enemy->max_health - enemy->cur_health); i++)std::cout << "-";
+
+		for (int i = 0; i < enemy->cur_health; i++)
+			std::cout << "=";
+		for (int i = 0; i < (enemy->cur_health - enemy->max_health); i++)
+			std::cout << "-";
 
 		std::cout << "\n";
+
 		renderer.DisplaySprite(enemy->sprite);
+
 		std::cout << "\n";
 
-				std::cout << "   What do you want to do?" << "\n\n";
+		std::cout << "   What do you want to do?" << "\n\n";
 
 		switch (index)
 		{
@@ -50,16 +55,21 @@ void EncounterMenu::Battle(std::shared_ptr<Player> player, std::shared_ptr<Enemy
 				std::cout << "     Attack" << "\n";
 				std::cout << "   > Run" << "\n";
 				break;
-
 		}
 
 		input = _getch();
 
 		switch (input)
 		{
-			case 'w': case 'W': if (index > 0) index--; break;
+			case 'w': case 'W': 
+				if (index > 0) 
+					index--; 
+				break;
 
-			case 's': case 'S':if (index < 1) index++; break;
+			case 's': case 'S':
+				if (index < 1) 
+					index++; 
+				break;
 
 			case '\r':
 			{
@@ -96,8 +106,10 @@ void EncounterMenu::Initialize(std::shared_ptr<Player> player, std::shared_ptr<E
 		std::cout << "   " << enemy->name << "\n";
 
 		std::cout << "   ";
-		for (int i = 0; i < enemy->cur_health; i++)std::cout << "=";
-		for (int i = 0; i < (enemy->max_health - enemy->cur_health); i++)std::cout << "-";
+		for (int i = 0; i < enemy->cur_health; i++)
+			std::cout << "=";
+		for (int i = 0; i < (enemy->cur_health - enemy->max_health); i++)
+			std::cout << "-";
 
 		std::cout << "\n";
 		renderer.DisplaySprite(enemy->sprite);
@@ -124,9 +136,15 @@ void EncounterMenu::Initialize(std::shared_ptr<Player> player, std::shared_ptr<E
 
 		switch (input)
 		{
-			case 'w': case 'W': if (index > 0) index--; break;
+			case 'w': case 'W': 
+				if (index > 0) 
+					index--; 
+				break;
 			
-			case 's': case 'S':if (index < 1) index++; break;
+			case 's': case 'S':
+				if (index < 1) 
+					index++;
+				break;
 			
 			case '\r':
 			{

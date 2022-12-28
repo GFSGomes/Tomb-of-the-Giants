@@ -13,22 +13,17 @@ GameMenu::~GameMenu()
 
 }
 
-void GameMenu::Initialize()
+void GameMenu::Initialize(std::shared_ptr<Player> player)
 {
 	system("cls");
 
-	std::cout << "\n";
-
 	active ?
-		DebugMode ? 
-			std::cout << "   [Esc] Close - DebugMode" << "\n" : 
-			std::cout << "   [Esc] Close  " << "\n" :
-		DebugMode ? 
-			std::cout << "   [Esc] Menu - DebugMode" << "\n" : 
-			std::cout << "   [Esc] Menu  " << "\n";
-
-	std::cout << "\n";
-
+		DebugMode ?
+		std::cout << "   |Esc| Close - DebugMode" << "\n" :
+		std::cout << "   |Esc| Close  " << "\n" :
+		DebugMode ?
+		std::cout << "   |Esc| Menu - DebugMode" << "\n" :
+		std::cout << "   |Esc| Menu  " << "\n";
 
 	if (active)
 	{
@@ -36,56 +31,108 @@ void GameMenu::Initialize()
 		{
 			case 0:
 			{
-				std::cout << "  > Character" << "\n";
-				std::cout << "    Abilities" << "\n";
-				std::cout << "    Inventory" << "\n";
-				std::cout << "    Settings" << "\n";
-				std::cout << "    Leave Game" << "\n";
-			}				    
-			break;			    
-							    
-			case 1:			    
-			{				    
-				std::cout << "    Character  " << "\n";
-				std::cout << "  > Abilities" << "\n";
-				std::cout << "    Inventory" << "\n";
-				std::cout << "    Settings" << "\n";
-				std::cout << "    Leave Game" << "\n";
-			}				    
-			break;			    
-							    
-			case 2:			    
-			{				    
-				std::cout << "    Character" << "\n";
-				std::cout << "    Abilities" << "\n";
-				std::cout << "  > Inventory" << "\n";
-				std::cout << "    Settings" << "\n";
-				std::cout << "    Leave Game" << "\n";
-			}				    
-			break;			    
-							    
-			case 3:			    
-			{				    
-				std::cout << "    Character" << "\n";
-				std::cout << "    Abilities" << "\n";
-				std::cout << "    Inventory" << "\n";
-				std::cout << "  > Settings" << "\n";
-				std::cout << "    Leave Game" << "\n";
-			}				    
-			break;			    
-							    
-			case 4:			    
-			{				    
-				std::cout << "    Character" << "\n";
-				std::cout << "    Abilities" << "\n";
-				std::cout << "    Inventory" << "\n";
-				std::cout << "    Settings" << "\n";
-				std::cout << "  > Leave Game" << "\n";
+				std::cout << "   > Character" << "\n";
+				std::cout << "     Abilities" << "\n";
+				std::cout << "     Inventory" << "\n";
+				std::cout << "     Settings" << "\n";
+				std::cout << "     Leave Game" << "\n";
+			}					 
+			break;				 
+								 
+			case 1:				 
+			{					 
+				std::cout << "     Character  " << "\n";
+				std::cout << "   > Abilities" << "\n";
+				std::cout << "     Inventory" << "\n";
+				std::cout << "     Settings" << "\n";
+				std::cout << "     Leave Game" << "\n";
+			}					 
+			break;				 
+								 
+			case 2:				 
+			{					 
+				std::cout << "     Character" << "\n";
+				std::cout << "     Abilities" << "\n";
+				std::cout << "   > Inventory" << "\n";
+				std::cout << "     Settings" << "\n";
+				std::cout << "     Leave Game" << "\n";
+			}					 
+			break;				 
+								 
+			case 3:				 
+			{					 
+				std::cout << "     Character" << "\n";
+				std::cout << "     Abilities" << "\n";
+				std::cout << "     Inventory" << "\n";
+				std::cout << "   > Settings" << "\n";
+				std::cout << "     Leave Game" << "\n";
+			}					 
+			break;				 
+								 
+			case 4:				 
+			{					 
+				std::cout << "     Character" << "\n";
+				std::cout << "     Abilities" << "\n";
+				std::cout << "     Inventory" << "\n";
+				std::cout << "     Settings" << "\n";
+				std::cout << "   > Leave Game" << "\n";
 			}
 			break;
 		}
-		std::cout << "\n";
 	}
+	std::cout << "\n";
+
+	std::cout << "   " << player->name << " - " << player->job.GetJobName() << " (Lvl. " << player->level << ")" << "\n";
+	std::cout << "   HP  <";
+
+	short bar_size = 20;
+	short part = 100 / bar_size;
+
+	for (short i = 0; i < bar_size; i++) // 20 = Comprimento da Barra
+	{
+		float pct = ((player->cur_health / player->max_health) * 100);
+		if (pct > i * part)
+		{
+			std::cout << "=";
+		}
+		else
+		{
+			std::cout << "-";
+		}
+	}
+	std::cout << ">" << "\n";
+
+
+	std::cout << "   MP  <";
+	for (short i = 0; i < bar_size; i++) // 20 = Comprimento da Barra
+	{
+		float pct = ((player->cur_mana / player->max_mana) * 100);
+		if (pct > i * part)
+		{
+			std::cout << "=";
+		}
+		else
+		{
+			std::cout << "-";
+		}
+	}
+	std::cout << ">" << "\n";
+
+	
+	std::cout << "   Exp <";
+	for (short i = 0; i < bar_size; i++) // 20 = Comprimento da Barra
+	{
+		float pct = ((player->cur_experience / player->max_experience) * 100);
+		if (pct > i * part)
+		{
+			std::cout << "_";
+		}
+		else
+		{
+			std::cout << " ";
+		}
+	}
+	std::cout << ">" << "\n";
 }
 
 void GameMenu::Input(std::shared_ptr<Player> player)
@@ -95,108 +142,80 @@ void GameMenu::Input(std::shared_ptr<Player> player)
 
 	if (player->isTorchActive)
 	{
-		std::cout << "     [W]   To       [T] Torch (X) " << player->torchDuration << "\n";
-		std::cout << "   [A|S|D] Move     Your torch is lit." << "\n";
+		std::cout << "     |W|   To       |T| Torch [X] " << player->torchDuration << "\n";
+		std::cout << "   |A|S|D| Move" << "\n";
 	}
 	else
 	{
-		std::cout << "     [W]   To       [T] Torch ( ) " << player->torchDuration << "\n";
-		std::cout << "   [A|S|D] Move" << "\n";
+		std::cout << "     |W|   To       |T| Torch [ ] " << player->torchDuration << "\n";
+		std::cout << "   |A|S|D| Move" << "\n";
 	}
+
+	std::cout << "\n";
 
 	if (DebugMode)
 	{
-		std::cout << "\n";
-		std::cout << "   Debug:\n";
-		std::cout << "   [1] Torch +10\n";
-		std::cout << "   [2] Health +1\n";
+		std::cout << "   |1| Torch +10" << "\n";
+		std::cout << "   |2| Health++" << "\n";
+		std::cout << "   |3| Health++" << "\n";
+		std::cout << "   |4| Level++" << "\n";
 	}
 
 	input = _getch();
 
-	switch (input)
+	if (active)
 	{
-		case 27: active = !active; break;
-		
-		case 'w': case 'W':
+		switch (input)
 		{
-			if (active)
-			{
-				if (index > 0)
-					index--;
-			}
-			else
-			{
-				player->Actions(input);
-			}
-				
-		} 
-		break;
+			case 27: active = false; break;
+			case 'w': case 'W': 
+				if (index > 0) index--;
+				break;
+			case 's': case 'S':
+				if (index < 4) index++;
+				break;
 
-		case 's': case 'S':
-		{
-			if (active)
-			{
-				if (index < 4) 
-					index++;
-			}
-			else
-			{
-				player->Actions(input);
-			}
-				
-		} break;
-
-
-		case '1':
-		{
-			if (DebugMode)
-			{
-				player->torchDuration += 10;
-			}
-
-		} break;
-		
-		case '2':
-		{
-			if (DebugMode)
-			{
-				player->cur_health++;
-			}
-
-		} break;
-
-		case '\r':
-		{
-			if (active)
-			{
+			case '\r': 
 				switch (index)
 				{
-					case 0:
-					{
-						// Temporary - Create a CharacterMenu instead.
+					case 0: 
 						system("cls");
 						player->DisplayStatus();
-						_getch();
-					} break;
-
+						_getch(); 
+						break;
+					
 					case 1: break;
+					
 					case 2: player->inventory.Initialize(); break;
+					
 					case 3: settings.Initialize(); break;
+					
 					case 4: break;
-
-					default: return;
+					
+					default: break;
 				}
 
-				input = '\0';
 				index = 0;
+				input = '\0';
 				active = false;
-			}
+				break;
+			
+			default:
+				break;
 		}
-
-		default: 
-			if (!active)
+	}
+	else
+	{
+		switch (input)
+		{
+			case 27: active = true; break;
+			case '1': player->torchDuration += 10; break;
+			case '2': player->cur_health++; break;
+			case '3': player->cur_health--; break;
+			case '4': player->UpdateStatus(true); break;
+			default:
 				player->Actions(input);
-		break;
+				break;
+		}
 	}
 }

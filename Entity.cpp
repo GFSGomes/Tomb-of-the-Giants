@@ -28,21 +28,15 @@ void Entity::DisplayStatus()
 	std::cout << " " << job.GetJobName() << "\n";
 	std::cout << " Exp : " << cur_experience << "/" << max_experience << "\n";
 
-	std::cout << " HP ";
-	for (short i = 0; i < cur_health; i++) std::cout << "=";
-	for (short i = 0; i < cur_health - max_health; i++) std::cout << "-";
-	std::cout << "\n";
+	std::cout << " HP " << cur_health << "/" << max_health << "\n";
+	std::cout << " MP " << cur_mana << "/" << max_mana << "\n";
 
-	std::cout << " MP ";
-	for (short i = 0; i < cur_mana; i++) std::cout << "=";
-	for (short i = 0; i < cur_mana - max_mana; i++) std::cout << "-";
-	std::cout << "\n";
-
-	std::cout << " CON | " << CON << "   Physical Damage | " << physical_damage << "\n";
-	std::cout << " INT | " << INT << "   Magical Damage  | " << magical_damage  << "\n";
+	std::cout << " CON | " << CON << "       Physical Damage | " << physical_damage << "\n";
+	std::cout << " INT | " << INT << "       Magical Damage  | " << magical_damage  << "\n";
 	std::cout << " RES | " << RES << "   Physical Resistance | " << physical_damage << "\n";
 	std::cout << " WIS | " << WIS << "   Magical Resistance  | " << magical_resistance << "\n";
-	std::cout << " DEX | " << DEX << "   Dodge | " << dodge_rate << "   Critical Chance | " << critical_rate << "   Flee | " << flee_rate << "\n";
+	std::cout << " DEX | " << DEX << "\n\n";
+	std::cout << " Dodge | " << dodge_rate << "   Critical Chance | " << critical_rate << "   Flee | " << flee_rate;
 }
 
 void Entity::UpdateStatus(bool _levelUp)	
@@ -68,10 +62,9 @@ void Entity::UpdateStatus(bool _levelUp)
 		cur_experience = 0;
 		max_experience *= 1.15;
 
-		cur_health	= max_health;
-		cur_mana	= max_mana;
-
 		CON++; INT++; DEX++; WIS++; RES++;
 		UpdateStatus(false);
+		cur_health	= max_health;
+		cur_mana	= max_mana;
 	}
 }

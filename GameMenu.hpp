@@ -8,7 +8,7 @@ struct GameMenu : Menu
 	GameMenu();
 	~GameMenu();
 
-	void Initialize();
+	void Initialize(std::shared_ptr<Player>);
 	void Input(std::shared_ptr<Player>);
 };
 

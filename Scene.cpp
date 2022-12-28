@@ -101,7 +101,7 @@ void Scene::LoadScene()
 
 	while (currentScene)
 	{
-		gameMenu.Initialize();
+		gameMenu.Initialize(player);
 		grid.UpdateGrid(SceneOBJ, player);
 		gameMenu.Input(player);
 		Interaction();

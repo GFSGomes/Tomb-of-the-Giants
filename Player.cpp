@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player PLAYER("Soldier");
+Player PLAYER("GFSGomes");
 
 Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, FOV3{16, 17, 18, 23, 25, 30, 31, 32}, FOV7{2, 3, 4, 8, 9,10,11,12,14,15,19,20,21,22,26,27,28,29,33,34,36,37,38,39,40,44,45,46}, FOV7_X{0, 1, 5, 6, 7,13,24,35,41,42,43,47,48}, FOV{}
 {
