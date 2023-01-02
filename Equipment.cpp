@@ -9,8 +9,3 @@ Equipment::~Equipment()
 {
 
 }
-
-void Equipment::Use()
-{
-	
-}

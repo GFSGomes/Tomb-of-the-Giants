@@ -1,10 +1,10 @@
 #pragma once
-#include "Menu.hpp"
+#include "GUI.hpp"
 #include "Slot.hpp"
 #include <vector>
 #include <conio.h>
 
-struct Inventory : Menu
+struct Inventory : GUI
 {
 	bool remove;
 	bool organize;

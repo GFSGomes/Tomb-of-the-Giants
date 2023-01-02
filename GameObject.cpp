@@ -1,6 +1,6 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject() : name{'\0'}, description{'\0'}, posX{0}, posY{0}, active{false}, sprite{Sprite::NONE}
+GameObject::GameObject() : name{'\0'}, description{'\0'}, posX{0}, posY{0}, active{true}, sprite{Sprite::NONE}
 {
 
 }

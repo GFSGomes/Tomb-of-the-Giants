@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.hpp"
 #include "Enemy.hpp"
 #include "Weapon.hpp"
 

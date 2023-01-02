@@ -1,43 +1,41 @@
 #pragma once
 #include "GameObject.hpp"
 #include "Inventory.hpp"
-#include "Job.hpp"
+
+struct Archetype;
 
 struct Entity : GameObject 
 {
 	short level;
-	short freeStatPoints;
-	float max_experience;
-	float cur_experience;
-
+	short status_points;
 	short CON; // Increases Maximum Health and Physical Damage
 	short INT; // Increases Maximum Mana and Magical Damage
 	short RES; // Increases Physical Damage Mitigation
 	short WIS; // Increases Magical Damage Mitigation
 	short DEX; // Increases Dodge, Critical Chance and slightly increases Flee rate;
-
+	short turns_stunned;
+	short turns_poisoned;
+	
+	float max_experience;
+	float cur_experience;
 	float max_health;
 	float cur_health;
-	float physical_damage;
-	float physical_resistance;
-
 	float max_mana;
 	float cur_mana;
+	float physical_damage;
 	float magical_damage;
+	float physical_resistance;
 	float magical_resistance;
-
-	float dodge_rate;
-	float critical_rate;
+	short accuracy;
+	float dodge;
+	float critical_chance;
+	float critical_damage;
 	float flee_rate;
-
-	short state_stun;
-	short state_poison;
-	short state_confusion;
 	
 	bool alive;
 
 	Inventory inventory;
-	Job job;
+	std::shared_ptr<Archetype> archetype;
 
 	Entity();
 	virtual ~Entity() = 0;

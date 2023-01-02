@@ -7,7 +7,6 @@ struct SceneManager
 
 	SceneManager();
 	~SceneManager();
+
 	void StartGame();
 };
-
-extern SceneManager sceneManager;

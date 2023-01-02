@@ -1,12 +1,12 @@
 #pragma once
-#include "Menu.hpp"
+#include "GUI.hpp"
 
-struct Settings : Menu
+struct Settings : GUI
 {
 	Settings();
 	~Settings();
 
-	void Initialize();
+	void Initialize() override;
 };
 
 extern Settings settings;

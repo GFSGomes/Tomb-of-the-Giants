@@ -1,7 +1,7 @@
 #include "Scene.hpp"
-#include "GameMenu.hpp"
+#include "GameInterface.hpp"
+#include "Interactions.hpp"
 #include "Equipment.hpp"
-#include "EncounterMenu.hpp"
 #include "Torch.hpp"
 
 Scene::Scene(short gridSizeX, short gridSizeY) : grid{gridSizeX, gridSizeY}, currentScene{false}
@@ -65,29 +65,25 @@ void Scene::Interaction()
 {
 	for (short i = 0; i < SceneOBJ.size(); i++)
 	{
-		if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
+		if (std::shared_ptr<GameObject> obj = std::dynamic_pointer_cast<GameObject>(SceneOBJ[i]))
 		{
-			if (player->posX == enemy->posX && player->posY == enemy->posY)
+			if (player->posX == obj->posX && player->posY == obj->posY)
 			{
-				encounterMenu.Initialize(player, enemy);
-			}
-		}
-
-		if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJ[i]))
-		{
-			if (player->posX == item->posX && player->posY == item->posY)
-			{
-				if (std::shared_ptr<Torch> torch = std::dynamic_pointer_cast<Torch>(SceneOBJ[i]))
-				{
-					torch->Use();
-				}
-
-				else
+				if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(obj))
 				{
 					player->inventory.AddItem((std::shared_ptr<Item>) item, 1);
+					GUI_Interactions.Initialize(player, item);
+					SceneOBJ.erase(SceneOBJ.begin() + i);
 				}
 
-				SceneOBJ.erase(SceneOBJ.begin() + i);
+				else if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(obj))
+				{
+					GUI_Interactions.Initialize(player, enemy);
+					if (enemy->cur_health <= 0)
+					{
+						SceneOBJ.erase(SceneOBJ.begin() + i);
+					}
+				}
 			}
 		}
 	}
@@ -101,9 +97,14 @@ void Scene::LoadScene()
 
 	while (currentScene)
 	{
-		gameMenu.Initialize(player);
+		if (GameOver){
+			currentScene = false;
+			return;
+		}
+
+		GUI_Controls.Initialize(player);
 		grid.UpdateGrid(SceneOBJ, player);
-		gameMenu.Input(player);
+		GUI_Controls.Input(player);
 		Interaction();
 	}
 }

@@ -5,7 +5,6 @@
 
 struct Player : Entity 
 {
-
 	short torchDuration;
 	bool isTorchActive;
 
@@ -15,7 +14,6 @@ struct Player : Entity
 	std::vector<std::shared_ptr<Item>> items;
 	std::vector<std::shared_ptr<Light>> FOV;
 	std::vector<std::shared_ptr<Item>> Inventory;
-
 
 	Player(const char*);
 	~Player();

@@ -4,14 +4,14 @@
 
 extern bool DebugMode;
 
-struct Menu
+struct GUI
 {
 	bool active;
 	short index;
 	char input;
 
-	Menu();
-	virtual ~Menu() = 0;
+	GUI();
+	virtual ~GUI() = 0;
 
-	virtual void Initialize();
+	virtual void Initialize() = 0;
 };

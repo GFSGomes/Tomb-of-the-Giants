@@ -3,7 +3,7 @@
 
 enum class WeaponType
 {
-	SWORD, AXE, STAFF, BOW
+	SWORD, DAGGER, STAFF, BOW
 };
 
 struct Weapon : Equipment

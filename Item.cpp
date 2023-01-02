@@ -10,8 +10,3 @@ Item::~Item()
 {
 
 }
-
-void Item::Use()
-{
-
-}

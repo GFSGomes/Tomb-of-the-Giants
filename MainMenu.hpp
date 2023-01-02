@@ -1,15 +1,15 @@
 #pragma once
-#include "Menu.hpp"
+#include "GUI.hpp"
 #include "SceneManager.hpp"
 
-struct MainMenu : Menu
+struct MainMenu : GUI
 {
 	Renderer renderer;
 
 	MainMenu();
 	~MainMenu();
 
-	void Initialize();
+	void Initialize() override;
 };
 
 extern MainMenu mainMenu;

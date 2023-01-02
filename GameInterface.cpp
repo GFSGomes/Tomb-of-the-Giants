@@ -1,19 +1,20 @@
-#include "GameMenu.hpp"
+#include "Controls.hpp"
 #include "Settings.hpp"
 
-GameMenu gameMenu;
+Controls GUI_Controls;
 
-GameMenu::GameMenu()
+Controls::Controls()
 {
 
 }
 
-GameMenu::~GameMenu()
+Controls::~Controls()
 {
 
 }
 
-void GameMenu::Initialize(std::shared_ptr<Player> player)
+void Controls::Initialize(){}
+void Controls::Initialize(std::shared_ptr<Player> player)
 {
 	system("cls");
 
@@ -82,15 +83,16 @@ void GameMenu::Initialize(std::shared_ptr<Player> player)
 	}
 	std::cout << "\n";
 
-	std::cout << "   " << player->name << " - " << player->job.GetJobName() << " (Lvl. " << player->level << ")" << "\n";
+	std::cout << "   " << player->name <<" (Lvl. " << player->level << ")" << "\n";
 	std::cout << "   HP  <";
 
 	short bar_size = 20;
 	short part = 100 / bar_size;
 
-	for (short i = 0; i < bar_size; i++) // 20 = Comprimento da Barra
+	for (short i = 0; i < bar_size; i++)
 	{
 		float pct = ((player->cur_health / player->max_health) * 100);
+		
 		if (pct > i * part)
 		{
 			std::cout << "=";
@@ -135,7 +137,7 @@ void GameMenu::Initialize(std::shared_ptr<Player> player)
 	std::cout << ">" << "\n";
 }
 
-void GameMenu::Input(std::shared_ptr<Player> player)
+void Controls::Input(std::shared_ptr<Player> player)
 {
 	std::cout << "\n";
 	std::cout << "\n";
