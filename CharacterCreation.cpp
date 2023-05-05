@@ -27,25 +27,25 @@ void CharacterCreation::Initialize()
 		switch (index)
 		{
 			case 0: 
-				std::cout << "   [Warrrior]" << "\n";
+				std::cout << "   [Warrior]" << "\n";
 				std::cout << "    Archer" << "\n";
 				std::cout << "    Mage" << "\n";
 				std::cout << "    Rogue" << "\n";
 				break;
 			case 1: 
-				std::cout << "    Warrrior" << "\n";
+				std::cout << "    Warrior" << "\n";
 				std::cout << "   [Archer]" << "\n";
 				std::cout << "    Mage" << "\n";
 				std::cout << "    Rogue" << "\n";
 				break;
 			case 2: 
-				std::cout << "    Warrrior" << "\n";
+				std::cout << "    Warrior" << "\n";
 				std::cout << "    Archer" << "\n";
 				std::cout << "   [Mage]" << "\n";
 				std::cout << "    Rogue" << "\n";
 				break;
 			case 3: 
-				std::cout << "    Warrrior" << "\n";
+				std::cout << "    Warrior" << "\n";
 				std::cout << "    Archer" << "\n";
 				std::cout << "    Mage" << "\n";
 				std::cout << "   [Rogue]" << "\n";

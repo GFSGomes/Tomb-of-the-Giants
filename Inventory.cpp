@@ -220,10 +220,6 @@ void Inventory::Initialize()
 				std::cout << "\n";
 			}
 		}
-		if (selectedSlot)
-		{
-			std::cout << selectedSlot->item->name << "\n";
-		}
 
 		input = _getch();
 

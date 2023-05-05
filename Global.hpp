@@ -1,3 +1,4 @@
+// Arquivo incluso no GameObject;
 #pragma once
 extern bool GameOver;
 extern bool DebugMode;

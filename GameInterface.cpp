@@ -1,20 +1,20 @@
-#include "Controls.hpp"
+#include "GameInterface.hpp"
 #include "Settings.hpp"
 
-Controls GUI_Controls;
+GameInterface GUI_Controls;
 
-Controls::Controls()
+GameInterface::GameInterface()
 {
 
 }
 
-Controls::~Controls()
+GameInterface::~GameInterface()
 {
 
 }
 
-void Controls::Initialize(){}
-void Controls::Initialize(std::shared_ptr<Player> player)
+void GameInterface::Initialize(){}
+void GameInterface::Initialize(std::shared_ptr<Player> player)
 {
 	system("cls");
 
@@ -137,7 +137,7 @@ void Controls::Initialize(std::shared_ptr<Player> player)
 	std::cout << ">" << "\n";
 }
 
-void Controls::Input(std::shared_ptr<Player> player)
+void GameInterface::Input(std::shared_ptr<Player> player)
 {
 	std::cout << "\n";
 	std::cout << "\n";

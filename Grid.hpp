@@ -4,8 +4,9 @@
 #include "Item.hpp"
 #include "Equipment.hpp"
 
-extern short GridSizeX;
-extern short GridSizeY;
+//Reativar se der problema:
+//extern short GridSizeX;
+//extern short GridSizeY; 
 
 struct Grid
 {

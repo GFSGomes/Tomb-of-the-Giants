@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "AbilityDatabase.hpp"
 
 enum class Class
 {
@@ -11,7 +10,6 @@ enum class Class
 struct Archetype
 {
 	Class name;
-	std::vector<std::shared_ptr<Ability>> Skilltree;
 
 	Archetype(Class);
 	~Archetype();

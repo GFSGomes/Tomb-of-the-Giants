@@ -1,8 +1,10 @@
 #pragma once
 #include "GameObject.hpp"
 #include "Inventory.hpp"
+#include "AbilityCast.hpp"
 
 struct Archetype;
+enum class Ability;
 
 struct Entity : GameObject 
 {
@@ -36,6 +38,7 @@ struct Entity : GameObject
 
 	Inventory inventory;
 	std::shared_ptr<Archetype> archetype;
+	std::vector<Ability> abilities;
 
 	Entity();
 	virtual ~Entity() = 0;

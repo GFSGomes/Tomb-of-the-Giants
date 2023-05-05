@@ -1,0 +1,15 @@
+Mapa: fort_0 (16x16)
+Luz: Sim
+NPCs: <captain>
+Doors: <east>
+<captain>:
+Recebemos notificações de avistamentos de carniçais ao leste de <village>. <enemy-nation> ainda tenta retomar o território, portanto estamos focados em proteger este forte. É sua chance de provar ser útil, recruta. Vá e investigue o local.
+
+
+Mapa: fort_1 (8x5)
+Luz: Sim
+NPCs: <captain>, <soldier>, <soldier>
+Doors: <east>, <west>
+
+Mapa: plains_0
+Luz: Sim

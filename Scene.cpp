@@ -1,6 +1,6 @@
 #include "Scene.hpp"
 #include "GameInterface.hpp"
-#include "Interactions.hpp"
+#include "InteractionInterface.hpp"
 #include "Equipment.hpp"
 #include "Torch.hpp"
 
@@ -72,13 +72,13 @@ void Scene::Interaction()
 				if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(obj))
 				{
 					player->inventory.AddItem((std::shared_ptr<Item>) item, 1);
-					GUI_Interactions.Initialize(player, item);
+					GUI_Interaction.Initialize(player, item);
 					SceneOBJ.erase(SceneOBJ.begin() + i);
 				}
 
 				else if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(obj))
 				{
-					GUI_Interactions.Initialize(player, enemy);
+					GUI_Interaction.Initialize(player, enemy);
 					if (enemy->cur_health <= 0)
 					{
 						SceneOBJ.erase(SceneOBJ.begin() + i);

@@ -16,15 +16,21 @@ Grid::~Grid()
 
 void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::shared_ptr<Player> player)
 {
-	std::cout << "   ┌";
+	/*std::cout << "   ┌";
 	for (short i = 0; i < GridSizeX; i++)
 	{std::cout << "──";}
 	std::cout << "─┐   ";
+	std::cout << "\n";*/
+	std::cout << "   -";
+	for (short i = 0; i < GridSizeX; i++)
+	{std::cout << "--";}
+	std::cout << "--   ";
 	std::cout << "\n";
 
 	for (short y = 0; y < sizeY; y++)
 	{
-		std::cout << "   │ ";
+		//std::cout << "   │ ";
+		std::cout << "   | ";
 
 		for (short x = 0; x < sizeX; x++)
 		{
@@ -48,7 +54,8 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 							}
 							if (player->isTorchActive)
 							{
-								icon = "·";
+								//icon = "·";
+								icon = ".";
 							}
 
 							for (short j = 0; j < SceneOBJ.size(); j++)
@@ -63,7 +70,8 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 										}
 										if (player->isTorchActive)
 										{
-											icon = "○";
+											//icon = "○";
+											icon = "M";
 										}
 									}
 								}
@@ -84,7 +92,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 											}
 											else
 											{
-												icon = "+";
+												icon = "i";
 											}
 										}
 									}
@@ -96,7 +104,8 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					// Darkness
 					if (std::shared_ptr<Player> player = std::dynamic_pointer_cast<Player>(SceneOBJ[i]))
 					{
-						icon = "●";
+						//icon = "●";
+						icon = "P";
 					}
 
 					if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
@@ -139,11 +148,16 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 				std::cout << "  ";
 			}
 		}
-		std::cout << "│\n";
+		//std::cout << "│\n";
+		std::cout << "|\n";
 	}
 
-	std::cout << "   └";
+	/*std::cout << "   └";
 	for (short i = 0; i < GridSizeX; i++)
 	{std::cout << "──";}
-	std::cout << "─┘   ";
+	std::cout << "─┘   ";*/
+	std::cout << "   -";
+	for (short i = 0; i < GridSizeX; i++)
+	{std::cout << "--";}
+	std::cout << "--   ";
 }

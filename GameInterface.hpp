@@ -3,14 +3,14 @@
 #include "Player.hpp"
 
 
-struct Controls : GUI
+struct GameInterface : GUI
 {
-	Controls();
-	~Controls();
+	GameInterface();
+	~GameInterface();
 
 	void Initialize() override;
 	void Initialize(std::shared_ptr<Player>);
 	void Input(std::shared_ptr<Player>);
 };
 
-extern Controls GUI_Controls;
+extern GameInterface GUI_Controls;

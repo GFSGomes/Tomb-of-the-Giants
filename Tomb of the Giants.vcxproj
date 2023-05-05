@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Gabriel\Documents\Desenvolvimento\C++\TOTG\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -102,6 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Gabriel\Documents\Desenvolvimento\C++\TOTG\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Gabriel\Documents\Desenvolvimento\C++\TOTG\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Gabriel\Documents\Desenvolvimento\C++\TOTG\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,10 +143,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Ability.hpp" />
-    <ClInclude Include="AbilityDatabase.hpp" />
+    <ClInclude Include="AbilityCast.hpp" />
     <ClInclude Include="Archetype.hpp" />
-    <ClInclude Include="Attack.hpp" />
     <ClInclude Include="CharacterCreation.hpp" />
     <ClInclude Include="InteractionInterface.hpp" />
     <ClInclude Include="Enemy.hpp" />
@@ -155,6 +157,7 @@
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Database.hpp" />
+    <ClInclude Include="ItemDatabase.hpp" />
     <ClInclude Include="Light.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="GUI.hpp" />
@@ -169,10 +172,8 @@
     <ClInclude Include="Weapon.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ability.cpp" />
-    <ClCompile Include="AbilityDatabase.cpp" />
+    <ClCompile Include="AbilityCast.cpp" />
     <ClCompile Include="Archetype.cpp" />
-    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="CharacterCreation.cpp" />
     <ClCompile Include="InteractionInterface.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Database.cpp" />
+    <ClCompile Include="ItemDatabase.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="GUI.cpp" />

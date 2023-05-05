@@ -12,9 +12,6 @@ Archetype::~Archetype()
 
 void Archetype::SetSkillTree()
 {
-	Skilltree.clear();
-	Skilltree.push_back(std::make_shared<Attack>(attack));
-
 	switch (name)
 	{
 		case Class::WARRIOR:

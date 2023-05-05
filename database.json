@@ -1,0 +1,16 @@
+{
+  "abilities": [
+    {
+      "name": "ATTACK",
+      "desc": "ATTACK: causes (100%) Physical Damage.\nCost: 0 MP\nDifficulty: 15",
+      "cost": 0,
+      "multiplier": 1,
+      "base_value": 0,
+      "difficulty": 15,
+      "id": 1
+    }
+  ],
+  "items": [],
+  "monsters": [],
+  "maps": []
+}

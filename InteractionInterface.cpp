@@ -56,11 +56,14 @@ void InteractionInterface::StartCombat(std::shared_ptr<Player> player, std::shar
 		for (short i = 0; i < bar_size; i++)
 		{
 			float pct = ((enemy->cur_health / enemy->max_health) * 100);
-			if (pct > i * part) std::cout << "■";
-			else std::cout << "□";
+			/*if (pct > i * part) std::cout << "■";
+			else std::cout << "□";*/
+			if (pct > i * part) std::cout << "=";
+			else std::cout << "-";
 		}
 		std::cout << " | " << enemy->cur_health << "/" << enemy->max_health << "\n";
 
+		renderer.DisplaySprite(enemy->sprite);
 		renderer.DisplaySprite(Sprite::ICON_TARGET);
 
 		// PLAYER
@@ -70,16 +73,20 @@ void InteractionInterface::StartCombat(std::shared_ptr<Player> player, std::shar
 		for (short i = 0; i < bar_size; i++)
 		{
 			float pct = ((player->cur_health / player->max_health) * 100);
-			if (pct > i * part) std::cout << "■";
-			else std::cout << "□";
+			/*if (pct > i * part) std::cout << "■";
+			else std::cout << "□";*/
+			if (pct > i * part) std::cout << "=";
+			else std::cout << "-";
 		}
 		std::cout << " | " << player->cur_health << "/" << player->max_health << "\n";
 		std::cout << "   MP ";
 		for (short i = 0; i < bar_size; i++)
 		{
 			float pct = ((player->cur_mana / player->max_mana) * 100);
-			if (pct > i * part) std::cout << "▬";
-			else std::cout << "═";
+			/*if (pct > i * part) std::cout << "▬";
+			else std::cout << "═";*/
+			if (pct > i * part) std::cout << "=";
+			else std::cout << "-";
 		}
 		std::cout << " | " << player->cur_mana << "/" << player->max_mana << "" << "\n";
 
@@ -163,9 +170,11 @@ void InteractionInterface::StartCombat(std::shared_ptr<Player> player, std::shar
 				 break;
 
 			case '\r': {
-				switch (index) // TEMP
+				switch (index) // ABILITYCASTING
 				{
 					case 0:
+						log_0 = AbilityCast::Cast(player->abilities[0], player, enemy) + "\n";
+						log_1 = AbilityCast::Cast(enemy->abilities[0], enemy, player);
 						break;
 
 					case 1:
@@ -215,6 +224,8 @@ void InteractionInterface::Initialize(std::shared_ptr<Player> player, std::share
 				std::cout << "   You bumped into an enemy!" << "\n" :
 				std::cout << "   You accidentaly bumped into an enemy!" << "\n";
 			std::cout << "   " << enemy->name << " [Lv." << enemy->level << "]" << "\n";
+
+			renderer.DisplaySprite(enemy->sprite);
 			
 			std::cout << "\n";
 			std::cout << "   > What do you want to do?" << "\n";

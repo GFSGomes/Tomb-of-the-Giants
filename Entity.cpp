@@ -1,4 +1,3 @@
-#pragma once
 #include "Entity.hpp"
 
 Entity::Entity() :
@@ -13,6 +12,10 @@ Entity::Entity() :
 {
 	max_experience = 50;
 	UpdateStatus(true);
+
+	// TEMPORARIO: SERA NOS ARQUETIPOS
+	abilities.push_back(Ability::ATTACK);
+	//abilities.push_back(Ability::DOUBLE_STRIKE);
 }
 
 Entity::~Entity()

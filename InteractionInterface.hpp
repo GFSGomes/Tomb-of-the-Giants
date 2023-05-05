@@ -2,6 +2,7 @@
 #include "GUI.hpp"
 #include "Enemy.hpp"
 #include "Player.hpp"
+#include "AbilityCast.hpp"
 
 struct InteractionInterface : GUI
 {

@@ -114,17 +114,14 @@
     <ClInclude Include="Slot.hpp">
       <Filter>Arquivos de Cabeçalho\GUI\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="Ability.hpp">
-      <Filter>Arquivos de Cabeçalho\Ability</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack.hpp">
-      <Filter>Arquivos de Cabeçalho\Ability</Filter>
-    </ClInclude>
-    <ClInclude Include="AbilityDatabase.hpp">
-      <Filter>Arquivos de Cabeçalho\Ability</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterCreation.hpp">
       <Filter>Arquivos de Cabeçalho\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemDatabase.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="AbilityCast.hpp">
+      <Filter>Arquivos de Cabeçalho\Ability</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,15 +179,6 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Arquivos de Origem\GUI\Inventory</Filter>
     </ClCompile>
-    <ClCompile Include="Ability.cpp">
-      <Filter>Arquivos de Origem\Ability</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack.cpp">
-      <Filter>Arquivos de Origem\Ability</Filter>
-    </ClCompile>
-    <ClCompile Include="AbilityDatabase.cpp">
-      <Filter>Arquivos de Origem\Ability</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
@@ -211,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="CharacterCreation.cpp">
       <Filter>Arquivos de Origem\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemDatabase.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="AbilityCast.cpp">
+      <Filter>Arquivos de Origem\Ability</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

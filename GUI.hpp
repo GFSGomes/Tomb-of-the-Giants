@@ -2,6 +2,7 @@
 #include "Renderer.hpp"
 #include <conio.h>
 
+//Reativar se der problema:
 extern bool DebugMode;
 
 struct GUI
