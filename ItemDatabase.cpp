@@ -1,8 +1,8 @@
 #include "ItemDatabase.hpp"
 
 Weapon axe_0(WeaponType::AXE, "Copper Axe", "A simple Axe made of Copper.\n+10 Might", 10, 0);
-Weapon axe_1(WeaponType::AXE, "Iron Axe", "A decent Axe made of Iron.\n+15 Might", 10, 0);
-Weapon axe_2(WeaponType::AXE, "Steel Axe", "A strong Axe made of Steel.\n+20 Might", 10, 0);
+Weapon axe_1(WeaponType::AXE, "Iron Axe", "A decent Axe made of Iron.\n+15 Might", 15, 0);
+Weapon axe_2(WeaponType::AXE, "Steel Axe", "A strong Axe made of Steel.\n+20 Might", 20, 0);
 
 Weapon sword_0(WeaponType::SWORD, "Copper Sword", "A simple Sword made of Copper.\n+8 Might", 8, 0);
 Weapon sword_1(WeaponType::SWORD, "Iron Sword", "A decent Sword made of Iron.\n+12 Might", 12, 0);

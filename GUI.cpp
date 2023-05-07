@@ -1,6 +1,6 @@
 #include "GUI.hpp"
 
-bool DebugMode = false;
+bool DebugMode = true;
 
 GUI::GUI() : active{false}, index{0}, input{'\0'}
 {

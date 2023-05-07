@@ -146,7 +146,6 @@
     <ClInclude Include="AbilityCast.hpp" />
     <ClInclude Include="Archetype.hpp" />
     <ClInclude Include="CharacterCreation.hpp" />
-    <ClInclude Include="InteractionInterface.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Equipment.hpp" />
@@ -154,6 +153,7 @@
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="Global.hpp" />
     <ClInclude Include="Grid.hpp" />
+    <ClInclude Include="InteractionUI.hpp" />
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Database.hpp" />
@@ -169,19 +169,20 @@
     <ClInclude Include="Settings.hpp" />
     <ClInclude Include="Slot.hpp" />
     <ClInclude Include="Torch.hpp" />
+    <ClInclude Include="UI.hpp" />
     <ClInclude Include="Weapon.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbilityCast.cpp" />
     <ClCompile Include="Archetype.cpp" />
     <ClCompile Include="CharacterCreation.cpp" />
-    <ClCompile Include="InteractionInterface.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="GameInterface.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="InteractionUI.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Database.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Slot.cpp" />
     <ClCompile Include="Tomb of the Giants.cpp" />
     <ClCompile Include="Torch.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

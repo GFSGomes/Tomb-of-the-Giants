@@ -158,8 +158,8 @@ void GameInterface::Input(std::shared_ptr<Player> player)
 	if (DebugMode)
 	{
 		std::cout << "   |1| Torch +10" << "\n";
-		std::cout << "   |2| Health++" << "\n";
-		std::cout << "   |3| Health++" << "\n";
+		std::cout << "   |2| Health++, Mana++" << "\n";
+		std::cout << "   |3| Health--, Mana--" << "\n";
 		std::cout << "   |4| Level++" << "\n";
 	}
 
@@ -212,8 +212,8 @@ void GameInterface::Input(std::shared_ptr<Player> player)
 		{
 			case 27: active = true; break;
 			case '1': player->torchDuration += 10; break;
-			case '2': player->cur_health++; break;
-			case '3': player->cur_health--; break;
+			case '2': player->cur_health++; player->cur_mana++; break;
+			case '3': player->cur_health--; player->cur_mana--; break;
 			case '4': player->UpdateStatus(true); break;
 			default:
 				player->Actions(input);

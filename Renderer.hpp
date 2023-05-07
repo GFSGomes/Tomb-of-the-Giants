@@ -5,9 +5,10 @@ enum class Sprite {
     NONE,
     OH_SWORD, OH_AXE,
     TORCH,
-    SKULL, SPIDER,
+    SKULL, SPIDER, GHOUL,
     TITLE,
     ICON_TARGET, ICON_SWORD, ICON_AXE,
+    DEATH,
 };
 
 struct Renderer 

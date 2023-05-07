@@ -9,8 +9,11 @@ struct Entity;
 
  enum class Ability
  {
+	 NONE,
 	 ATTACK,
 	 DOUBLE_STRIKE,
+	 FIREBALL,
+	 BRUTAL_STRIKE,
  };
 
 struct AbilityCast

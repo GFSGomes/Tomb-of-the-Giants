@@ -25,9 +25,6 @@
     <Filter Include="Arquivos de Cabeçalho\GUI\Inventory">
       <UniqueIdentifier>{459bc60a-17a8-40d0-bc9a-064da7388ca0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Origem\Ability">
-      <UniqueIdentifier>{30273c6d-28be-4bf0-8584-750c56f6cf29}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Arquivos de Origem\GameObjects">
       <UniqueIdentifier>{3b6bed17-63cc-4330-8e4f-0a8ac731204a}</UniqueIdentifier>
     </Filter>
@@ -37,8 +34,11 @@
     <Filter Include="Arquivos de Cabeçalho\GameObjects\Derived">
       <UniqueIdentifier>{733750c4-4a2e-451e-8b2e-8bfb74618f54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Ability">
-      <UniqueIdentifier>{4f57571b-878e-4ff5-80f3-eb69cf6d66eb}</UniqueIdentifier>
+    <Filter Include="Arquivos de Cabeçalho\UI">
+      <UniqueIdentifier>{369486ad-6690-42ba-ae73-ece1c5b8f6e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\UI">
+      <UniqueIdentifier>{6c310e96-129e-457e-bd8a-93bdddba2890}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +56,6 @@
     </ClInclude>
     <ClInclude Include="SceneManager.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="InteractionInterface.hpp">
-      <Filter>Arquivos de Cabeçalho\GUI</Filter>
     </ClInclude>
     <ClInclude Include="GameInterface.hpp">
       <Filter>Arquivos de Cabeçalho\GUI</Filter>
@@ -121,7 +118,13 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="AbilityCast.hpp">
-      <Filter>Arquivos de Cabeçalho\Ability</Filter>
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.hpp">
+      <Filter>Arquivos de Cabeçalho\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractionUI.hpp">
+      <Filter>Arquivos de Cabeçalho\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -151,9 +154,6 @@
     </ClCompile>
     <ClCompile Include="Equipment.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="InteractionInterface.cpp">
-      <Filter>Arquivos de Origem\GUI</Filter>
     </ClCompile>
     <ClCompile Include="GameInterface.cpp">
       <Filter>Arquivos de Origem\GUI</Filter>
@@ -204,7 +204,13 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="AbilityCast.cpp">
-      <Filter>Arquivos de Origem\Ability</Filter>
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractionUI.cpp">
+      <Filter>Arquivos de Origem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Arquivos de Origem\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

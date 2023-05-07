@@ -5,7 +5,7 @@ Entity::Entity() :
 	CON{0}, INT{0}, RES{0}, WIS{0}, DEX{0},
 	cur_health{0}, max_health{0}, physical_damage{0}, physical_resistance{0},
 	cur_mana{0}, max_mana{0}, magical_damage{0}, magical_resistance{0},
-	accuracy{0}, dodge{0}, critical_chance{0}, critical_damage{0},
+	accuracy{0}, dodge{0}, critical_chance{0}, critical_damage{2},
 	flee_rate{0},
 	turns_stunned{0}, turns_poisoned{0},
 	alive{true}
@@ -13,9 +13,12 @@ Entity::Entity() :
 	max_experience = 50;
 	UpdateStatus(true);
 
-	// TEMPORARIO: SERA NOS ARQUETIPOS
+	// TEMPORARIO:
 	abilities.push_back(Ability::ATTACK);
-	//abilities.push_back(Ability::DOUBLE_STRIKE);
+	abilities.push_back(Ability::BRUTAL_STRIKE);
+	abilities.push_back(Ability::DOUBLE_STRIKE);
+	abilities.push_back(Ability::FIREBALL);
+	abilities.push_back(Ability::NONE);
 }
 
 Entity::~Entity()
@@ -51,13 +54,13 @@ void Entity::UpdateStatus(bool level_up)
 	max_mana   = 10 + INT;					// 20.0	MP				45.0 MP
 
 	physical_damage = 1 + (CON * 0.15);		// 2.5 PD				4.75 PD
-	magical_damage  = 1 + (INT * 0.20);		// 3.5 MD				6.00 MD
+	magical_damage  = 1 + (INT * 0.20);		// 3.0 MD				6.00 MD
 
-	physical_resistance = RES * 0.15;		// 1.5 PR				3.75 PR
+	physical_resistance = RES * 0.15;		// 2.5 PR				3.75 PR
 	magical_resistance  = WIS * 0.20;		// 2.0 MR				5.00 MR
 
 	accuracy		= DEX;
-	dodge			= 5 + DEX * 0.08;		// 5.25 Dodge			7.00 Dodge
+	dodge			= 5 + DEX * 0.08;		// 5.8 Dodge			7.00 Dodge
 	critical_chance	= 1 + DEX * 0.05;		// 1.50 Crit			2.25 Crit
 	critical_damage	= 1 + DEX * 0.015;		
 	flee_rate		= 5 + DEX * 0.50;		// 10.0 Flee			17.5 Flee

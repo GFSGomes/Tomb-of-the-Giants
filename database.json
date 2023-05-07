@@ -1,13 +1,48 @@
 {
   "abilities": [
     {
+      "name": "NONE",
+      "desc": "NONE",
+      "cost": 0,
+      "multiplier": 0,
+      "base_value": 0,
+      "difficulty": 0,
+      "id": 0
+    },{
       "name": "ATTACK",
-      "desc": "ATTACK: causes (100%) Physical Damage.\nCost: 0 MP\nDifficulty: 15",
+      "desc": "A basic attack that deals (100%) Physical Damage.",
       "cost": 0,
       "multiplier": 1,
       "base_value": 0,
       "difficulty": 15,
       "id": 1
+    },
+    {
+      "name": "DOUBLE_STRIKE",
+      "desc": "Attack your taget two times, dealing (80%) Physical Damage on each succefful hit.",
+      "cost": 3,
+      "multiplier": 0.8,
+      "base_value": 0,
+      "difficulty": 20,
+      "id": 2
+    },
+    {
+      "name": "FIREBALL",
+      "desc": "Throw a fireball on an target that deals (180%) Magical Damage.\nFIREBALL also set fire to your target dealing (10%) Magical Damage for 3 rounds.",
+      "cost": 4,
+      "multiplier": 1.8,
+      "base_value": 0,
+      "difficulty": 35,
+      "id": 3
+    },
+    {
+      "name": "BRUTAL_STRIKE",
+      "desc": "Brutally charges the target dealing (220%) Physical Damage. Has a 10% Chance to cause Bleed, which deals 5% of damage dealt as Physical Damage for 5 rounds.",
+      "cost": 4,
+      "multiplier": 2.20,
+      "base_value": 0,
+      "difficulty": 30,
+      "id": 4
     }
   ],
   "items": [],

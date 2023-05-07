@@ -55,7 +55,10 @@ void Settings::Initialize()
 			{
 				switch (index)
 				{
-					case 0: DebugMode = !DebugMode; break;
+					case 0: 
+						DebugMode = !DebugMode; 
+						index = 1;
+						break;
 					case 1: 
 						input = '\0';
 						index = 0;

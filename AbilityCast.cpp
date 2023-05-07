@@ -1,4 +1,5 @@
 #include "AbilityCast.hpp";
+#include <iomanip>
 
 AbilityCast::~AbilityCast()
 {
@@ -11,11 +12,20 @@ std::string AbilityCast::GetAbilityName(Ability ability)
 
 	switch (ability)
 	{
+		case Ability::NONE:
+			name = "NONE";
+			break;
 		case Ability::ATTACK: 
-			name = "ATTACK"; 
+			name = "ATTACK";
 			break;
 		case Ability::DOUBLE_STRIKE: 
-			name = "DOUBLE STRIKE";  
+			name = "DOUBLE_STRIKE";
+			break;
+		case Ability::FIREBALL:
+			name = "FIREBALL";
+			break;
+		case Ability::BRUTAL_STRIKE:
+			name = "BRUTAL_STRIKE";
 			break;
 	}
 
@@ -43,12 +53,36 @@ json AbilityCast::GetAbility(Ability ability)
 	return abilityData;
 }
 
-std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, std::shared_ptr<Entity> target)
-{
-	enum class Condition {HIT, MISS, CRIT};
+enum class Condition {HIT, MISS, CRIT, OFM};
 
+Condition GetCondition(float difficulty, float cost, std::shared_ptr<Entity> caster, std::shared_ptr<Entity> target)
+{
+	short hit = rand() % 100 + 1;
 	Condition condition = Condition::MISS;
 
+	if (caster->cur_mana >= cost)
+	{
+		if (caster->accuracy + hit >= difficulty + target->dodge)
+		{
+			hit + target->critical_chance >= 90 ?
+				condition = Condition::CRIT :
+				condition = Condition::HIT;
+		}
+		else
+		{
+			condition = Condition::MISS;
+		}
+	}
+	else
+	{
+		condition = Condition::OFM;
+	}
+
+	return condition;
+}
+
+std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, std::shared_ptr<Entity> target)
+{
 	json data = GetAbility(ability);
 
 	std::string name = std::string(data["name"]);
@@ -57,39 +91,45 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 	float multiplier = data["multiplier"];	// Attribute value multiplier i.e.: (120%) Phys. Damage = 1.2;
 	float baseValue	 = data["base_value"];	// Defines if the ability has a flat base value
 	float difficulty = data["difficulty"];
-
+	float damageDealt = 0;
 	std::string log = "";
-
-	short hit = rand() % 100 + 1;
-
-	if (caster->accuracy + hit >= difficulty + target->dodge){
-		hit + target->critical_chance >= 90 ?
-		condition = Condition::CRIT	:
-		condition = Condition::HIT;
-	}
-	else {
-		condition = Condition::MISS;
-	}
+	std::ostringstream out;
 	
+	out.precision(2);
 
 	switch (ability)
 	{
-		case Ability::ATTACK:
-			switch (condition)
+		default:
+			switch (GetCondition(difficulty, cost, caster, target))
 			{
 				case Condition::CRIT:
-					target->cur_health -= (caster->physical_damage * multiplier * caster->critical_damage) + baseValue;
-					log = "CRITICAL HIT! " + target->name + " lost " + std::to_string(caster->physical_damage * caster->critical_damage) + "HP!";
-					break;
+				{
+					caster->cur_mana -= cost;
+					damageDealt = (caster->physical_damage * multiplier * caster->critical_damage) + baseValue;
+					out << std::fixed << damageDealt;
+					target->cur_health -= damageDealt;
+					
+					log = "  [" + caster->name + " used " + name + "]:\n  " + target->name + " HP -" + std::move(out).str() + "[!]";
+
+				} break;
+					
 
 				case Condition::HIT:
-					target->cur_health -= caster->physical_damage * multiplier + baseValue;
-					log = target->name + " lost " + std::to_string(caster->physical_damage) + "HP.";
+					caster->cur_mana -= cost;
+					damageDealt = (caster->physical_damage * multiplier) + baseValue;
+					out << std::fixed << damageDealt;
+					target->cur_health -= damageDealt;
+
+					log = "  [" + caster->name + " used " + name + "]:\n  " + target->name + " HP -" + std::move(out).str();
 					break;
 
 				case Condition::MISS:
-					log = target->name + " DODGED!";
+					caster->cur_mana -= cost;
+					log = "  [" + caster->name + " used " + name + "]:\n  " + target->name + " Dodged!";
 					break;
+
+				case Condition::OFM:
+					log = "";
 			}
 			break;
 	}
