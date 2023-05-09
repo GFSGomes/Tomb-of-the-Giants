@@ -1,13 +1,16 @@
 #pragma once
 #include "GameObject.hpp"
-#include "Inventory.hpp"
 #include "AbilityCast.hpp"
+#include "Inventory.hpp"
+#include "Weapon.hpp";
+#include "Potion.hpp";
 
 struct Archetype;
 enum class Ability;
 
-struct Entity : GameObject 
+struct Entity : GameObject
 {
+	#pragma region Variables
 	short level;
 	short status_points;
 	short CON; // Increases Maximum Health and Physical Damage
@@ -28,22 +31,26 @@ struct Entity : GameObject
 	float magical_damage;
 	float physical_resistance;
 	float magical_resistance;
-	short accuracy;
+	float accuracy; // short
 	float dodge;
 	float critical_chance;
 	float critical_damage;
 	float flee_rate;
 	
 	bool alive;
+	#pragma endregion
 
 	Inventory inventory;
-	std::shared_ptr<Archetype> archetype;
 	std::vector<Ability> abilities;
+	std::shared_ptr<Archetype> archetype;
 
 	Entity();
 	virtual ~Entity() = 0;
 
 	virtual void Actions();
-	void UpdateStatus(bool);
+	void ApplyEquipedItemStats();
+	void ChangeEquipment(std::shared_ptr<Equipment>, bool);
+	void ManageInventory();
+	void UpdateStatus(bool, bool);
 	void DisplayStatus();
 };

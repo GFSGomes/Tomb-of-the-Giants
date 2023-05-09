@@ -14,5 +14,5 @@ struct GUI
 	GUI();
 	virtual ~GUI() = 0;
 
-	virtual void Initialize() = 0;
+	void Initialize();
 };

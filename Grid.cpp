@@ -66,11 +66,16 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 									{
 										if (fov->proximityReveal)
 										{
-											icon = "?";
+											icon = "x";
 										}
 										if (player->isTorchActive)
 										{
 											//icon = "○";
+											icon = "M";
+										}
+
+										if (DebugMode)
+										{
 											icon = "M";
 										}
 									}
@@ -82,8 +87,16 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 									{
 										if (fov->proximityReveal)
 										{
-											icon = "?";
+											if (DebugMode)
+											{
+												icon = "i";
+											}
+											else
+											{
+												icon = "x";
+											}
 										}
+
 										if (player->isTorchActive)
 										{
 											if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(SceneOBJ[j]))
@@ -114,7 +127,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						{
 							if (DebugMode) // DEBUG
 							{
-								icon = "?";
+								icon = "M";
 							}
 						}
 					}
@@ -125,7 +138,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						{
 							if (DebugMode)
 							{
-								icon = "!";
+								icon = "i";
 							}
 						}
 					}

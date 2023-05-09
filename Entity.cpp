@@ -11,7 +11,7 @@ Entity::Entity() :
 	alive{true}
 {
 	max_experience = 50;
-	UpdateStatus(true);
+	UpdateStatus(true, false);
 
 	// TEMPORARIO:
 	abilities.push_back(Ability::ATTACK);
@@ -19,16 +19,138 @@ Entity::Entity() :
 	abilities.push_back(Ability::DOUBLE_STRIKE);
 	abilities.push_back(Ability::FIREBALL);
 	abilities.push_back(Ability::NONE);
+
+	for (short i = 1; i <= 10; i++)
+	{
+		inventory.AddItem(std::make_shared<Weapon>(WeaponType::AXE, "Axe", "trainingAxe.", 8, 0), 1);
+	}
+	inventory.AddItem(std::make_shared<Potion>("Potion", PotionType::MINOR_HEALTH_POTION), 4);
 }
 
-Entity::~Entity()
-{
+Entity::~Entity(){}
 
+void Entity::Actions(){}
+
+void Entity::ApplyEquipedItemStats()
+{
+	for (short i = 0; i < inventory.Container.size(); i++)
+	{
+		if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(inventory.Container[i].item))
+		{
+			if (equip->equiped)
+			{
+				if (std::shared_ptr<Weapon> weapon = std::dynamic_pointer_cast<Weapon>(equip))
+				{
+					CON += weapon->b_might;
+					INT += weapon->b_magic;
+				}
+			}
+		}
+	}
+
+	UpdateStatus(false, false); // level_up / combat_stats
 }
 
-void Entity::Actions()
+void Entity::ChangeEquipment(std::shared_ptr<Equipment> _equip, bool _equipmentState = true)
 {
 
+	for (short i = 0; i < inventory.Container.size(); i++)
+	{
+		if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(inventory.Container[i].item))
+		{
+			if (equip->equiped)
+			{
+				if (std::shared_ptr<Weapon> weapon = std::dynamic_pointer_cast<Weapon>(equip))
+				{
+					CON -= weapon->b_might;
+					INT -= weapon->b_magic;
+					weapon->equiped = false;
+				}
+			}
+		}
+	}
+
+	_equip->equiped = _equipmentState;
+
+	ApplyEquipedItemStats();
+}
+
+void Entity::ManageInventory()
+{
+	bool active = false;
+	short index = 0;
+	char input = '\0';
+
+	active = true;
+
+	std::shared_ptr<Item> item = inventory.Initialize();
+	inventory.active = true;
+
+	while (active)
+	{
+		if (!item)
+		{
+			active = false;
+			return;
+		}
+		system("cls");
+		std::cout << "\n";
+		renderer.DisplaySprite(item->sprite);
+		std::cout << "   " << item->name << "\n";
+		std::cout << "\n";
+
+		if (std::shared_ptr<Equipment> equipment = std::dynamic_pointer_cast<Equipment>(item))
+		{
+			!equipment->equiped ?
+				std::cout << "   [Equip " << equipment->name << "]" << "\n" :
+				std::cout << "   [Unequip " << equipment->name << "]" << "\n";
+		}
+		else if (std::shared_ptr<Potion> potion = std::dynamic_pointer_cast<Potion>(item))
+		{
+			std::cout << "   [Drink]" << "\n";
+		}
+
+		std::cout << "\n";
+		std::cout << "\n";
+		std::cout << "   |" << item->description << "\n";
+
+		if (std::shared_ptr<Weapon> weap = std::dynamic_pointer_cast<Weapon>(item))
+		{
+			std::cout << "   | Bonus STR: " << weap->b_might << "\n";
+			std::cout << "   | Bonus INT: " << weap->b_magic << "\n";
+		}
+		else if (std::shared_ptr<Potion> potion = std::dynamic_pointer_cast<Potion>(item))
+		{
+			std::cout << "   | Bonus Health: " << potion->health_recovery << "\n";
+			std::cout << "   | Bonus Health: " << potion->mana_recovery << "\n";
+		}
+
+		input = _getch();
+
+		switch (input)
+		{
+			// Equipar
+			case '\r':
+				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
+				{
+					if (equip->equiped)
+					{
+						ChangeEquipment(equip, false);
+					}
+					else
+					{
+						ChangeEquipment(equip);
+					}
+					ManageInventory();
+					active = false;
+				}
+				break;
+
+			case 27:
+				active = false;
+				break;
+		}
+	}
 }
 
 void Entity::DisplayStatus()
@@ -48,7 +170,7 @@ void Entity::DisplayStatus()
 	std::cout << " Critical Chance | " << critical_chance << "   Flee from combat | " << flee_rate;
 }
 
-void Entity::UpdateStatus(bool level_up)	
+void Entity::UpdateStatus(bool level_up = false, bool combatStatsAlteration = false)
 {											// LEVEL 10				// LEVEL 25
 	max_health = 15 + CON * 1.5;			// 30.0	HP				52.5 HP
 	max_mana   = 10 + INT;					// 20.0	MP				45.0 MP
@@ -66,6 +188,12 @@ void Entity::UpdateStatus(bool level_up)
 	flee_rate		= 5 + DEX * 0.50;		// 10.0 Flee			17.5 Flee
 
 	cur_health > 0 ? alive = true : alive = false;
+
+	if (!combatStatsAlteration)
+	{
+		cur_health	= max_health;
+		cur_mana	= max_mana;
+	}
 
 	if (level_up)
 	{

@@ -256,12 +256,14 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 					{
 						if (player->isTorchActive)
 						{
+							enemy->Actions(true); // Força o movimento do Inimigo para sair da mesma coordenada que o jogador.
 							active = false;
 						}
 						else
 						{
 							if (DebugMode)
 							{
+								enemy->Actions(true);
 								active = false;
 							}
 
@@ -269,12 +271,13 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 
 							if (player->flee_rate + flee >= 50 + enemy->level)
 							{
+								enemy->Actions(true);
 								active = false;
 							}
 							else
 							{
 								std::cout << "\n";
-								std::cout << "   You failed to escape. Starting combat." << "\n";
+								std::cout << "   You failed to escape. Starting combat..." << "\n";
 								input = _getch();
 								StartCombat(player, enemy, false);
 							}
@@ -289,7 +292,77 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 
 bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_ptr<Item> item)
 {
-	return false;
+	bool sceneItemRemoval = false;
+
+	while (active)
+	{
+		system("cls");
+		renderer.DisplaySprite(item->sprite);
+		std::cout << "  [You found a " << item->name << "]" << "\n";
+		std::cout << "\n";
+		switch(index)
+		{
+			case 0: std::cout << "  [Add to Inventory]  Equip   Ignore" << "\n";
+				break;
+				
+			case 1: std::cout << "   Add to Inventory  [Equip]  Ignore" << "\n";
+				break;
+
+			case 2: std::cout << "   Add to Inventory   Equip  [Ignore]" << "\n";
+				break;
+		}
+
+		input = _getch();
+
+		switch (input)
+		{
+			case 'w': case 'W': case 'a': case 'A':
+				if (index > 0) index--;
+				break;
+
+			case 's': case 'S': case 'd': case 'D':
+				if (index < 2) index++;
+				break;
+
+			case '\r':
+			{
+				switch (index)
+				{
+					case 0: 
+						player->inventory.AddItem(item, item->stack);
+						sceneItemRemoval = true;
+						std::cout << "\n";
+						std::cout << "  [" << item->name << " added to Inventory]" << "\n";
+						break;
+
+					case 1:
+						player->inventory.AddItem(item, item->stack);
+						sceneItemRemoval = true;
+						std::cout << "\n";
+						{
+							if (std::shared_ptr<Potion> potion = std::dynamic_pointer_cast<Potion>(item))
+							{
+								//potion->Use(player);
+							}
+							else if (std::shared_ptr<Weapon> weapon = std::dynamic_pointer_cast<Weapon>(item))
+							{
+								player->ChangeEquipment(weapon, true);
+							}
+						}
+						break;
+
+					case 2:
+						sceneItemRemoval = false;
+						std::cout << "\n";
+						std::cout << "  [" << item->name << " was ignored]" << "\n";
+						break;
+				}
+				input = _getch();
+				active = false;
+			}
+		}
+	}
+	return sceneItemRemoval;
 }
 
 bool InteractionUI::Initialize()

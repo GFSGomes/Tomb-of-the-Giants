@@ -9,7 +9,7 @@ struct MainMenu : GUI
 	MainMenu();
 	~MainMenu();
 
-	void Initialize() override;
+	void Initialize();
 };
 
 extern MainMenu mainMenu;

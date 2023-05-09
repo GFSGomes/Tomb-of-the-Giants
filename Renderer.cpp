@@ -18,18 +18,14 @@ void Renderer::DisplaySprite(Sprite _sprite) {
         {
             std::cout << R"(
 
-                  _____+_
-                -''''''|  _
-                       | /_\
-                       |'-=-'.
-                      /'"  . \
-                      \ |   \ \
-                       ||    \  \
-                       ||   \.'.'
-                       ||\    \|
-                       |\ .    /
-                         ' '--'
-        
+            .-.
+            |-|
+          .-' '-.
+         /_______\
+        |         |
+         \       /
+          '-----'
+
 )";
         } break;
 
@@ -37,25 +33,35 @@ void Renderer::DisplaySprite(Sprite _sprite) {
         case Sprite::OH_SWORD:
         {
             std::cout << R"(
-
-      /\
-.-....||-----------------------.
-'-''''||-----------------------'
-      \/
+             .
+            / \
+            | |
+            | |
+            |.|
+            |||
+          __|||__
+         '--. .--'
+            ] [
+            (_)
 
 )";
         } break;
 
         case Sprite::OH_AXE:
         {
-            std::cout << R"(
+            std::cout << R"( 
 
-                         ____
-.-....--................-\   |-.
-'-''''--''''''''''''''''./   |-'
-                       .'    |
-                      /-.....|
-                     '--.....:
+             .-.
+         .---+=+---''//
+          '''+=+-.  //
+             [ ]  \//
+             | |   '
+             | |
+             | |
+             [']
+             ) (
+             ) (
+             [_]
 
 )";
         } break;
@@ -66,48 +72,46 @@ void Renderer::DisplaySprite(Sprite _sprite) {
         {
             std::cout << R"(
 
-               ,
-             '(.
-            (._)\'
-            ')  (,
-             \{}/
-              []
-              []  You found a Torch.
-              []  That's nice.
-              ||
-              []
-              ||
-              ||
-              ||
-              []
+            '(.
+           (._)\'
+           ')  (,
+            \{}/
+             []  You found a Torch.
+             ||  ...
+             ||  
+             ||  Even in the darkest places,
+             ||  you can find a spark of hope.
+             []
 
 )";
         } break;
 
         // MONSTERS
         case Sprite::GHOUL:
+        {
             std::cout << R"(
-
-         ////\\\
-        |/'/  '\|
-        |<ò>.<ó>|
-        | /+++\ |
-         \\+++//
-          '''''
+     
+          /////\\\
+         |/'/   '\|
+         |<Ò>..<Ó>|
+         | /++++\ |
+          \\++++//
+           ''''''
 
 )";
-            break;
+        } break;
+
         case Sprite::SKULL:
         {
             std::cout << R"(
-
-         /'''''\
-        |       |
-        |<o>.<o>|
-        \'\+++/'/
-         \'+++'/
-          '''''
-
+       
+          /''''''\
+         |        |
+         |<o>..<o>|
+         \'\++++/'/
+          \'++++'/
+           ''''''
+       
 )";
 
         } break;
@@ -115,11 +119,12 @@ void Renderer::DisplaySprite(Sprite _sprite) {
         case Sprite::SPIDER:
         {
             std::cout << R"(
-            _
-         /\(|)/\
-         /\( )/\
-          /'"'\
-
+            .  .
+         . / __ \ .
+          \\(||)//
+         /'.(..).'\
+        '  \ "" /  '
+           '    '
 )";
 
         } break;
@@ -155,24 +160,9 @@ void Renderer::DisplaySprite(Sprite _sprite) {
         {
             std::cout << R"(
             v
-           > <
+          >   <
             ^
 )";
-        } break;
-
-        case Sprite::ICON_SWORD:
-        {
-            std::cout << R"(
-           -====|=-
-                   )";
-        } break;
-
-        case Sprite::ICON_AXE:
-        {
-            std::cout << R"(
-           |(=====,
-           '-'
-                   )";
         } break;
 
         case Sprite::DEATH:

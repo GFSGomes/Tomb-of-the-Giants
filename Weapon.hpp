@@ -1,5 +1,6 @@
 #pragma once
-#include "Equipment.hpp"
+#include "Equipment.hpp";
+#include "Entity.hpp";
 
 enum class WeaponType
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.hpp"
+#include "GameObject.hpp";
 
 struct Item : GameObject
 {

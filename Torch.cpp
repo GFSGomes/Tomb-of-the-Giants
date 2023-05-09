@@ -12,5 +12,5 @@ Torch::~Torch()
 
 void Torch::Use()
 {
-	PLAYER.torchDuration += rand() % 50 + 5;
+	PLAYER.torchDuration += rand() % 10 + 5;
 }

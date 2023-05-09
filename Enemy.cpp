@@ -8,7 +8,7 @@ Enemy::Enemy(const char* _name, short _level, Sprite _sprite) : sprite{_sprite}
 
 	CON = INT = RES = WIS = DEX = level;
 
-	UpdateStatus(true);
+	UpdateStatus(true, false);
 }
 
 Enemy::~Enemy()

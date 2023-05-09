@@ -7,6 +7,8 @@ SceneManager::SceneManager()
 	Scene scene_00{12, 6};
 	scene_00.AddObject(std::make_shared<Player>(PLAYER)); // Ponteiro para o player
 	scene_00.AddObject(std::make_shared<Weapon>(longSword));
+	scene_00.AddObject(std::make_shared<Weapon>(hatchet));
+	scene_00.AddObject(std::make_shared<Potion>(hp1));
 	scene_00.AddObject(std::make_shared<Enemy>(skeletonFootman));
 	scene_00.AddObject(std::make_shared<Enemy>(skeletonFootman));
 	scene_00.AddObject(std::make_shared<Enemy>(skeletonFootman));

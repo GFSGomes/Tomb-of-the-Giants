@@ -41,8 +41,6 @@ void Player::Actions(char input)
 				UpdateFOV();
 			}
 			break;
-
-		default: return;
 	}
 
 	if (isTorchActive)

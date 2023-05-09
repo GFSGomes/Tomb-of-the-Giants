@@ -3,6 +3,7 @@
 #include "Slot.hpp"
 #include <vector>
 #include <conio.h>
+#include "Equipment.hpp" //
 
 struct Inventory : GUI
 {
@@ -16,9 +17,15 @@ struct Inventory : GUI
 
 	~Inventory();
 
-	void AddItem(std::shared_ptr<Item>, short);
-	void DiscardItem(std::shared_ptr<Item>);
+	std::shared_ptr<Slot> GetSlot(std::shared_ptr<Item>);
+
 	int GetSlotIndex(std::shared_ptr<Slot>);
+
+	void AddItem(std::shared_ptr<Item>, short);
+
+	void DiscardItem(std::shared_ptr<Item>);
+
 	void OrganizeSlots();
-	void Initialize();
+
+	std::shared_ptr<Item> Initialize();
 };

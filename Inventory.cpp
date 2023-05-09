@@ -106,6 +106,18 @@ int Inventory::GetSlotIndex(std::shared_ptr<Slot> _slot)
 	}
 }
 
+std::shared_ptr<Slot> Inventory::GetSlot(std::shared_ptr<Item> _item)
+{
+	for (int i = 0; i < Container.size(); i++)
+	{
+		if (std::make_shared<Slot>(Container[i])->item == _item)
+		{
+			std::shared_ptr<Slot> slot = std::make_shared<Slot>(Container[i]);
+			return slot;
+		}
+	}
+}
+
 void Inventory::DiscardItem(std::shared_ptr<Item> _item)
 {
 	std::cout << "\n";
@@ -129,25 +141,45 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item)
 
 		if (!Container.empty())
 		{
-			for (int i = 0; i < Container.size(); i++)
+			for (short i = 0; i < Container.size() - 1; ++i)
 			{
 				if (Container[i].item->name == _item->name)
 				{
-					if (Container[i].amount > amount)
+					short count = 0;
+
+					for (short j = 0; j < Container.size(); ++j)
 					{
-						Container[i].amount -= amount;
-						return;
+						if (Container[j].item->name == _item->name)
+						{
+							count += Container[j].amount;
+						}
 					}
 
-					if (Container[i].amount <= amount)
+					if (amount > count)
 					{
-						index = 0;
+						amount = count;
+					}
+					/* <-- Limitando 'amount' ao somatório dos itens identicos
+					
+					Gerenciamento de Itens --> */
+					while (amount >= Container[i].item->stack)
+					{
+						amount -=  Container[i].item->stack;
 						Container.erase(Container.begin() + i);
+					}
+					
+					if (amount > 0)
+					{
+						if (amount < Container[i].amount)
+						{
+							Container[i].amount -= amount;
+							return;
+						}
 					}
 				}
 			}
-			Container.shrink_to_fit();
 		}
+
 		return;
 	}
 }
@@ -173,7 +205,7 @@ void Inventory::OrganizeSlots()
 	}
 }
 
-void Inventory::Initialize()
+std::shared_ptr<Item> Inventory::Initialize()
 {
 	active = true;
 
@@ -181,8 +213,8 @@ void Inventory::Initialize()
 	{
 		system("cls");
 
-			std::cout << "\n";
-			std::cout << "   [ESC] RETURN" << "\n";
+		std::cout << "\n";
+		std::cout << "   [ESC] RETURN" << "\n";
 			
 		organize ? 
 			std::cout << "   [TAB] Organize (X)" : 
@@ -192,7 +224,7 @@ void Inventory::Initialize()
 			std::cout << "   [BKS] Remove ( )";
 
 			std::cout << "\n";
-			std::cout << "\n";
+			std::cout << "   |   " << "\n";
 
 		for (int i = 0; i < Container.size(); i++)
 		{
@@ -201,24 +233,39 @@ void Inventory::Initialize()
 			{
 				hoveredSlot = std::make_shared<Slot>(Container[index]);
 
-				std::cout << "  > ";
+				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(Container[i].item))
+				{
+					if (equip->equiped)
+					{
+						std::cout << "   | E> " << Container[i].item->name;
+					}
+					else
+					{
+						std::cout << "   |  > " << Container[i].item->name;
+					}
+				}
+				else
+				{
+					std::cout << "   |  > " << Container[i].item->name << " (" << Container[i].amount << ")";
+				}
 			}
 			else
 			{
-				std::cout << "    ";
+				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(Container[i].item))
+				{
+					equip->equiped ?
+						std::cout << "   | E " :
+						std::cout << "   |   ";
+
+					std::cout << Container[i].item->name;
+				}
+				else
+				{
+					std::cout << "   |   " << Container[i].item->name << " (" << Container[i].amount << ")";
+				}
 			}
 
-			std::cout << "" << Container[i].item->name << " (" << Container[i].amount << ")";
-
-			// Indicador: SELECTED
-			if (std::make_shared<Slot>(Container[index]) == selectedSlot)
-			{
-				std::cout << " <\n"; // Não está saindo.
-			}
-			else
-			{
-				std::cout << "\n";
-			}
+			std::cout << "\n";
 		}
 
 		input = _getch();
@@ -234,17 +281,26 @@ void Inventory::Initialize()
 				if (remove)
 				{
 					DiscardItem(hoveredSlot->item);
+					break;
 				}
 
 				if (organize)
 				{
 					OrganizeSlots();
 				}
-				else
-				{
-					// Equipar / Usar
-				}
 
+				else 
+				{
+					if (hoveredSlot)
+					{
+						return hoveredSlot->item;
+					}
+					else
+					{
+						std::cout << "Inventário vazio" << "\n";
+						return nullptr;
+					}
+				}
 			}
 			break;
 			
@@ -252,8 +308,6 @@ void Inventory::Initialize()
 				active = false;
 				selectedSlot = nullptr;
 				break;
-
-			default: break;
 		}
 	}
 }

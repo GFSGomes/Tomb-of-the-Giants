@@ -6,5 +6,5 @@ struct CharacterCreation : GUI
 	CharacterCreation();
 	~CharacterCreation();
 
-	void Initialize() override;
+	void Initialize();
 };

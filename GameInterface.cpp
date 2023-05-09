@@ -169,12 +169,20 @@ void GameInterface::Input(std::shared_ptr<Player> player)
 	{
 		switch (input)
 		{
-			case 27: active = false; break;
+			case 27: 
+				active = false; 
+				break;
+			
 			case 'w': case 'W': 
 				if (index > 0) index--;
 				break;
+
 			case 's': case 'S':
 				if (index < 4) index++;
+				break;
+
+			case 'i': case 'I':
+				player->ManageInventory();
 				break;
 
 			case '\r': 
@@ -183,12 +191,12 @@ void GameInterface::Input(std::shared_ptr<Player> player)
 					case 0: 
 						system("cls");
 						player->DisplayStatus();
-						_getch(); 
+						input = _getch(); 
 						break;
 					
 					case 1: break;
 					
-					case 2: player->inventory.Initialize(); break;
+					case 2: player->ManageInventory(); break;
 					
 					case 3: settings.Initialize(); break;
 					
@@ -203,7 +211,7 @@ void GameInterface::Input(std::shared_ptr<Player> player)
 				break;
 			
 			default:
-				break;
+				return;
 		}
 	}
 	else
@@ -214,7 +222,7 @@ void GameInterface::Input(std::shared_ptr<Player> player)
 			case '1': player->torchDuration += 10; break;
 			case '2': player->cur_health++; player->cur_mana++; break;
 			case '3': player->cur_health--; player->cur_mana--; break;
-			case '4': player->UpdateStatus(true); break;
+			case '4': player->UpdateStatus(true, false); break;
 			default:
 				player->Actions(input);
 				break;

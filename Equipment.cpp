@@ -1,6 +1,6 @@
 #include "Equipment.hpp"
 
-Equipment::Equipment(const char* _name) : Item(_name, 3)
+Equipment::Equipment(const char* _name, EquipmentClass _type) : equiped{false}, equipmentClass{_type}, Item(_name, 1)
 {
 
 }

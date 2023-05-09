@@ -6,7 +6,7 @@ struct Settings : GUI
 	Settings();
 	~Settings();
 
-	void Initialize() override;
+	void Initialize();
 };
 
 extern Settings settings;

@@ -72,13 +72,15 @@ void Scene::Interaction()
 			{
 				if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(obj))
 				{
-					bool erase = UI_Interaction.Initialize(player, item);
-
-					player->inventory.AddItem((std::shared_ptr<Item>) item, 1);
+					bool removeObject = UI_Interaction.Initialize(player, item);
 					
-					if (erase)
+					if (removeObject)
 					{
 						SceneOBJ.erase(SceneOBJ.begin() + i);
+					}
+					else
+					{
+						break;
 					}
 				}
 
@@ -116,7 +118,17 @@ void Scene::LoadScene()
 
 		GUI_Controls.Initialize(player);
 		grid.UpdateGrid(SceneOBJ, player);
+
 		GUI_Controls.Input(player);
+
+		for (short i = 0; i < SceneOBJ.size(); i++)
+		{
+			if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
+			{
+				enemy->Actions(false);
+			}
+		}
+
 		Interaction();
 	}
 }
