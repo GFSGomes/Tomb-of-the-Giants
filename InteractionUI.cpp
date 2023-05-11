@@ -12,108 +12,82 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 	short barLength = 10;
 	short barUnit = 100 / barLength;
 
-	std::string battleLog = "\n";
+	std::string battleLog = "\0";
 
 	while (active)
 	{
 		system("cls");
-		std::cout << "\n";
-		std::cout << battleLog << "\n";
-
-			std::cout << "\n";
-			std::cout << "  | " << enemy->name << " - Lv." << enemy->level << "" << "\n";
-			std::cout << "  | " << enemy->cur_health << " HP  :";
-			for (short i = 0; i < barLength; i++){
-				float pct = (enemy->cur_health / enemy->max_health) * 100;
-				pct > i * barUnit ?
-					std::cout << "=" :
-					std::cout << "-" ;
-			}
-			std::cout << ":" << "\n";
-
-		renderer.DisplaySprite(enemy->sprite);
-
-			// HP
-			std::cout << "\n";
-			std::cout << "  | " << player->name << " - Lv." << player->level << "" << "\n";
-
-			std::cout << "  | " << player->cur_health << " HP  :";
-			for (short i = 0; i < barLength; i++)
-			{
-				float pct = (player->cur_health / player->max_health) * 100;
-				pct > i * barUnit ?
-					std::cout << "=" :
-					std::cout << "-";
-			}
-			std::cout << ":" << "\n";
-
-			// MP
-			std::cout << "  | " << player->cur_mana << " MP  :";
-			for (short i = 0; i < barLength; i++)
-			{
-				float pct = (player->cur_mana / player->max_mana) * 100;
-				pct > i * barUnit ?
-					std::cout << "=" :
-					std::cout << "-";
-			}
-			std::cout << ":" << "\n";
 		
+		std::cout << " | " << enemy->name << " Lv." << enemy->level << "\n";
+		Renderer::StatusBar("HP", enemy->cur_health, enemy->max_health);
+
+		Renderer::DisplaySprite(enemy->sprite);
+		std::cout << "\n";
+
+		if (battleLog != "\0")
+		{
+			Renderer::Dialog(battleLog);
+			_getch();
+		}
+
+		std::cout << "\n";
+		battleLog = "\0";
+		std::cout << "\n";
 		std::cout << "\n";
 
 		if (advantage)
 		{
+			std::cout << " | " << player->name << " Lv." << player->level << "\n";
+			Renderer::StatusBar("HP", player->cur_health, player->max_health);
+			Renderer::StatusBar("MP", player->cur_mana, player->max_mana);
+			std::cout << "\n";
+
+			std::string text = AbilityCast::GetAbility(player->abilities[index])["desc"];
 			switch (index)
 			{
 				case 0:
-					std::cout << "  [" << AbilityCast::GetAbilityName(player->abilities[0]) << "]" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[1]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[2]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[3]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[4]) << "" << "\n";
-					std::cout << "\n";
-					std::cout << "   " << AbilityCast::GetAbility(player->abilities[index])["desc"] << "\n";
+					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[0]) << "]" << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[1]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[2]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[3]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[4]) << "\n";
 					break;
 
 				case 1:
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[0]) << "" << "\n";
-					std::cout << "  [" << AbilityCast::GetAbilityName(player->abilities[1]) << "]" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[2]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[3]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[4]) << "" << "\n";
-					std::cout << "\n";
-					std::cout << "   " << AbilityCast::GetAbility(player->abilities[index])["desc"] << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[0]) << "\n";
+					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[1]) << "]" << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[2]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[3]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[4]) << "\n";
 					break;
 
 				case 2:
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[0]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[1]) << "" << "\n";
-					std::cout << "  [" << AbilityCast::GetAbilityName(player->abilities[2]) << "]" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[3]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[4]) << "" << "\n";
-					std::cout << "\n";
-					std::cout << "   " << AbilityCast::GetAbility(player->abilities[index])["desc"] << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[0]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[1]) << "\n";
+					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[2]) << "]" << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[3]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[4]) << "\n";
 					break;
 
 				case 3:
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[0]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[1]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[2]) << "" << "\n";
-					std::cout << "  [" << AbilityCast::GetAbilityName(player->abilities[3]) << "]" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[4]) << "" << "\n";
-					std::cout << "\n";
-					std::cout << "   " << AbilityCast::GetAbility(player->abilities[index])["desc"] << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[0]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[1]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[2]) << "\n";
+					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[3]) << "]" << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[4]) << "\n";
 					break;
 
 				case 4:
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[0]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[1]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[2]) << "" << "\n";
-					std::cout << "   " << AbilityCast::GetAbilityName(player->abilities[3]) << "" << "\n";
-					std::cout << "  [" << AbilityCast::GetAbilityName(player->abilities[4]) << "]" << "\n";
-					std::cout << "\n";
-					std::cout << "   " << AbilityCast::GetAbility(player->abilities[index])["desc"] << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[0]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[1]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[2]) << "\n";
+					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[3]) << "\n";
+					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[4]) << "]" << "\n";
+					
 					break;
 			}
+			std::cout << "\n";
+			Renderer::Dialog(text);
 
 			input = _getch();
 
@@ -137,7 +111,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 					battleLog = AbilityCast::Cast(player->abilities[index], player, enemy);
 					if (battleLog == "")
 					{
-						battleLog = "  [Insufficient MANA]\n";
+						battleLog = " [Insufficient MANA]\n";
 					} 
 					else
 					{
@@ -149,7 +123,8 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		else
 		{
 			short randomSkill = rand() % 4 + 1;
-			if (enemy->cur_mana >= AbilityCast::GetAbility(player->abilities[randomSkill])["desc"])
+			short cost = AbilityCast::GetAbility(player->abilities[randomSkill])["cost"];
+			if (enemy->cur_mana >= cost)
 			{
 				battleLog = AbilityCast::Cast(enemy->abilities[randomSkill], enemy, player);
 			}
@@ -157,8 +132,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 			{
 				battleLog = AbilityCast::Cast(enemy->abilities[0], enemy, player);
 			}
-
-			input = _getch();
+			_getch();
 			advantage = !advantage;
 		}
 
@@ -166,32 +140,37 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		{
 			player->alive = false;
 			system("cls");
-			std::cout << "\n";
-
-			renderer.DisplaySprite(Sprite::DEATH);
-
-			std::cout << "" << "\n";
-			std::cout << "  [ DEATH ]" << "\n";
-			std::cout << "  | " << "\n";
-			std::cout << "  | Sorry, little soul..." << "\n";
-			std::cout << "  | " << "\n";
-			std::cout << "  | Even though you died, I cannot take your soul with me." << "\n";
-			std::cout << "  | The tomb of the giants is out of my domains." << "\n";
-			std::cout << "  | ..." << "\n";
+			Renderer::DisplaySprite(Sprite::DEATH);
 			input = _getch();
+
 			std::cout << "\n";
-			std::cout << "  GAME OVER" << "\n";
+			std::cout << "-------------------------- GAME OVER --------------------------" << "\n";
 			input = _getch();
+
 			active = false;
 			GameOver = true;
+			return;
 		}
 
 		if (enemy->cur_health <= 0)
 		{
-			battleLog = "  [SUCESS: " + enemy->name + " died]" + "\n";
-			enemy->alive = false;
-			enemy->cur_health = 0;
+			system("cls");
+			Renderer::StatusBar("HP", enemy->cur_health, enemy->max_health);
+			Renderer::DisplaySprite(enemy->sprite);
+			short exp = enemy->level + player->level + enemy->level * 15;
+
+			Renderer::Dialog("SUCESS:" + enemy->name + " died!");
+			Renderer::Dialog("Exp:" + std::to_string(exp));
+
+			player->cur_experience += exp;
+			if (player->cur_experience >= player->max_experience)
+			{
+				float over = player->max_experience - player->cur_experience;
+				player->UpdateStatus(true);
+				player->cur_experience += over;
+			}
 			input = _getch();
+			enemy->alive = false;
 			active = false;
 		}
 	}
@@ -211,7 +190,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 		
 		std::cout << "  [" << enemy->name << " - Lv." << enemy->level << "]" << "\n";
 
-		renderer.DisplaySprite(enemy->sprite);
+		Renderer::DisplaySprite(enemy->sprite);
 
 		std::cout << "\n";
 
@@ -256,7 +235,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 					{
 						if (player->isTorchActive)
 						{
-							enemy->Actions(true); // Força o movimento do Inimigo para sair da mesma coordenada que o jogador.
+							enemy->Actions(true); // Forï¿½a o movimento do Inimigo para sair da mesma coordenada que o jogador.
 							active = false;
 						}
 						else
@@ -297,18 +276,35 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 	while (active)
 	{
 		system("cls");
-		renderer.DisplaySprite(item->sprite);
-		std::cout << "  [You found a " << item->name << "]" << "\n";
+		Renderer::DisplaySprite(item->sprite);
+		std::cout << "\n";
+
+		std::cout << " | You found a " << item->name << "\n";
 		std::cout << "\n";
 		switch(index)
 		{
-			case 0: std::cout << "  [Add to Inventory]  Equip   Ignore" << "\n";
+			case 0: 
+				std::cout << " | > Add to Inventory" << "\n";
+				std::dynamic_pointer_cast<Equipment>(item) ?
+				std::cout << " |  Equip" << "\n" :
+				std::cout << " |  Use" << "\n";
+				std::cout << " |  Ignore" << "\n";
 				break;
 				
-			case 1: std::cout << "   Add to Inventory  [Equip]  Ignore" << "\n";
+			case 1: 
+				std::cout << " |  Add to Inventory" << "\n";
+				std::dynamic_pointer_cast<Equipment>(item) ?
+				std::cout << " | > Equip" << "\n" :
+				std::cout << " | > Use" << "\n";
+				std::cout << " |  Ignore" << "\n";
 				break;
 
-			case 2: std::cout << "   Add to Inventory   Equip  [Ignore]" << "\n";
+			case 2: 
+				std::cout << " |  Add to Inventory" << "\n";
+				std::dynamic_pointer_cast<Equipment>(item) ?
+				std::cout << " |  Equip" << "\n" :
+				std::cout << " |  Use" << "\n";
+				std::cout << " | > Ignore" << "\n";
 				break;
 		}
 
@@ -329,27 +325,36 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 				switch (index)
 				{
 					case 0: 
-						player->inventory.AddItem(item, item->stack);
+						player->inventory.AddItem(item, 1);
+
 						sceneItemRemoval = true;
+
 						std::cout << "\n";
-						std::cout << "  [" << item->name << " added to Inventory]" << "\n";
+
+						Renderer::Dialog(item->name + " added to Inventory");
 						break;
 
 					case 1:
-						player->inventory.AddItem(item, item->stack);
+					{
 						sceneItemRemoval = true;
+
 						std::cout << "\n";
+
+						if (std::shared_ptr<Potion> potion = std::dynamic_pointer_cast<Potion>(item))
 						{
-							if (std::shared_ptr<Potion> potion = std::dynamic_pointer_cast<Potion>(item))
-							{
-								//potion->Use(player);
-							}
-							else if (std::shared_ptr<Weapon> weapon = std::dynamic_pointer_cast<Weapon>(item))
-							{
-								player->ChangeEquipment(weapon, true);
-							}
+							player->DrinkPotion(potion);
+							return sceneItemRemoval;
 						}
+						else if (std::shared_ptr<Weapon> weapon = std::dynamic_pointer_cast<Weapon>(item))
+						{
+							player->inventory.AddItem(weapon, 1);
+							player->ChangeEquipment(weapon, true);
+							return sceneItemRemoval;
+						}
+
+						index = 0;
 						break;
+					}
 
 					case 2:
 						sceneItemRemoval = false;
@@ -360,6 +365,12 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 				input = _getch();
 				active = false;
 			}
+
+
+			case 27:
+				index = 0;
+				sceneItemRemoval = false;
+				break;
 		}
 	}
 	return sceneItemRemoval;

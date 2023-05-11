@@ -16,21 +16,30 @@ Grid::~Grid()
 
 void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::shared_ptr<Player> player)
 {
-	/*std::cout << "   ┌";
-	for (short i = 0; i < GridSizeX; i++)
-	{std::cout << "──";}
-	std::cout << "─┐   ";
-	std::cout << "\n";*/
-	std::cout << "   -";
-	for (short i = 0; i < GridSizeX; i++)
-	{std::cout << "--";}
-	std::cout << "--   ";
-	std::cout << "\n";
+	
+	if (CompatibilityMode)
+	{
+		std::cout << " -";
+		for (short i = 0; i < GridSizeX; i++)
+		{std::cout << "--";}
+		std::cout << "-";
+		std::cout << "\n";
+	}
+	else
+	{
+		std::cout << " ┌";
+		for (short i = 0; i < GridSizeX; i++)
+		{std::cout << "──";}
+		std::cout << "┐";
+		std::cout << "\n";
+	}
+	
 
 	for (short y = 0; y < sizeY; y++)
 	{
-		//std::cout << "   │ ";
-		std::cout << "   | ";
+		CompatibilityMode ?
+			std::cout << " |":
+			std::cout << " │";
 
 		for (short x = 0; x < sizeX; x++)
 		{
@@ -52,10 +61,12 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 							{
 								icon = ' ';
 							}
+
 							if (player->isTorchActive)
 							{
-								//icon = "·";
-								icon = ".";
+								CompatibilityMode ?
+								icon = "." : // Ascii
+								icon = "·";  // Unicode
 							}
 
 							for (short j = 0; j < SceneOBJ.size(); j++)
@@ -64,19 +75,18 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 								{
 									if (enemy->posX == fov->posX && enemy->posY == fov->posY)
 									{
+										 /* Monstro - Tocha Acesa */
+
 										if (fov->proximityReveal)
 										{
 											icon = "x";
 										}
-										if (player->isTorchActive)
-										{
-											//icon = "○";
-											icon = "M";
-										}
 
-										if (DebugMode)
+										if (player->isTorchActive || DebugMode)
 										{
-											icon = "M";
+											CompatibilityMode ?
+											icon = "E":
+											icon = "○";
 										}
 									}
 								}
@@ -85,28 +95,18 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 								{
 									if (item->posX == fov->posX && item->posY == fov->posY)
 									{
+										 /* Item - Tocha Acesa */
+
 										if (fov->proximityReveal)
 										{
-											if (DebugMode)
-											{
-												icon = "i";
-											}
-											else
-											{
-												icon = "x";
-											}
+											icon = "x";
 										}
 
-										if (player->isTorchActive)
+										if (player->isTorchActive || DebugMode)
 										{
-											if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(SceneOBJ[j]))
-											{
-												icon = "e";
-											}
-											else
-											{
-												icon = "i";
-											}
+											CompatibilityMode ?
+											icon = "i" :
+											icon = "▴";
 										}
 									}
 								}
@@ -117,8 +117,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					// Darkness
 					if (std::shared_ptr<Player> player = std::dynamic_pointer_cast<Player>(SceneOBJ[i]))
 					{
-						//icon = "●";
-						icon = "P";
+						CompatibilityMode ?
+						icon = "P" :
+						icon = "●";
 					}
 
 					if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
@@ -127,7 +128,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						{
 							if (DebugMode) // DEBUG
 							{
-								icon = "M";
+								CompatibilityMode ?
+								icon = "M":
+								icon = "○";
 							}
 						}
 					}
@@ -138,7 +141,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						{
 							if (DebugMode)
 							{
-								icon = "i";
+								CompatibilityMode ?
+									icon = "i" :
+									icon = "▴";
 							}
 						}
 					}
@@ -161,16 +166,24 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 				std::cout << "  ";
 			}
 		}
-		//std::cout << "│\n";
-		std::cout << "|\n";
+
+		CompatibilityMode ?
+			std::cout << "|" << "\n" :
+			std::cout << "│" << "\n";
 	}
 
-	/*std::cout << "   └";
-	for (short i = 0; i < GridSizeX; i++)
-	{std::cout << "──";}
-	std::cout << "─┘   ";*/
-	std::cout << "   -";
-	for (short i = 0; i < GridSizeX; i++)
-	{std::cout << "--";}
-	std::cout << "--   ";
+	if (CompatibilityMode)
+	{
+		std::cout << " -";
+		for (short i = 0; i < GridSizeX; i++)
+		{std::cout << "--";}
+		std::cout << "-";
+	}
+	else
+	{
+		std::cout << " └";
+		for (short i = 0; i < GridSizeX; i++)
+		{std::cout << "──";}
+		std::cout << "┘";
+	}
 }

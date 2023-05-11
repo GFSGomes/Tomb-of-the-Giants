@@ -50,7 +50,8 @@ struct Entity : GameObject
 	virtual void Actions();
 	void ApplyEquipedItemStats();
 	void ChangeEquipment(std::shared_ptr<Equipment>, bool);
+	void DrinkPotion(std::shared_ptr<Potion>);
 	void ManageInventory();
-	void UpdateStatus(bool, bool);
+	void UpdateStatus(bool);
 	void DisplayStatus();
 };

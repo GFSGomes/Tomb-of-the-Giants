@@ -20,15 +20,15 @@
     {
       "name": "DOUBLE_STRIKE",
       "desc": "Attack your taget two times, dealing (80%) Physical Damage on each succefful hit.",
-      "cost": 3,
-      "multiplier": 0.8,
+      "cost": 1,
+      "multiplier": 0.95,
       "base_value": 0,
       "difficulty": 20,
       "id": 2
     },
     {
       "name": "FIREBALL",
-      "desc": "Throw a fireball on an target that deals (180%) Magical Damage.\nFIREBALL also set fire to your target dealing (10%) Magical Damage for 3 rounds.",
+      "desc": "Throw a fireball on an target that deals (180%) Magical Damage.\n | Effect: also set fire to your target dealing (10%) Magical Damage for 3 rounds.",
       "cost": 4,
       "multiplier": 1.8,
       "base_value": 0,
@@ -37,8 +37,8 @@
     },
     {
       "name": "BRUTAL_STRIKE",
-      "desc": "Brutally charges the target dealing (220%) Physical Damage. Has a 10% Chance to cause Bleed, which deals 5% of damage dealt as Physical Damage for 5 rounds.",
-      "cost": 4,
+      "desc": "Brutally charges the target dealing (220%) Physical Damage.\n | Effect: has 10% chance of cause Bleed, which deals 5% of damage dealt as Physical Damage for 5 rounds.",
+      "cost": 3,
       "multiplier": 2.20,
       "base_value": 0,
       "difficulty": 30,

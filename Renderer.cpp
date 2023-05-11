@@ -1,7 +1,7 @@
 #pragma once
 #include "Renderer.hpp"
 
-Renderer renderer;
+//bool CompatibilityMode;
 
 Renderer::Renderer() {
 
@@ -11,22 +11,85 @@ Renderer::~Renderer() {
 
 }
 
+
+void Renderer::Dialog(std::string _text)
+{
+    char temp[255];
+    short count = 0;
+    const char* text = _text.c_str();
+
+    strncpy_s(temp, text, 255);
+    
+    std::cout << " | ";
+   
+    while (true)
+    {
+        Sleep(5);
+        std::cout << temp[count];
+
+        if (count == strlen(temp) || _kbhit())
+        {
+            break;
+        }
+        count++;
+    }
+}
+
+void Renderer::StatusBar(const char* _bar_name, float _cur, float _max)
+{
+    std::setprecision(0);
+
+    short barLength = 10;
+    short barUnit = 100 / barLength;
+
+    if (CompatibilityMode)
+    {
+        float pct = (_cur / _max) * 100;
+        
+        std::cout << " | " << _bar_name << ": " << " <";
+
+        for (short i = 0; i < barLength; i++)
+        {
+
+            if (pct > i * barUnit)
+            {
+                std::cout << "=";
+            }
+            else
+            {
+                std::cout << " ";
+            }
+        }
+        std::cout << "> " << pct << "%" << "\n";
+    }
+    else
+    {
+        float pct = (_cur / _max) * 100;
+        
+        std::cout << " | " << _bar_name << ": ";
+
+        for (short i = 0; i < barLength; i++)
+        {
+
+            if (pct > i * barUnit)
+            {
+                std::cout << "â– ";
+            }
+            else
+            {
+                std::cout << "â–¡";
+            }
+        }
+        std::cout << " " << pct << "%" << "\n";
+    }
+}
+
 void Renderer::DisplaySprite(Sprite _sprite) {
 
 	switch (_sprite) {
         case Sprite::NONE:
         {
-            std::cout << R"(
-
-            .-.
-            |-|
-          .-' '-.
-         /_______\
-        |         |
-         \       /
-          '-----'
-
-)";
+            
         } break;
 
         // EQUIPMENT:
@@ -37,32 +100,32 @@ void Renderer::DisplaySprite(Sprite _sprite) {
             / \
             | |
             | |
+            | |
             |.|
             |||
-          __|||__
-         '--. .--'
+            |||
+         .__|||__.
+         '--.^.--'
             ] [
             (_)
-
 )";
         } break;
 
         case Sprite::OH_AXE:
         {
-            std::cout << R"( 
-
-             .-.
+            std::cout << R"(
+             .-.    ___
          .---+=+---''//
           '''+=+-.  //
              [ ]  \//
              | |   '
              | |
              | |
+             | |
              [']
              ) (
              ) (
              [_]
-
 )";
         } break;
 
@@ -71,7 +134,6 @@ void Renderer::DisplaySprite(Sprite _sprite) {
         case Sprite::TORCH:
         {
             std::cout << R"(
-
             '(.
            (._)\'
            ')  (,
@@ -82,36 +144,52 @@ void Renderer::DisplaySprite(Sprite _sprite) {
              ||  Even in the darkest places,
              ||  you can find a spark of hope.
              []
+)";
+        } break;
 
+        case Sprite::POTION:
+        {
+            std::cout << R"(
+            .-.
+            |-|
+          .-' '-.
+         /_______\
+        |         |
+         \       /
+          '-----'
 )";
         } break;
 
         // MONSTERS
-        case Sprite::GHOUL:
+        case Sprite::SKELENTON_GIANT:
         {
             std::cout << R"(
-     
-          /////\\\
-         |/'/   '\|
-         |<Ò>..<Ó>|
-         | /++++\ |
-          \\++++//
-           ''''''
-
+                          -.           
+          .-~~~-.        /  '~..__..-~;
+         / .   . \      /           | |
+         |\_\ /_/|      \-..._      / /
+         )(.) (.)(   _.-/ /---.   ,' / 
+         \_. " ._/  /-~-\/     \,' ,'  
+          ||-~-||   /''\\\     | ,'    
+          \\___//   `/`\\\\    '`      
+           \'''/    / / (  )           
+            '-'    / /                 
 )";
         } break;
 
-        case Sprite::SKULL:
+        case Sprite::SKELENTON_FOOTMAN:
         {
             std::cout << R"(
-       
-          /''''''\
-         |        |
-         |<o>..<o>|
-         \'\++++/'/
-          \'++++'/
-           ''''''
-       
+                .-~-.      
+               /     \     
+               )'. .'(     
+               (<>.<>)     
+                )...(      
+             .-~\'''/~-..  
+           /  .__..-"-.;__\
+          / / |     /'7   |
+         / /  |    / /    |
+        { (   \   / /     /
 )";
 
         } break;
@@ -122,7 +200,7 @@ void Renderer::DisplaySprite(Sprite _sprite) {
             .  .
          . / __ \ .
           \\(||)//
-         /'.(..).'\
+         /'.(::).'\
         '  \ "" /  '
            '    '
 )";
@@ -134,54 +212,57 @@ void Renderer::DisplaySprite(Sprite _sprite) {
         case Sprite::TITLE:
         {
             std::cout << R"(
-                                   ____     __
-                                   \\  '--'_||_'--.
-     \\''||'''''//          //'    \\   -===[]==- |
-         ||        ||'\\'\\ ||'\\  \\    .--::-.  /
-         ||  //'\\ || || || || ((   \\  (   ||  )/
-         ||  )) (( || || || ||.//    \\ /   ||  '
-         ||  \\.// |/ '               \/    ||
-         ||          //'  ||  //'           ||
-         \\.  //'\\ '||'  ||' ||'\\ //'\\   ||
-              )) ((  ||   ||  || (( ))//'   ||
-     //''''\\ \\.//  ||   \\  || // \\.//   []
-     ||     '                               ][
-     ||    \\ '' //''\\ ||''\\ ||  //''\\   ][
-     ||    || || '   || ||  || ||' ||   '   ][
-     ||    || || //''|| ||  || ||  \\--\\   ][
-     ||    || || ||  || ||  || ||  .   ||   ][
-     \\....// \\ \\..\\ ||  || \\. \\..//   []
-
-)";
-        } break;
-
-        // ICONS
-        case Sprite::ICON_TARGET:
-        {
-            std::cout << R"(
-            v
-          >   <
-            ^
+                                 ____     __ 
+                                 \\  '--'_||_'--.
+   \\''||'''''//          //'    \\   -===[]==- |
+       ||        ||'\\'\\ ||'\\  \\    .--::-.  /
+       ||  //'\\ || || || || ((   \\  (   ||  )/
+       ||  )) (( || || || ||.//    \\ /   ||  '
+       ||  \\.// |/ '               \/    ||
+       ||          //'  ||  //'           ||
+       \\.  //'\\ '||'  ||' ||'\\ //'\\   ||
+            )) ((  ||   ||  || (( ))//'   ||
+   //''''\\ \\.//  ||   \\  || // \\.//   []
+   ||     '                               ][
+   ||    \\ '' //''\\ ||''\\ ||  //''\\   ][
+   ||    || || '   || ||  || ||' ||   '   ][
+   ||    || || //''|| ||  || ||  \\--\\   ][
+   ||    || || ||  || ||  || ||  .   ||   ][
+   \\....// \\ \\..\\ ||  || \\. \\..//   []
 )";
         } break;
 
         case Sprite::DEATH:
         {
-            std::cout << R"(
-
-    _____+_
-  +-'''''|  __
-         | /'\\
-         |'-=-'.
-        /'\  . \
-        \ /   \ \
-         ||    \  \
-         ||     '-'
-         ||       |
-         |\       /
-           '''---'
-
-)";
+            std::cout << R"(                                  
+                                                            
+                                    .--.   _.._______         
+                                   /--.'\  \..------._\       
+                                   \   \/\  ||        '       
+                                   /      \ ||                
+                                  /\    |  \||                
+                                  ||    |/ _||                
+                                  ||    | /'+:                
+                                  ||     \_/||                
+                _[]_              \|    \   ||                   
+               // /\\              |       \||                 
+              /// \ \\.____        |    \   ||\                      
+              _/   \  '           /|     \  ||\                
+             /__/\_/              \|        ||/                
+            \(   /(_               \_.-.__./||                 
+                                                               
+ 
+|   DEATH                                                      |
+|  ----------------------------------------------------------  |
+|   How sad.                                                   |
+|                                                              |
+|   Now, you are one of them... draggin a weapon to and fro.   |
+|   I can't reap your soul. The Tomb of the Giants is          |
+|   out of my domains.                                         |
+|                                                              |
+|   ...                                                        |
+|   There is no "rest in peace" for you...                     |
+|                                                              |)";
         } break;
 	}
 }
@@ -192,7 +273,7 @@ void Renderer::DisplaySprite(Sprite _sprite) {
         //|\          /|
         //|/____\/____\|
         ///(___/  \___)\
-        //\__   ||   __/
+        //\__   ''   __/
         // | '++++++' |
         //  \'++++++'/
         //   '-____-'
@@ -243,3 +324,24 @@ void Renderer::DisplaySprite(Sprite _sprite) {
          //     ][
          //     []
          //                )";
+
+//            -.
+//____________||_____
+//\ `~~~------||_____[)
+// `"~~-------\*.___.-.
+//             `~---~*'
+
+
+	  // .-~~~-.
+	  /// .   . \
+	  //|\_\ /_/|      -.
+	  //)(.) ( )(     /  '~..__..-~;
+	  //\_. " ._/    /           | |
+	  // ||-~-||     \-..._      / /
+	  // \\___//  _.-/ /---.   ,' /
+	  //  \'''/  /-~-\/     \,' ,'
+	  //   '-'   /''\\\     | ,'
+	  //         `/`\\\\    '`
+	  //         / / (  )
+	  //        / /
+	  //       / /

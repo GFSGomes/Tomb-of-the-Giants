@@ -1,9 +1,9 @@
 #include "Scene.hpp"
-#include "GameInterface.hpp"
-//#include "InteractionInterface.hpp"
+#include "GameInterfaceUI.hpp"
 #include "InteractionUI.hpp"
 #include "Equipment.hpp"
 #include "Torch.hpp"
+
 
 Scene::Scene(short gridSizeX, short gridSizeY) : grid{gridSizeX, gridSizeY}, currentScene{false}
 {
@@ -116,19 +116,27 @@ void Scene::LoadScene()
 			return;
 		}
 
-		GUI_Controls.Initialize(player);
+		UI_GameInterface.Initialize(player);
+
 		grid.UpdateGrid(SceneOBJ, player);
 
-		GUI_Controls.Input(player);
+		UI_GameInterface.Input(player);
 
-		for (short i = 0; i < SceneOBJ.size(); i++)
+		if (IsPaused)
 		{
-			if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
+			continue;
+		}
+		else
+		{
+			Interaction();
+
+			for (short i = 0; i < SceneOBJ.size(); i++)
 			{
-				enemy->Actions(false);
+				if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
+				{
+					enemy->Actions(false);
+				}
 			}
 		}
-
-		Interaction();
 	}
 }

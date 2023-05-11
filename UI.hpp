@@ -3,9 +3,6 @@
 #include <conio.h>;
 #include "Enemy.hpp";
 #include "Player.hpp";
-#include "SceneManager.hpp";
-
-extern bool Debug;
 
 struct UI
 {

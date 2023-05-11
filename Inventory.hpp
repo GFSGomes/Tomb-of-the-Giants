@@ -1,12 +1,18 @@
 #pragma once
-#include "GUI.hpp"
-#include "Slot.hpp"
+#define NOMINMAX
 #include <vector>
 #include <conio.h>
-#include "Equipment.hpp" //
+#include <limits>
+#include "Slot.hpp"
+#include "Equipment.hpp"
+#include "Renderer.hpp"
+#include <conio.h>
 
-struct Inventory : GUI
+struct Inventory
 {
+	bool active;
+	short index;
+	char input;
 	bool remove;
 	bool organize;
 	std::vector<Slot> Container;
@@ -23,7 +29,7 @@ struct Inventory : GUI
 
 	void AddItem(std::shared_ptr<Item>, short);
 
-	void DiscardItem(std::shared_ptr<Item>);
+	void DiscardItem(std::shared_ptr<Item>, short);
 
 	void OrganizeSlots();
 

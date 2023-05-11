@@ -13,18 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\GUI">
-      <UniqueIdentifier>{915e7093-c877-45b1-8d50-185968ca9a4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Origem\GUI">
-      <UniqueIdentifier>{bf4a3b41-689d-48c1-9a89-68b410fff04b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Origem\GUI\Inventory">
-      <UniqueIdentifier>{2ae4ae7e-07e4-47ec-8167-3774efc332b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Cabeçalho\GUI\Inventory">
-      <UniqueIdentifier>{459bc60a-17a8-40d0-bc9a-064da7388ca0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Arquivos de Origem\GameObjects">
       <UniqueIdentifier>{3b6bed17-63cc-4330-8e4f-0a8ac731204a}</UniqueIdentifier>
     </Filter>
@@ -39,6 +27,12 @@
     </Filter>
     <Filter Include="Arquivos de Origem\UI">
       <UniqueIdentifier>{6c310e96-129e-457e-bd8a-93bdddba2890}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\UI\Inventory">
+      <UniqueIdentifier>{2ae4ae7e-07e4-47ec-8167-3774efc332b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\UI\Inventory">
+      <UniqueIdentifier>{459bc60a-17a8-40d0-bc9a-064da7388ca0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,18 +50,6 @@
     </ClInclude>
     <ClInclude Include="SceneManager.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="GameInterface.hpp">
-      <Filter>Arquivos de Cabeçalho\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.hpp">
-      <Filter>Arquivos de Cabeçalho\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI.hpp">
-      <Filter>Arquivos de Cabeçalho\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Settings.hpp">
-      <Filter>Arquivos de Cabeçalho\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Entity.hpp">
       <Filter>Arquivos de Cabeçalho\GameObjects</Filter>
@@ -106,13 +88,10 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.hpp">
-      <Filter>Arquivos de Cabeçalho\GUI\Inventory</Filter>
+      <Filter>Arquivos de Cabeçalho\UI\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="Slot.hpp">
-      <Filter>Arquivos de Cabeçalho\GUI\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterCreation.hpp">
-      <Filter>Arquivos de Cabeçalho\GUI</Filter>
+      <Filter>Arquivos de Cabeçalho\UI\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="ItemDatabase.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
@@ -124,6 +103,15 @@
       <Filter>Arquivos de Cabeçalho\UI</Filter>
     </ClInclude>
     <ClInclude Include="InteractionUI.hpp">
+      <Filter>Arquivos de Cabeçalho\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettingsUI.hpp">
+      <Filter>Arquivos de Cabeçalho\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuUI.hpp">
+      <Filter>Arquivos de Cabeçalho\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInterfaceUI.hpp">
       <Filter>Arquivos de Cabeçalho\UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -155,18 +143,6 @@
     <ClCompile Include="Equipment.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="GameInterface.cpp">
-      <Filter>Arquivos de Origem\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Arquivos de Origem\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI.cpp">
-      <Filter>Arquivos de Origem\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Settings.cpp">
-      <Filter>Arquivos de Origem\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Database.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -174,10 +150,10 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Slot.cpp">
-      <Filter>Arquivos de Origem\GUI\Inventory</Filter>
+      <Filter>Arquivos de Origem\UI\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
-      <Filter>Arquivos de Origem\GUI\Inventory</Filter>
+      <Filter>Arquivos de Origem\UI\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
@@ -197,9 +173,6 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterCreation.cpp">
-      <Filter>Arquivos de Origem\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="ItemDatabase.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -210,6 +183,15 @@
       <Filter>Arquivos de Origem\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
+      <Filter>Arquivos de Origem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettingsUI.cpp">
+      <Filter>Arquivos de Origem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuUI.cpp">
+      <Filter>Arquivos de Origem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInterfaceUI.cpp">
       <Filter>Arquivos de Origem\UI</Filter>
     </ClCompile>
   </ItemGroup>

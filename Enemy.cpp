@@ -8,7 +8,7 @@ Enemy::Enemy(const char* _name, short _level, Sprite _sprite) : sprite{_sprite}
 
 	CON = INT = RES = WIS = DEX = level;
 
-	UpdateStatus(true, false);
+	UpdateStatus(true);
 }
 
 Enemy::~Enemy()
@@ -20,7 +20,7 @@ void Enemy::Actions(bool _forceMovement)
 {
 	short idleness;
 
-	_forceMovement ? idleness = 3 : idleness = 12;
+	_forceMovement ? idleness = 3 : idleness = 50;
 
 	short direction = rand() % idleness + 1;
 

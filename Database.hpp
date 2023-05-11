@@ -4,11 +4,10 @@
 #include "Weapon.hpp"
 #include "Potion.hpp"
 
-extern Enemy forestSpider;
-extern Enemy skeletonFootman;
+extern Enemy spider;
+extern Enemy undead;
 
-extern Weapon shortSword;
-extern Weapon longSword; 
-extern Weapon hatchet;
+extern Weapon sword;
+extern Weapon axe;
 
-extern Potion hp1;
+extern Potion potion;

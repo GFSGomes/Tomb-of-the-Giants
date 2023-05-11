@@ -1,4 +1,4 @@
-#include "MainMenu.hpp";
+#include "MainMenuUI.hpp"
 
 int main()
 {
@@ -6,4 +6,5 @@ int main()
 	std::ios::sync_with_stdio(false);
 	srand(time(0));
 	mainMenu.Initialize();
+	return 0;
 }

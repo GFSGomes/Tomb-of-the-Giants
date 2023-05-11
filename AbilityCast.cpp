@@ -109,7 +109,7 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 					out << std::fixed << damageDealt;
 					target->cur_health -= damageDealt;
 					
-					log = "  [" + caster->name + " used " + name + "]:\n  " + target->name + " HP -" + std::move(out).str() + "[!]";
+					log = caster->name + " used " + name + ":  " + target->name + " HP -" + std::move(out).str() + "[!]";
 
 				} break;
 					
@@ -120,12 +120,12 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 					out << std::fixed << damageDealt;
 					target->cur_health -= damageDealt;
 
-					log = "  [" + caster->name + " used " + name + "]:\n  " + target->name + " HP -" + std::move(out).str();
+					log = caster->name + " used " + name + ":  " + target->name + " HP -" + std::move(out).str();
 					break;
 
 				case Condition::MISS:
 					caster->cur_mana -= cost;
-					log = "  [" + caster->name + " used " + name + "]:\n  " + target->name + " Dodged!";
+					log = caster->name + " used " + name + ": " + target->name + " Dodged!";
 					break;
 
 				case Condition::OFM:

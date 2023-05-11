@@ -18,7 +18,7 @@ struct Entity;
 
 struct AbilityCast
 {
-	AbilityCast(){}; // Impede a criação de múltiplas instâncias ?
+	AbilityCast(){}; // Impede a criaï¿½ï¿½o de mï¿½ltiplas instï¿½ncias ?
 	~AbilityCast();
 
 	static json GetAbility(Ability);
