@@ -2,47 +2,57 @@
   "abilities": [
     {
       "name": "NONE",
-      "desc": "NONE",
+      "description": "Do nothing.",
       "cost": 0,
       "multiplier": 0,
       "base_value": 0,
-      "difficulty": 0,
+      "accuracy": 0,
       "id": 0
-    },{
+    },
+    {
       "name": "ATTACK",
-      "desc": "A basic attack that deals (100%) Physical Damage.",
+      "description": "A standart swing with a weapon, that deals (100%) Physical Damage.",
       "cost": 0,
       "multiplier": 1,
       "base_value": 0,
-      "difficulty": 15,
+      "accuracy": 90,
       "id": 1
     },
     {
-      "name": "DOUBLE_STRIKE",
-      "desc": "Attack your taget two times, dealing (80%) Physical Damage on each succefful hit.",
+      "name": "DOUBLE STRIKE",
+      "description": "Attack your taget two times, dealing (80%) Physical Damage on each succefful hit.",
       "cost": 1,
-      "multiplier": 0.95,
+      "multiplier": 0.8,
       "base_value": 0,
-      "difficulty": 20,
+      "accuracy": 80,
       "id": 2
     },
     {
-      "name": "FIREBALL",
-      "desc": "Throw a fireball on an target that deals (180%) Magical Damage.\n | Effect: also set fire to your target dealing (10%) Magical Damage for 3 rounds.",
-      "cost": 4,
-      "multiplier": 1.8,
+      "name": "BRUTAL STRIKE",
+      "description": "Brutally charges the target dealing (150%) Physical Damage.\n   Has a 50% Chance to cause Bleed, which deals 10% Physical Damage for 5 rounds.",
+      "cost": 2,
+      "multiplier": 1.5,
       "base_value": 0,
-      "difficulty": 35,
+      "accuracy": 65,
       "id": 3
     },
     {
-      "name": "BRUTAL_STRIKE",
-      "desc": "Brutally charges the target dealing (220%) Physical Damage.\n | Effect: has 10% chance of cause Bleed, which deals 5% of damage dealt as Physical Damage for 5 rounds.",
+      "name": "FIREBALL",
+      "description": "Throw a fireball on an target that deals (180%) Magical Damage.\n   FIREBALL also set fire to your target dealing (10%) Magical Damage for 3 rounds.",
       "cost": 3,
-      "multiplier": 2.20,
+      "multiplier": 1.8,
       "base_value": 0,
-      "difficulty": 30,
+      "accuracy": 80,
       "id": 4
+    },
+    {
+      "name": "MANA SHIELD",
+      "description": "Surround yourself with mana. Absorbs 3 + (30%) Maximum Mana.",
+      "cost": 5,
+      "multiplier": 0.3,
+      "base_value": 3,
+      "accuracy": 100,
+      "id": 5
     }
   ],
   "items": [],

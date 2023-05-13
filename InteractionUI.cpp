@@ -16,126 +16,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 
 	while (active)
 	{
-		system("cls");
-		
-		std::cout << " | " << enemy->name << " Lv." << enemy->level << "\n";
-		Renderer::StatusBar("HP", enemy->cur_health, enemy->max_health);
-
-		Renderer::DisplaySprite(enemy->sprite);
-		std::cout << "\n";
-
-		if (battleLog != "\0")
-		{
-			Renderer::Dialog(battleLog);
-			_getch();
-		}
-
-		std::cout << "\n";
-		battleLog = "\0";
-		std::cout << "\n";
-		std::cout << "\n";
-
-		if (advantage)
-		{
-			std::cout << " | " << player->name << " Lv." << player->level << "\n";
-			Renderer::StatusBar("HP", player->cur_health, player->max_health);
-			Renderer::StatusBar("MP", player->cur_mana, player->max_mana);
-			std::cout << "\n";
-
-			std::string text = AbilityCast::GetAbility(player->abilities[index])["desc"];
-			switch (index)
-			{
-				case 0:
-					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[0]) << "]" << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[1]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[2]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[3]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[4]) << "\n";
-					break;
-
-				case 1:
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[0]) << "\n";
-					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[1]) << "]" << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[2]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[3]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[4]) << "\n";
-					break;
-
-				case 2:
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[0]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[1]) << "\n";
-					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[2]) << "]" << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[3]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[4]) << "\n";
-					break;
-
-				case 3:
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[0]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[1]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[2]) << "\n";
-					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[3]) << "]" << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[4]) << "\n";
-					break;
-
-				case 4:
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[0]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[1]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[2]) << "\n";
-					std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[3]) << "\n";
-					std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[4]) << "]" << "\n";
-					
-					break;
-			}
-			std::cout << "\n";
-			Renderer::Dialog(text);
-
-			input = _getch();
-
-			switch (input)
-			{
-				case 'w': case 'W':
-					if (index > 0) index--;
-					break;
-
-				case 's': case 'S':
-					if (index < 4) index++;
-					break;
-
-				case '1': index = 0; break;
-				case '2': index = 1; break;
-				case '3': index = 2; break;
-				case '4': index = 3; break;
-				case '5': index = 4; break;
-
-				case '\r': {
-					battleLog = AbilityCast::Cast(player->abilities[index], player, enemy);
-					if (battleLog == "")
-					{
-						battleLog = " [Insufficient MANA]\n";
-					} 
-					else
-					{
-						advantage = !advantage;
-					}
-				} break;
-			}
-		}
-		else
-		{
-			short randomSkill = rand() % 4 + 1;
-			short cost = AbilityCast::GetAbility(player->abilities[randomSkill])["cost"];
-			if (enemy->cur_mana >= cost)
-			{
-				battleLog = AbilityCast::Cast(enemy->abilities[randomSkill], enemy, player);
-			}
-			else
-			{
-				battleLog = AbilityCast::Cast(enemy->abilities[0], enemy, player);
-			}
-			_getch();
-			advantage = !advantage;
-		}
-
+		#pragma region BattleResults
 		if (player->cur_health <= 0)
 		{
 			player->alive = false;
@@ -169,9 +50,154 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 				player->UpdateStatus(true);
 				player->cur_experience += over;
 			}
+
 			input = _getch();
 			enemy->alive = false;
 			active = false;
+		}
+		#pragma endregion
+		
+		#pragma region Rendering
+		system("cls");
+
+		std::cout << " | " << enemy->name << " Lv." << enemy->level << "\n";
+		Renderer::StatusBar("HP", enemy->cur_health, enemy->max_health);
+		Renderer::StatusBar("MP", enemy->cur_mana, enemy->max_mana);
+
+		Renderer::DisplaySprite(enemy->sprite);
+		std::cout << "\n";
+
+		std::cout << " | " << player->name << " Lv." << player->level << "\n";
+		Renderer::StatusBar("HP", player->cur_health, player->max_health);
+		Renderer::StatusBar("MP", player->cur_mana, player->max_mana);
+		std::cout << "\n";
+
+		if (battleLog != "\0")
+		{
+			Renderer::Dialog(battleLog);
+
+			if (advantage)
+			{
+				if (player->UpdateSideEffects() != "")
+				{
+					battleLog = player->UpdateSideEffects();
+					Renderer::Dialog(battleLog);
+					_getch();
+				}
+				std::cout << "\n";
+			}
+			else
+			{
+				if (enemy->UpdateSideEffects() != "")
+				{
+					battleLog = enemy->UpdateSideEffects();
+					Renderer::Dialog(battleLog);
+					_getch();
+				}
+				std::cout << "\n";
+			}
+			std::cout << "\n";
+		}
+		else
+		{
+			std::cout << "\n";
+			std::cout << "\n";
+			std::cout << "\n";
+		}
+
+		battleLog = "\0";
+		#pragma endregion
+
+		// PLAYER TURN
+		if (advantage)
+		{
+			if (!player->can_fight)
+			{
+				battleLog = player->name + " is stunned for " + std::to_string(player->_stunned_turns) + "turns";
+				advantage = !advantage;
+				return;
+			}
+			
+			std::string abilityDescription = AbilityCast::GetAbility(player->abilities[index])["description"];
+			
+			switch (index)
+			{
+				if (player->abilities.size() >= index)
+				{
+					case 0: case 1: case 2: case 3: case 4:
+					{
+						for (short i = 0; i < player->abilities.size(); i++)
+						{
+							short ability_cost = AbilityCast::GetAbility(player->abilities[i])["cost"];
+
+							i == index ?
+								std::cout << " [" << AbilityCast::GetAbilityName(player->abilities[index]) << " (" << ability_cost << ")" << "]" << "\n" :
+								std::cout << "  " << AbilityCast::GetAbilityName(player->abilities[i]) << " (" << ability_cost << ")" << "\n";
+						}
+						break;
+					}
+				}
+			}
+			std::cout << "\n";
+
+			std::cout << " | " << abilityDescription << "\n";
+
+			input = _getch();
+
+			switch (input)
+			{
+				case 'w': case 'W':
+					if (index > 0) index--;
+					break;
+
+				case 's': case 'S':
+					if (index < player->abilities.size() - 1) index++;
+					break;
+
+				case '\r': 
+				{
+					battleLog = AbilityCast::Cast(player->abilities[index], player, enemy);
+
+					if (battleLog == "")
+					{
+						battleLog = "[!] WARING: Insufficient Mana [!]\n";
+					}
+					else
+					{
+						advantage = !advantage;
+					}
+					break;
+				}
+			}
+		}
+
+		// ENEMY TURN
+		else
+		{
+			if (!enemy->can_fight){
+				battleLog = enemy->name + " is stunned for " + std::to_string(enemy->_stunned_turns) + "turns";
+				advantage = !advantage;
+				return;
+			}
+
+			short randomSkill = rand() % enemy->abilities.size();
+
+			short cost = AbilityCast::GetAbility(player->abilities[randomSkill])["cost"];
+			
+			if (enemy->cur_mana >= cost)
+			{
+				battleLog = AbilityCast::Cast(enemy->abilities[randomSkill], enemy, player);
+			}
+			else
+			{
+				battleLog = AbilityCast::Cast(enemy->abilities[0], enemy, player);
+			}
+
+			if (!_getch())
+			{
+				Sleep(10000);
+			}
+			advantage = !advantage;
 		}
 	}
 }
@@ -248,7 +274,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 
 							short flee = rand() % 100 + 1;
 
-							if (player->flee_rate + flee >= 50 + enemy->level)
+							if (player->flee + flee >= 50 + enemy->level)
 							{
 								enemy->Actions(true);
 								active = false;
@@ -306,6 +332,8 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 				std::cout << " |  Use" << "\n";
 				std::cout << " | > Ignore" << "\n";
 				break;
+
+			default: break;
 		}
 
 		input = _getch();
@@ -313,18 +341,23 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 		switch (input)
 		{
 			case 'w': case 'W': case 'a': case 'A':
+			{
 				if (index > 0) index--;
 				break;
+			}
 
 			case 's': case 'S': case 'd': case 'D':
+			{
 				if (index < 2) index++;
 				break;
+			}
 
 			case '\r':
 			{
 				switch (index)
 				{
 					case 0: 
+					{
 						player->inventory.AddItem(item, 1);
 
 						sceneItemRemoval = true;
@@ -333,6 +366,7 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 
 						Renderer::Dialog(item->name + " added to Inventory");
 						break;
+					}
 
 					case 1:
 					{
@@ -357,20 +391,30 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 					}
 
 					case 2:
+					{
 						sceneItemRemoval = false;
 						std::cout << "\n";
-						std::cout << "  [" << item->name << " was ignored]" << "\n";
+						Renderer::Dialog(item->name + " was ignored and desappeared into the darkness.");
 						break;
+					}
+						
 				}
+
 				input = _getch();
 				active = false;
 			}
 
 
 			case 27:
+			{
 				index = 0;
-				sceneItemRemoval = false;
 				break;
+			}
+
+			default:
+			{
+				break;
+			}
 		}
 	}
 	return sceneItemRemoval;

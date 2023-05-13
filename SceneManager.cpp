@@ -4,7 +4,7 @@ bool GameOver = false;
 
 SceneManager::SceneManager()
 {
-	Scene scene_00{12, 6};
+	Scene scene_00{20, 10};
 	scene_00.AddObject(std::make_shared<Player>(PLAYER)); // Ponteiro para o player
 	scene_00.AddObject(std::make_shared<Weapon>(axe));
 	scene_00.AddObject(std::make_shared<Potion>(potion));

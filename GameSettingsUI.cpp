@@ -73,11 +73,11 @@ bool GameSettingsUI::Initialize()
 
 		switch (input)
 		{
-			case 'w': case 'W': case 'a': case 'A': 
+			case 'w': case 'W':
 				if (index > 0) index--; 
 				break;
 
-			case 's': case 'S': case 'd': case 'D': 
+			case 's': case 'S':
 				if (index < 2) index++; 
 				break;
 
@@ -91,6 +91,7 @@ bool GameSettingsUI::Initialize()
 				{
 					case 0: 
 						DebugMode = !DebugMode;
+						index = 2;
 						break;
 
 					case 1:
@@ -100,7 +101,7 @@ bool GameSettingsUI::Initialize()
 					case 2: 
 						input = '\0';
 						index = 0;
-						active = false; 
+						active = false;
 						break;
 					
 					default: break;

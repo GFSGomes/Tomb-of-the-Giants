@@ -114,6 +114,9 @@
     <ClInclude Include="GameInterfaceUI.hpp">
       <Filter>Arquivos de Cabeçalho\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Armor.hpp">
+      <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Grid.cpp">

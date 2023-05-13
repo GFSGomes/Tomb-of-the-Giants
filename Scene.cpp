@@ -80,6 +80,8 @@ void Scene::Interaction()
 					}
 					else
 					{
+						item->SpawnRandom();
+
 						break;
 					}
 				}

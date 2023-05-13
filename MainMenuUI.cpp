@@ -74,11 +74,12 @@ bool MainMenuUI::Initialize()
 						sceneManager.StartGame();
 					} break;
 
-					case 1: 
-						UI_GameSettings.Initialize(); 
+					case 1:
+						index = 0;
+						UI_GameSettings.Initialize();
 						break;
 
-					case 2: 
+					case 2:
 						active = false; 
 						break;
 				}

@@ -3,6 +3,7 @@
 #include <fstream>
 #include "Entity.hpp"
 #include <nlohmann/json.hpp>
+//#include <iomanip>;
 
 using json = nlohmann::json;
 struct Entity;
@@ -12,8 +13,14 @@ struct Entity;
 	 NONE,
 	 ATTACK,
 	 DOUBLE_STRIKE,
-	 FIREBALL,
 	 BRUTAL_STRIKE,
+	 FIREBALL,
+	 MANA_SHIELD,
+ };
+
+ enum class Condition
+ {
+	 HIT, MISS, CRIT, OFM
  };
 
 struct AbilityCast

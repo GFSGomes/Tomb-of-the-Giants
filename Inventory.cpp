@@ -252,11 +252,19 @@ std::shared_ptr<Item> Inventory::Initialize()
 
 		hoveredSlot = std::make_shared<Slot>(Container[index]);
 
-		std::cout << " |" << "\n";
-		hoveredSlot ?
-		std::cout << " |  >>> " << hoveredSlot->item->description << "\n" :
-		std::cout << " |" << "\n";
-		std::cout << " |" << "\n";
+		std::cout << "\n";
+		if (hoveredSlot)
+		{
+			if (std::dynamic_pointer_cast<Equipment>(hoveredSlot->item))
+			{
+				std::cout << " |  E: " << hoveredSlot->item->description << "\n";
+			}
+			else
+			{
+				std::cout << " |  I: " << hoveredSlot->item->description << "\n";
+			}
+		}
+		std::cout << "\n";
 
 		for (int i = 0; i < Container.size(); ++i)
 		{
@@ -265,18 +273,13 @@ std::shared_ptr<Item> Inventory::Initialize()
 			{
 				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(Container[i].item))
 				{
-					if (equip->equiped)
-					{
-						std::cout << " | E> " << Container[i].item->name;
-					}
-					else
-					{
-						std::cout << " |  > " << Container[i].item->name;
-					}
+					equip->equiped ?
+						std::cout << " | > " << Container[i].item->name << " [Equipped]" :
+						std::cout << " | > " << Container[i].item->name;
 				}
 				else
 				{
-					std::cout << " |  > " << Container[i].item->name << " (" << Container[i].amount << ")";
+					std::cout << " | > " << Container[i].item->name << " (" << Container[i].amount << ")";
 				}
 			}
 			else
@@ -284,10 +287,8 @@ std::shared_ptr<Item> Inventory::Initialize()
 				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(Container[i].item))
 				{
 					equip->equiped ?
-						std::cout << " | E " :
-						std::cout << " |   ";
-
-					std::cout << Container[i].item->name;
+						std::cout << " |   " << Container[i].item->name << " [E]":
+						std::cout << " |   " << Container[i].item->name;
 				}
 				else
 				{

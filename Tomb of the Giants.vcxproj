@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="AbilityCast.hpp" />
     <ClInclude Include="Archetype.hpp" />
+    <ClInclude Include="Armor.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Equipment.hpp" />
