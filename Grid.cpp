@@ -66,6 +66,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 							if (fov->proximityReveal)
 							{
 								icon = " ";  // Unicode
+								CompatibilityMode ?
+									icon = "." : // Ascii
+									icon = "·";  // Unicode
 							}
 
 							if (player->isTorchActive)
@@ -120,6 +123,28 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 										}
 									}
 								}
+
+								if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJ[i]))
+								{
+									if (portal->posX == fov->posX && portal->posY == fov->posY)
+									{
+										 /* portal - Tocha Acesa */
+
+										if (fov->proximityReveal)
+										{
+											CompatibilityMode ?
+												icon = "D" :
+												icon = "□";
+										}
+
+										if (player->isTorchActive || DebugMode)
+										{
+											CompatibilityMode ?
+												icon = "D" :
+												icon = "□";
+										}
+									}
+								}
 							}
 						}
 					}
@@ -154,6 +179,19 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 								CompatibilityMode ?
 									icon = "i" :
 									icon = "▴";
+							}
+						}
+					}
+
+					if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJ[i]))
+					{
+						if (portal->active)
+						{
+							if (DebugMode) // DEBUG
+							{
+								CompatibilityMode ?
+									icon = "D" :
+									icon = "□";
 							}
 						}
 					}

@@ -1,13 +1,11 @@
 #include "Scene.hpp"
 #include "GameInterfaceUI.hpp"
 #include "InteractionUI.hpp"
-#include "Equipment.hpp"
-#include "Torch.hpp"
 
-
-Scene::Scene(short gridSizeX, short gridSizeY) : grid{gridSizeX, gridSizeY}, currentScene{false}
+Scene::Scene(short _gridSizeX, short _gridSizeY) : grid{_gridSizeX, _gridSizeY}, currentScene{false}
 {
-
+	gridSizeX = _gridSizeX;
+	gridSizeY = _gridSizeY;
 }
 
 Scene::~Scene()
@@ -37,7 +35,10 @@ void Scene::SpawnObjects()
 {
 	for (std::shared_ptr<GameObject> obj : SceneOBJ)
 	{
-		obj->SpawnRandom();
+		if (!std::dynamic_pointer_cast<Portal>(obj))
+		{
+			obj->SpawnRandom();
+		}
 
 		// Prevenindo sobreposição durante o spawn;
 		for (std::shared_ptr<GameObject> other : SceneOBJ)
@@ -78,12 +79,6 @@ void Scene::Interaction()
 					{
 						SceneOBJ.erase(SceneOBJ.begin() + i);
 					}
-					else
-					{
-						item->SpawnRandom();
-
-						break;
-					}
 				}
 
 				else if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(obj))
@@ -94,6 +89,13 @@ void Scene::Interaction()
 					{
 						SceneOBJ.erase(SceneOBJ.begin() + i);
 					}
+				}
+
+				//PORTAL
+				else if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
+				{
+					currentScene = false;
+					return;
 				}
 			}
 		}
@@ -108,7 +110,9 @@ void Scene::Interaction()
 void Scene::LoadScene()
 {
 	srand(time(0));
-	bool currentScene = true;
+
+	currentScene = true;
+
 	SpawnObjects();
 
 	while (currentScene)

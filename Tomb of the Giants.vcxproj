@@ -156,11 +156,10 @@
     <ClInclude Include="InteractionUI.hpp" />
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="Item.hpp" />
-    <ClInclude Include="Database.hpp" />
-    <ClInclude Include="ItemDatabase.hpp" />
     <ClInclude Include="Light.hpp" />
     <ClInclude Include="MainMenuUI.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Portal.hpp" />
     <ClInclude Include="Potion.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="Scene.hpp" />
@@ -174,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="AbilityCast.cpp" />
     <ClCompile Include="Archetype.cpp" />
+    <ClCompile Include="Armor.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Equipment.cpp" />
@@ -183,11 +183,10 @@
     <ClCompile Include="InteractionUI.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Database.cpp" />
-    <ClCompile Include="ItemDatabase.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MainMenuUI.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />

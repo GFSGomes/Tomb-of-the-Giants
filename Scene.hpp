@@ -1,11 +1,12 @@
 #pragma once
 #include "Grid.hpp"
-#include "Database.hpp"
 
 struct Scene
 {
-	bool currentScene;
 	Grid grid;
+	bool currentScene;
+	short gridSizeX;
+	short gridSizeY;
 	std::shared_ptr<Player> player;
 	std::vector<std::shared_ptr<GameObject>> SceneOBJ;
 

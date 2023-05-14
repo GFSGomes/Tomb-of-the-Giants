@@ -1,6 +1,6 @@
 #pragma once
-#include "Equipment.hpp";
-#include "Entity.hpp";
+#include "Equipment.hpp"
+#include "Entity.hpp"
 
 enum class WeaponType
 {
@@ -10,9 +10,13 @@ enum class WeaponType
 struct Weapon : Equipment
 {
 	WeaponType weaponType;
-	short b_might;
-	short b_magic;
+	
+	short physical_power;
+	short magical_power;
+	short accuracy;
+	float critical_chance;
+	float critical_damage;
 
-	Weapon(WeaponType, const char*, const char*, short, short);
+	Weapon(WeaponType, const char*, const char*, short, short, short, float, float);
 	~Weapon();
 };

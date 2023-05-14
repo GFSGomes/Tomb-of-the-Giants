@@ -1,7 +1,4 @@
-#pragma once
 #include "Renderer.hpp"
-
-//bool CompatibilityMode;
 
 Renderer::Renderer() {
 
@@ -10,7 +7,6 @@ Renderer::Renderer() {
 Renderer::~Renderer() {
 
 }
-
 
 void Renderer::Dialog(std::string _text)
 {
@@ -39,7 +35,7 @@ void Renderer::StatusBar(const char* _bar_name, float _cur, float _max)
 {
     std::setprecision(0);
 
-    short barLength = 10;
+    short barLength = 20;
     short barUnit = 100 / barLength;
 
     if (CompatibilityMode)
@@ -66,7 +62,7 @@ void Renderer::StatusBar(const char* _bar_name, float _cur, float _max)
     {
         float pct = (_cur / _max) * 100;
         
-        std::cout << " | " << _bar_name << ": ";
+        std::cout << " | " << _bar_name << " |";
 
         for (short i = 0; i < barLength; i++)
         {
@@ -77,19 +73,21 @@ void Renderer::StatusBar(const char* _bar_name, float _cur, float _max)
             }
             else
             {
-                std::cout << "□";
+                std::cout << " ";
             }
         }
-        std::cout << " " << pct << "%" << "\n";
+        std::cout << "| " << _cur << " (" << pct << "%)" << "\n";
     }
 }
 
-void Renderer::DisplaySprite(Sprite _sprite) {
+void Renderer::DisplaySprite(Sprite _sprite)
+{
 
-	switch (_sprite) {
+    switch (_sprite)
+    {
         case Sprite::NONE:
         {
-            
+
         } break;
 
         // EQUIPMENT:
@@ -129,7 +127,68 @@ void Renderer::DisplaySprite(Sprite _sprite) {
 )";
         } break;
 
+        case Sprite::DAGGER:
+        {
+            std::cout << R"(
+                    -.
+        ____________||_____
+        \ `~~~------||_____[)
+         `"~~-------\*.___.-.
+                     `~---~*'
+)";
+            break;
+        }
 
+        case Sprite::LIGHT_BODY:
+        {
+            std::cout << R"(
+        ___--''--___
+    _.-'\  '-__-'  /'-._
+    \   /          |   /
+     \-'|      /   |'-/
+        |   _-'    |
+        |       /  |
+        )_\___//___(
+        ]:_:_[]_:_:[
+        /  /'  \   \
+        '-------'--'  
+)";
+            break;
+        }
+        case Sprite::MEDIUM_BODY:
+        {
+            std::cout << R"(
+          __.-----.__
+        ///\____.-'/  \
+       //\  /\  /\|    \
+      / | \/  \/  \     \
+     (  | /\  /\  /\     )
+      '-|/  \/  \/  \__-'
+        \\__/\__/\__//
+        )[][__][]___(
+        | /\\/  \/  \\
+        |/  \\  /\  /|
+        |\__/\\/__\/-|
+        \__/  \____-'
+          
+)";
+            break;
+        }
+        case Sprite::HEAVY_BODY:
+        {
+            std::cout << R"(
+          __.-----.__
+         / \____.-'/ \
+        /   /     |   | 
+       /   /       \__/
+       |             /
+       \            /
+        \          /\
+        /'        ' /
+        '-________-'
+)";
+            break;
+        }
         // ITEMS:
         case Sprite::TORCH:
         {
@@ -264,66 +323,67 @@ void Renderer::DisplaySprite(Sprite _sprite) {
 |   There is no "rest in peace" for you...                     |
 |                                                              |)";
         } break;
-	}
+    }
 }
 
-        //    std::cout << R"(
-        //  .--------.
-        // /          \
-        //|\          /|
-        //|/____\/____\|
-        ///(___/  \___)\
-        //\__   ''   __/
-        // | '++++++' |
-        //  \'++++++'/
-        //   '-____-'
-        //              )";
 
-         //   std::cout << R"(
-         //   .    .
-         //. /      \ .
-         //| | /""\ | |
-         //\ \(    )/ /
-         // \_\\__//_/
-         // / //  \\ \
-         //| | \::/ | |
-         //' \  ""  / '
-         //   '    '
-         //            )";
+//    std::cout << R"(
+//  .--------.
+// /          \
+//|\          /|
+//|/____\/____\|
+//(___/  \___)\
+//\__   ''   __/
+// | '++++++' |
+//  \'++++++'/
+//   '-____-'
+//              )";
 
-        // std::cout << R"(
-        //   /\
-        //  |  |
-        //  |  |
-        //  |  |
-        //  |  |
-        //  |  |
-        //  |  |
-        //  |/\|
-        //  ))((
-        //  \\//
-        //[//[]//]
-        //   ||
-        //   ||
-        //   []
-        //        )";
+//   std::cout << R"(
+//   .    .
+//. /      \ .
+//| | /""\ | |
+//\ \(    )/ /
+// \_\\__//_/
+// / //  \\ \
+//| | \::/ | |
+//' \  ""  / '
+//   '    '
+//            )";
 
-         //   std::cout << R"( 
-         //     []     ____
-         //.--'_||_'--'  //
-         //| -==[]===-   //
-         //\  .-||--.    //
-         // \(  ||   )  //
-         //  '  ||   \ //
-         //     ||    \/
-         //     ||
-         //     ||
-         //     []
-         //     ][
-         //     ][
-         //     ][
-         //     []
-         //                )";
+// std::cout << R"(
+//   /\
+//  |  |
+//  |  |
+//  |  |
+//  |  |
+//  |  |
+//  |  |
+//  |/\|
+//  ))((
+//  \\//
+//[//[]//]
+//   ||
+//   ||
+//   []
+//        )";
+
+//   std::cout << R"( 
+//     []     ____
+//.--'_||_'--'  //
+//| -==[]===-   //
+//\  .-||--.    //
+// \(  ||   )  //
+//  '  ||   \ //
+//     ||    \/
+//     ||
+//     ||
+//     []
+//     ][
+//     ][
+//     ][
+//     []
+//                )";
 
 //            -.
 //____________||_____
@@ -331,17 +391,16 @@ void Renderer::DisplaySprite(Sprite _sprite) {
 // `"~~-------\*.___.-.
 //             `~---~*'
 
-
-	  // .-~~~-.
-	  /// .   . \
-	  //|\_\ /_/|      -.
-	  //)(.) ( )(     /  '~..__..-~;
-	  //\_. " ._/    /           | |
-	  // ||-~-||     \-..._      / /
-	  // \\___//  _.-/ /---.   ,' /
-	  //  \'''/  /-~-\/     \,' ,'
-	  //   '-'   /''\\\     | ,'
-	  //         `/`\\\\    '`
-	  //         / / (  )
-	  //        / /
-	  //       / /
+// .-~~~-.
+// .   . \
+//|\_\ /_/|      -.
+//)(.) ( )(     /  '~..__..-~;
+//\_. " ._/    /           | |
+// ||-~-||     \-..._      / /
+// \\___//  _.-/ /---.   ,' /
+//  \'''/  /-~-\/     \,' ,'
+//   '-'   /''\\\     | ,'
+//         `/`\\\\    '`
+//         / / (  )
+//        / /
+//       / /

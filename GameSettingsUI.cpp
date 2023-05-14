@@ -20,8 +20,8 @@ bool GameSettingsUI::Initialize()
 	{
 		system("cls");
 
-		std::cout << " |  GAME SETTINGS                                       |" << "\n";
-		std::cout << " |  --------------------------------------------------  |" << "\n";
+		std::cout << " |  GAME SETTINGS            |" << "\n";
+		std::cout << " |  -----------------------  |" << "\n";
 
 
 
@@ -31,42 +31,46 @@ bool GameSettingsUI::Initialize()
 			{
 
 				DebugMode ? 
-				std::cout << " | > Debug Mode                                   [X]   |" << "\n" : 
-				std::cout << " | > Debug Mode                                   [ ]   |" << "\n";
+				std::cout << " | > Debug Mode         [X]  |" << "\n" : 
+				std::cout << " | > Debug Mode         [ ]  |" << "\n";
 				CompatibilityMode ?
-				std::cout << " |  Compatibility Mode                            [X]   |" << "\n" :
-				std::cout << " |  Compatibility Mode                            [ ]   |" << "\n";
-				std::cout << " |  Back                                                |" << "\n";
+				std::cout << " |   Compatibility Mode [X]  |" << "\n" :
+				std::cout << " |   Compatibility Mode [ ]  |" << "\n";
+
+				std::cout << " |                           |" << "\n";
+				std::cout << " |   Back                    |" << "\n";
 				break;
 			}
 
 			case 1:
 			{
 				DebugMode ?
-				std::cout << " |  Debug Mode                                    [X]   |" << "\n" :
-				std::cout << " |  Debug Mode                                    [ ]   |" << "\n";
+				std::cout << " |   Debug Mode         [X]  |" << "\n" :
+				std::cout << " |   Debug Mode         [ ]  |" << "\n";
 				CompatibilityMode ?
-				std::cout << " | > Compatibility Mode                           [X]   |" << "\n" :
-				std::cout << " | > Compatibility Mode                           [ ]   |" << "\n";
+				std::cout << " | > Compatibility Mode [X]  |" << "\n" :
+				std::cout << " | > Compatibility Mode [ ]  |" << "\n";
 
-				std::cout << " |  Back                                                |" << "\n";
+				std::cout << " |                           |" << "\n";
+				std::cout << " |   Back                    |" << "\n";
 				break;
 			}
 
 			case 2:
 			{
 				DebugMode ?
-				std::cout << " |  Debug Mode                                    [X]   |" << "\n" :
-				std::cout << " |  Debug Mode                                    [ ]   |" << "\n";
+				std::cout << " |   Debug Mode         [X]  |" << "\n" :
+				std::cout << " |   Debug Mode         [ ]  |" << "\n";
 				CompatibilityMode ?
-				std::cout << " |  Compatibility Mode                            [X]   |" << "\n" :
-				std::cout << " |  Compatibility Mode                            [ ]   |" << "\n";
+				std::cout << " |   Compatibility Mode [X]  |" << "\n" :
+				std::cout << " |   Compatibility Mode [ ]  |" << "\n";
 
-				std::cout << " | > Back                                               |" << "\n";
+				std::cout << " |                           |" << "\n";
+				std::cout << " | > Back                    |" << "\n";
 				break;
 			}
 		}
-		std::cout << " |______________________________________________________|" << "\n";
+				std::cout << " '---------------------------'" << "\n";
 
 
 		input = _getch();
@@ -96,6 +100,7 @@ bool GameSettingsUI::Initialize()
 
 					case 1:
 						CompatibilityMode = !CompatibilityMode;
+						index = 2;
 						break;
 
 					case 2: 

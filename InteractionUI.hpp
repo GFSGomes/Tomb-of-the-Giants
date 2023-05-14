@@ -1,8 +1,11 @@
 #pragma once
-#include "UI.hpp";
+#include "UI.hpp"
 
 struct InteractionUI : UI
 {
+	std::string battleLog;
+	std::string battleEffect;
+
 	InteractionUI();
 	~InteractionUI();
 

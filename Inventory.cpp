@@ -1,6 +1,6 @@
 #include "Inventory.hpp"
 
-Inventory::Inventory() : active{false}, index{0}, input{'\0'}, Container{}, hoveredSlot{nullptr}, selectedSlot{nullptr}, organize{false}, remove{false}
+Inventory::Inventory() : active{false}, index{0}, input{'\0'}, Container{}, hoveredSlot{nullptr}, selectedSlot{nullptr}, organize{false}
 {
 
 }
@@ -103,6 +103,8 @@ int Inventory::GetSlotIndex(std::shared_ptr<Slot> _slot)
 			return i;
 		}
 	}
+
+	return NULL;
 }
 
 std::shared_ptr<Slot> Inventory::GetSlot(std::shared_ptr<Item> _item)
@@ -115,20 +117,26 @@ std::shared_ptr<Slot> Inventory::GetSlot(std::shared_ptr<Item> _item)
 			return slot;
 		}
 	}
+
+	return nullptr;
 }
 
-void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0)
+void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0, bool _usingItem = false)
 {
 	if (_amount == 0)
 	{
 		std::cout << "\n";
-		std::cout << " | How many " << _item->name << " do you want to discard?" << "\n";
+		std::cout << " | [?] How many " << _item->name << " do you want to discard?" << "\n";
 		std::cout << " | > ";
 	}
 
+	short _index = 0;
+	bool _active = true;
+	char _input = '\0';
+
 	short amount = _amount;
 
-	while (true)
+	while (active)
 	{
 		if (_amount == 0)
 		{
@@ -136,11 +144,78 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0)
 
 			if (!std::cin)
 			{
-				std::cout << " | Please, enter a integer:" << std::endl;
+				std::cout << " | [!] Please, enter a integer:" << std::endl;
 				std::cin.clear();
 				std::cout << " | > ";
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				continue;
+			}
+		}
+
+		// Confirmação
+		while (_active && !_usingItem)
+		{
+			system("cls");
+			std::cout << "\n";
+			std::cout << " | [!] " << _item->name << " will be discarded:" << "\n";
+			Renderer::DisplaySprite(_item->sprite);
+			std::cout << "\n";
+			std::cout << " | Are you sure?" << "\n";
+			std::cout << " | " << "\n";
+
+			switch (_index)
+			{
+				case 0:
+				{
+					std::cout << " | > Yes" << "\n";
+					std::cout << " |   No" << "\n";
+					break;
+				}
+				case 1:
+				{
+					std::cout << " |   Yes" << "\n";
+					std::cout << " | > No" << "\n";
+					break;
+				}
+			}
+
+			_input = _getch();
+
+			switch (_input)
+			{
+				case 'w': case 'W':
+				{
+					if (_index > 0) _index--;
+					break;
+				}
+				case 's': case 'S':
+				{
+					if (_index < 1) _index++;
+					break;
+				}
+				case '\r':
+				{
+					switch (_index)
+					{
+						case 0:
+						{
+							_active = false;
+							continue;
+						}
+						case 1:
+						{
+							active = false;
+							_active = false;
+							return;
+						}
+					}
+				}
+				case 27:
+				{
+					active = false;
+					_active = false;
+					return;
+				}
 			}
 		}
 
@@ -191,13 +266,17 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0)
 							hoveredSlot = nullptr;
 						}
 					}
-
-
+					if (!_usingItem)
+					{
+						std::cout << "\n";
+						Renderer::Dialog(_item->name + " has been discarded.");
+						if (_getch());
+					}
 					return;
 				}
 			}
 		}
-
+		
 		return;
 	}
 }
@@ -236,9 +315,7 @@ std::shared_ptr<Item> Inventory::Initialize()
 		organize ? 
 		std::cout << " | |TAB| Organize [X]" : 
 		std::cout << " | |TAB| Organize [ ]";
-		remove ? 		     
-		std::cout << "   |BKS| Remove [X]" : 
-		std::cout << "   |BKS| Remove [ ]";
+		std::cout << "\n";
 		std::cout << "\n";
 
 		if (Container.size() == 0)
@@ -246,25 +323,26 @@ std::shared_ptr<Item> Inventory::Initialize()
 			input = '\0';
 			index = 0;
 			hoveredSlot = nullptr;
-			_getch();
+			if (_getch());
 			return nullptr;
 		}
 
 		hoveredSlot = std::make_shared<Slot>(Container[index]);
 
-		std::cout << "\n";
+		#pragma region ITEM_DESCRIPTION
 		if (hoveredSlot)
 		{
 			if (std::dynamic_pointer_cast<Equipment>(hoveredSlot->item))
 			{
-				std::cout << " |  E: " << hoveredSlot->item->description << "\n";
+				std::cout << " | [Equipment] " << hoveredSlot->item->description << "\n";
 			}
 			else
 			{
-				std::cout << " |  I: " << hoveredSlot->item->description << "\n";
+				std::cout << " | [Item] " << hoveredSlot->item->description << "\n";
 			}
 		}
 		std::cout << "\n";
+		#pragma endregion
 
 		for (int i = 0; i < Container.size(); ++i)
 		{
@@ -279,7 +357,7 @@ std::shared_ptr<Item> Inventory::Initialize()
 				}
 				else
 				{
-					std::cout << " | > " << Container[i].item->name << " (" << Container[i].amount << ")";
+					std::cout << " | > " << Container[i].amount << " x " << Container[i].item->name;
 				}
 			}
 			else
@@ -294,6 +372,11 @@ std::shared_ptr<Item> Inventory::Initialize()
 				{
 					std::cout << " |   " << Container[i].item->name << " (" << Container[i].amount << ")";
 				}
+			}
+
+			if (selectedSlot->item->name == Container[i].item->name)
+			{
+				std::cout << " <";
 			}
 
 			std::cout << "\n";
@@ -311,16 +394,12 @@ std::shared_ptr<Item> Inventory::Initialize()
 				if (index < Container.size() - 1) index++; 
 				break;
 
-			case '\t': organize = !organize; remove = false; break;
-			case '\b': remove = !remove; organize = false; break;
+			case '\t': 
+				organize = !organize; 
+				break;
+			
 			case '\r':
 			{
-				if (remove)
-				{
-					DiscardItem(hoveredSlot->item);
-					break;
-				}
-
 				if (organize)
 				{
 					OrganizeSlots();
@@ -341,9 +420,11 @@ std::shared_ptr<Item> Inventory::Initialize()
 			break;
 			
 			case 27: 
+			{
 				active = false;
 				selectedSlot = nullptr;
-				break;
+				return nullptr;
+			}
 		}
 	}
 }

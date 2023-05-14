@@ -7,6 +7,7 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, FOV
 	name = _name;
 	CreateFOV();
 	UpdateFOV();
+	abilities.push_back(Ability::MANA_SHIELD);
 }
 
 Player::~Player()

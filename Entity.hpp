@@ -2,9 +2,9 @@
 #include "GameObject.hpp"
 #include "AbilityCast.hpp"
 #include "Inventory.hpp"
-#include "Weapon.hpp";
-#include "Potion.hpp";
-//#include <iomanip>;
+#include "Weapon.hpp"
+#include "Armor.hpp"
+#include "Potion.hpp"
 
 struct Archetype;
 enum class Ability;
@@ -23,7 +23,10 @@ struct Entity : GameObject
 
 	short _bleedind_turns; float bleed_damage;
 	short _poisoned_turns; float poison_damage;
+	short _burning_turns; float burning_damage;
 	short _stunned_turns;  bool  can_fight;
+
+	short __barrier_turns; float barrier_value; float _store_cur_health;
 	
 	float max_experience;
 	float cur_experience;
@@ -58,7 +61,7 @@ struct Entity : GameObject
 	virtual void Actions();
 	std::string UpdateSideEffects();
 	void ApplyEquipedItemStats();
-	void ChangeEquipment(std::shared_ptr<Equipment>, bool);
+	void ChangeEquipment(std::shared_ptr<Equipment>, bool, bool);
 	void DrinkPotion(std::shared_ptr<Potion>);
 	void ManageInventory();
 	void UpdateStatus(bool);

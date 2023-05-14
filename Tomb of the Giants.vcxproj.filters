@@ -81,9 +81,6 @@
     <ClInclude Include="Weapon.hpp">
       <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="Database.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Archetype.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -92,9 +89,6 @@
     </ClInclude>
     <ClInclude Include="Slot.hpp">
       <Filter>Arquivos de Cabeçalho\UI\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemDatabase.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="AbilityCast.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
@@ -116,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="Armor.hpp">
       <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.hpp">
+      <Filter>Arquivos de Cabeçalho\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +143,6 @@
     <ClCompile Include="Equipment.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Database.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Archetype.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -176,9 +170,6 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="ItemDatabase.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="AbilityCast.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -196,6 +187,12 @@
     </ClCompile>
     <ClCompile Include="GameInterfaceUI.cpp">
       <Filter>Arquivos de Origem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Armor.cpp">
+      <Filter>Arquivos de Origem\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

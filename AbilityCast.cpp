@@ -1,4 +1,4 @@
-#include "AbilityCast.hpp";
+#include "AbilityCast.hpp"
 
 AbilityCast::~AbilityCast()
 {
@@ -87,7 +87,7 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 	short accuracy = data["accuracy"];
 	
 	Condition condition;
-	float brute_value = 0; //
+	float brute_value = 0; // Dano bruto, antes de passar pelas resistências;
 	float apply_value = 0; // Após passar por resistências;
 
 	std::string log = "";
@@ -96,6 +96,7 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 	out.precision(1);
 	#pragma endregion
 
+	// REDUÇÃO NA MANA DO CASTER:
 	if (caster->cur_mana >= cost)
 	{
 		caster->cur_mana -= cost;
@@ -158,7 +159,6 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 			break;
 		}
 
-		#pragma region BRUTAL_STRIKE
 		case Ability::BRUTAL_STRIKE:
 		{
 			switch (condition)
@@ -173,19 +173,17 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 					target->cur_health -= brute_value;
 					caster->cur_mana -= cost;
-					if (target->cur_health < 0) target->cur_health = 0;
-					if (caster->cur_mana < 0) caster->cur_mana = 0;
 
-					log = caster->name + ":" + name + ": " + target->name + " -" + std::move(out).str() + " HP.";
+					log = caster->name + ":" + name + ":\n | " + target->name + " -" + std::move(out).str() + " HP.";
 
-					short bleedChance =  rand() % 2 +1; // Range / MIN value;
+					short bleedChance =  rand() % 2 + 1; // Range e MIN value / 50% / 0 e 1;
 
 					if (bleedChance == 1)
 					{
 						if (target->_bleedind_turns == 0)
 						{
 							target->_bleedind_turns = 5;
-							target->bleed_damage = (caster->physical_damage * 10) / 100;
+							target->bleed_damage = (caster->physical_damage * 30) / 100;
 							log += "\n | " + target->name + " is now BLEEDING.";
 						}
 						else
@@ -193,6 +191,7 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 							log += "\n | [!] " + target->name + " is already BLEEDING.";
 						}
 					}
+
 					break;
 				}
 
@@ -214,9 +213,79 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 			break;
 		}
-		#pragma endregion
 
-		#pragma region Default
+		case Ability::FIREBALL:
+		{
+			switch (condition)
+			{
+				case Condition::HIT: case Condition::CRIT:
+				{
+					brute_value = (caster->magical_damage * multiplier) + base_value;
+
+					out << std::fixed << brute_value;
+
+					target->cur_health -= brute_value;
+					caster->cur_mana -= cost;
+
+					log = caster->name + ":" + name + ": " + target->name + " -" + std::move(out).str() + " HP.";
+
+					// Set Burning:
+					if (target->_burning_turns == 0)
+					{
+						target->_burning_turns = 3;
+						target->burning_damage = (caster->magical_damage * 50) / 100;
+						log += "\n | " + target->name + " is now BURNING.";
+					}
+					else
+					{
+						log += "\n | [!] " + target->name + " is already BURNING.";
+					}
+
+					break;
+				}
+
+				case Condition::MISS:
+				{
+					caster->cur_mana -= cost;
+					if (caster->cur_mana < 0) caster->cur_mana = 0;
+
+					log = caster->name + ":" + name + ": " + target->name + " dodged!";
+					break;
+				}
+
+				case Condition::OFM:
+				{
+					log = "";
+					break;
+				}
+			}
+			break;
+		}
+
+		case Ability::MANA_SHIELD:
+		{
+			brute_value = base_value + (caster->magical_damage * multiplier);
+
+			caster->barrier_value = brute_value;
+
+			if (caster->__barrier_turns == 0)
+			{
+				caster->_store_cur_health = caster->cur_health;
+
+				caster->cur_health += caster->barrier_value;
+
+				log = caster->name + ":" + name + ":\n " + caster->name + " was surrounded by a barrier.";
+			}
+			else
+			{
+				log = caster->name + ":" + name + ":\n " + caster->name + " barrier duration renewed.";
+			}
+
+			caster->__barrier_turns = 4;
+			
+			break;
+		}
+
 		default:
 		{
 			switch (condition)
@@ -231,10 +300,8 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 					target->cur_health -= brute_value;
 					caster->cur_mana -= cost;
-					if (target->cur_health < 0) target->cur_health = 0;
-					if (caster->cur_mana < 0) caster->cur_mana = 0;
 
-					log = caster->name + ":" + name + ": " + target->name + " HP -" + std::move(out).str();
+					log = caster->name + ":" + name + ":\n | " + target->name + " -" + std::move(out).str() + " HP.";
 					break;
 				}
 
@@ -256,7 +323,11 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 			break;
 		}
-		#pragma endregion
+	}
+
+	if (target->cur_health < 0)
+	{
+		target->cur_health = 0;
 	}
 
 	return log;

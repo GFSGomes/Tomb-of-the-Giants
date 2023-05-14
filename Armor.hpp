@@ -8,15 +8,19 @@ enum class ArmorType
 
 struct Armor : Equipment
 {
-	ArmorType _type;
+	ArmorType armorType;
 
-	short bonus_physical_resistance;
-	short bonus_magical_resistance;
+	short bonusSTR;
+	short bonusCON;
+	short bonusINT;
+	short bonusAGI;
+	short bonusDEX;
 
-	short bonus_CON;
-	short bonus_AGI;
-	short bonus_INT;
+	float physical_resistance;
+	float magical_resistance;
+	float dodge;
+	float flee;
 
-	Armor();
+	Armor(ArmorType, Sprite, const char*, const char*, float, float, float, float, short, short, short, short, short);
 	~Armor();
 };

@@ -3,10 +3,7 @@
 #include "Enemy.hpp"
 #include "Item.hpp"
 #include "Equipment.hpp"
-
-//Reativar se der problema:
-//extern short GridSizeX;
-//extern short GridSizeY; 
+#include "Portal.hpp"
 
 struct Grid
 {

@@ -29,7 +29,7 @@
     },
     {
       "name": "BRUTAL STRIKE",
-      "description": "Brutally charges the target dealing (150%) Physical Damage.\n   Has a 50% Chance to cause Bleed, which deals 10% Physical Damage for 5 rounds.",
+      "description": "Brutally charges the target dealing (150%) Physical Damage.\n   Has a 50% Chance to cause Bleed, which deals 30% Physical Damage for 5 rounds.",
       "cost": 2,
       "multiplier": 1.5,
       "base_value": 0,
@@ -38,8 +38,8 @@
     },
     {
       "name": "FIREBALL",
-      "description": "Throw a fireball on an target that deals (180%) Magical Damage.\n   FIREBALL also set fire to your target dealing (10%) Magical Damage for 3 rounds.",
-      "cost": 3,
+      "description": "Throw a fireball on an target that deals (180%) Magical Damage.\n   FIREBALL also set Burn to your target dealing (50%) Magical Damage for 4 rounds.",
+      "cost": 0,
       "multiplier": 1.8,
       "base_value": 0,
       "accuracy": 80,
@@ -47,10 +47,10 @@
     },
     {
       "name": "MANA SHIELD",
-      "description": "Surround yourself with mana. Absorbs 3 + (30%) Maximum Mana.",
-      "cost": 5,
-      "multiplier": 0.3,
-      "base_value": 3,
+      "description": "Surround yourself with mana, creating a barrier.\n   The barrier lasts for 4 rounds and can absorb (100%) Magical Power as damage.",
+      "cost": 0,
+      "multiplier": 1,
+      "base_value": 0,
       "accuracy": 100,
       "id": 5
     }

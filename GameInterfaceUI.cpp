@@ -26,8 +26,8 @@ bool GameInterfaceUI::Initialize(std::shared_ptr<Player> player)
 	if (active)
 	{
 		DebugMode ?
-		std::cout << " | GAME MENU : Game Paused - Debug Mode  |Esc||" << "\n" :
-		std::cout << " | GAME MENU : Game Paused               |Esc||" << "\n";
+		std::cout << " | |Esc| GAME MENU : Game Paused - Debug Mode |" << "\n" :
+		std::cout << " | |Esc| GAME MENU : Game Paused              |" << "\n";
 
 		std::cout << " | ------------------------------------------ |" << "\n" ;
 
@@ -36,62 +36,64 @@ bool GameInterfaceUI::Initialize(std::shared_ptr<Player> player)
 			case 0:
 			{
 				std::cout << " | > Character                            |C| |" << "\n";
-				std::cout << " |  Abilities                             |K| |" << "\n";
-				std::cout << " |  Inventory                             |I| |" << "\n";
-				std::cout << " |  Settings                              |O| |" << "\n";
-				std::cout << " |  Exit Game                                 |" << "\n";
+				std::cout << " |   Abilities                            |K| |" << "\n";
+				std::cout << " |   Inventory                            |I| |" << "\n";
+				std::cout << " |   Settings                             |O| |" << "\n";
+				std::cout << " |   Exit Game                                |" << "\n";
 				break;
 			}				   
 							   
 			case 1:			   
 			{	
-				std::cout << " |  Character                             |C| |" << "\n";
+				std::cout << " |   Character                            |C| |" << "\n";
 				std::cout << " | > Abilities                            |K| |" << "\n";
-				std::cout << " |  Inventory                             |I| |" << "\n";
-				std::cout << " |  Settings                              |O| |" << "\n";
-				std::cout << " |  Exit Game                                 |" << "\n";
+				std::cout << " |   Inventory                            |I| |" << "\n";
+				std::cout << " |   Settings                             |O| |" << "\n";
+				std::cout << " |   Exit Game                                |" << "\n";
 
 				break;
 			}				   
 							   
 			case 2:			   
 			{				   
-				std::cout << " |  Character                             |C| |" << "\n";
-				std::cout << " |  Abilities                             |K| |" << "\n";
+				std::cout << " |   Character                            |C| |" << "\n";
+				std::cout << " |   Abilities                            |K| |" << "\n";
 				std::cout << " | > Inventory                            |I| |" << "\n";
-				std::cout << " |  Settings                              |O| |" << "\n";
-				std::cout << " |  Exit Game                                 |" << "\n";
+				std::cout << " |   Settings                             |O| |" << "\n";
+				std::cout << " |   Exit Game                                |" << "\n";
 				break;
 			}				   
 							   
 			case 3:			   
 			{				   
-				std::cout << " |  Character                             |C| |" << "\n";
-				std::cout << " |  Abilities                             |K| |" << "\n";
-				std::cout << " |  Inventory                             |I| |" << "\n";
+				std::cout << " |   Character                            |C| |" << "\n";
+				std::cout << " |   Abilities                            |K| |" << "\n";
+				std::cout << " |   Inventory                            |I| |" << "\n";
 				std::cout << " | > Settings                             |O| |" << "\n";
-				std::cout << " |  Exit Game                                 |" << "\n";
+				std::cout << " |   Exit Game                                |" << "\n";
 				break;
 			}				   
 							   
 			case 4:			   
 			{				   
-				std::cout << " |  Character                             |C| |" << "\n";
-				std::cout << " |  Abilities                             |K| |" << "\n";
-				std::cout << " |  Inventory                             |I| |" << "\n";
-				std::cout << " |  Settings                              |O| |" << "\n";
+				std::cout << " |   Character                            |C| |" << "\n";
+				std::cout << " |   Abilities                            |K| |" << "\n";
+				std::cout << " |   Inventory                            |I| |" << "\n";
+				std::cout << " |   Settings                             |O| |" << "\n";
 				std::cout << " | > Exit Game - No one like cowards.         |" << "\n";
 				break;
 			}
 
 			default: break;
 		}
+		std::cout << " '--------------------------------------------'" << "\n";
 	}
 	else
 	{
 		DebugMode ?
-		std::cout << " | GAME MENU - DebugMode                |Esc| |" << "\n" :
-		std::cout << " | GAME MENU                            |Esc| |" << "\n" ;
+		std::cout << " | |Esc| GAME MENU - DebugMode                |" << "\n" :
+		std::cout << " | |Esc| GAME MENU                            |" << "\n";
+		std::cout << " '--------------------------------------------'" << "\n" ;
 	}
 	std::cout << "\n";
 
@@ -204,10 +206,12 @@ void GameInterfaceUI::Input(std::shared_ptr<Player> player)
 				_getch();
 				break;
 
-			case 'i': case 'I': player->ManageInventory();
+			case 'i': case 'I': 
+				player->ManageInventory();
 				break;
 
-			case 'o': case 'O': UI_GameSettings.Initialize();
+			case 'o': case 'O': 
+				UI_GameSettings.Initialize();
 				break;
 
 			if (DebugMode)
@@ -217,13 +221,13 @@ void GameInterfaceUI::Input(std::shared_ptr<Player> player)
 					break;
 
 				case '2':
-					player->cur_health = 999;
-					player->cur_mana = 999;
+					player->cur_health += 5;
+					player->cur_mana += 5;
 					break;
 
 				case '3':
-					player->cur_health = 1;
-					player->cur_mana = 1;
+					player->cur_health -= 2;
+					player->cur_mana -= 2;
 					break;
 
 				case '4':
