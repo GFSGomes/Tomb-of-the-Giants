@@ -17,9 +17,9 @@ void Scene::AddObject(std::shared_ptr<GameObject> obj)
 {
 	SceneOBJ.push_back(obj);
 
-	if (std::shared_ptr<Player> _player = std::dynamic_pointer_cast<Player>(obj))
+	if (std::dynamic_pointer_cast<Player>(obj))
 	{
-		player = _player;
+		player = std::dynamic_pointer_cast<Player>(obj);
 	}
 
 	if (player != nullptr)
@@ -35,7 +35,7 @@ void Scene::SpawnObjects()
 {
 	for (std::shared_ptr<GameObject> obj : SceneOBJ)
 	{
-		if (!std::dynamic_pointer_cast<Portal>(obj))
+		if (!std::dynamic_pointer_cast<Portal>(obj) || !std::dynamic_pointer_cast<Player>(obj))
 		{
 			obj->SpawnRandom();
 		}
@@ -94,7 +94,16 @@ void Scene::Interaction()
 				//PORTAL
 				else if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 				{
-					currentScene = false;
+					if (portal->active)
+					{
+						loadPortal = portal;
+						loadPortal->scene->AddObject(player);
+						for (short i = 0; i < player->inventory.Container.size(); i++)
+						{
+							loadPortal->scene->player->inventory.AddItem(player->inventory.Container[i].item, player->inventory.Container[i].amount);
+						}
+						currentScene = false;
+					}
 					return;
 				}
 			}
@@ -109,11 +118,18 @@ void Scene::Interaction()
 
 void Scene::LoadScene()
 {
+	GridSizeX = gridSizeX;
+	GridSizeY = gridSizeY;
+
 	srand(time(0));
 
 	currentScene = true;
 
 	SpawnObjects();
+
+	system("cls");
+	Renderer::Dialog("Done. Press any key to continue...");
+	_getch();
 
 	while (currentScene)
 	{
@@ -145,4 +161,6 @@ void Scene::LoadScene()
 			}
 		}
 	}
+
+	loadPortal->scene->LoadScene();
 }

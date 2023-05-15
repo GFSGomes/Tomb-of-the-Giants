@@ -12,7 +12,8 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, FOV
 
 Player::~Player()
 {
-
+	posX = 0;
+	posY = 0;
 }
 
 void Player::Actions(char input)

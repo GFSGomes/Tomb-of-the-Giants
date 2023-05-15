@@ -8,6 +8,7 @@ struct Scene
 	short gridSizeX;
 	short gridSizeY;
 	std::shared_ptr<Player> player;
+	std::shared_ptr<Portal> loadPortal;
 	std::vector<std::shared_ptr<GameObject>> SceneOBJ;
 
 	Scene(short, short);

@@ -144,7 +144,8 @@ void GameInterfaceUI::Input(std::shared_ptr<Player> player)
 			case 'c': case 'C': player->DisplayStatus();
 				break;
 
-			case 'i': case 'I': player->ManageInventory();
+			case 'i': case 'I': 
+				player->ManageInventory();
 				break;
 
 			case 'o': case 'O': UI_GameSettings.Initialize();

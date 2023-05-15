@@ -192,7 +192,7 @@
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
