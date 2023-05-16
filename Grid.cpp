@@ -1,4 +1,12 @@
 #include "Grid.hpp"
+#include "Light.hpp"
+#include "Player.hpp"
+#include "Enemy.hpp"
+#include "Item.hpp"
+#include "Equipment.hpp"
+#include "Portal.hpp"
+#include "Global.hpp"
+#include "Wall.hpp"
 
 short GridSizeX = 0;
 short GridSizeY = 0;
@@ -77,24 +85,22 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 
 							for (short j = 0; j < SceneOBJ.size(); j++)
 							{
-								if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[j]))
+								if (std::shared_ptr<Wall> wall = std::dynamic_pointer_cast<Wall>(SceneOBJ[j]))
 								{
-									if (enemy->posX == fov->posX && enemy->posY == fov->posY)
+									if (wall->posX == fov->posX && wall->posY == fov->posY)
 									{
-										 /* Monstro - Tocha Acesa */
-
 										if (fov->proximityReveal)
 										{
 											CompatibilityMode ?
-											icon = "E" :
-											icon = "○";
+												icon = "#" :
+												icon = "■";
 										}
 
 										if (player->isTorchActive || DebugMode)
 										{
 											CompatibilityMode ?
-											icon = "E":
-											icon = "○";
+												icon = "#" :
+												icon = "■";
 										}
 									}
 								}
@@ -121,6 +127,28 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 									}
 								}
 
+								if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[j]))
+								{
+									if (enemy->posX == fov->posX && enemy->posY == fov->posY)
+									{
+										 /* Monstro - Tocha Acesa */
+
+										if (fov->proximityReveal)
+										{
+											CompatibilityMode ?
+												icon = "M" :
+												icon = "○";
+										}
+
+										if (player->isTorchActive || DebugMode)
+										{
+											CompatibilityMode ?
+												icon = "M" :
+												icon = "○";
+										}
+									}
+								}
+
 								if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJ[j]))
 								{
 									if (portal->posX == fov->posX && portal->posY == fov->posY)
@@ -128,15 +156,15 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 										if (fov->proximityReveal)
 										{
 											CompatibilityMode ?
-												icon = "E" :
-												icon = "□";
+												icon = "D" :
+												icon = "◊";
 										}
 
 										if (player->isTorchActive || DebugMode)
 										{
 											CompatibilityMode ?
-												icon = "E" :
-												icon = "□";
+												icon = "D" :
+												icon = "◊";
 										}
 									}
 								}
@@ -145,29 +173,20 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					}
 					#pragma region DarknessObjectRendering
 
-					if (std::shared_ptr<Player> player = std::dynamic_pointer_cast<Player>(SceneOBJ[i]))
+					// A disposição afeta prioridade de renderização:
+					if (std::dynamic_pointer_cast<Wall>(SceneOBJ[i]))
 					{
-						CompatibilityMode ?
-						icon = "P" :
-						icon = "●";
-					}
-
-					if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
-					{
-						if (enemy->active)
+						if (DebugMode) // DEBUG
 						{
-							if (DebugMode) // DEBUG
-							{
-								CompatibilityMode ?
-								icon = "M":
-								icon = "○";
-							}
+							CompatibilityMode ?
+								icon = "#" :
+								icon = "■";
 						}
 					}
 
 					if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJ[i]))
 					{
-						if (item->active)
+						if (SceneOBJ[i]->active)
 						{
 							if (DebugMode)
 							{
@@ -178,17 +197,37 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						}
 					}
 
-					if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJ[i]))
+					if (std::dynamic_pointer_cast<Portal>(SceneOBJ[i]))
 					{
-						if (portal->active)
+						if (SceneOBJ[i]->active)
 						{
 							if (DebugMode) // DEBUG
 							{
 								CompatibilityMode ?
 									icon = "D" :
-									icon = "□";
+									icon = "◊";
 							}
 						}
+					}
+
+					if (std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
+					{
+						if (SceneOBJ[i]->active)
+						{
+							if (DebugMode) // DEBUG
+							{
+								CompatibilityMode ?
+									icon = "M" :
+									icon = "○";
+							}
+						}
+					}
+
+					if (std::dynamic_pointer_cast<Player>(SceneOBJ[i]))
+					{
+						CompatibilityMode ?
+							icon = "P" :
+							icon = "●";
 					}
 
 					#pragma endregion

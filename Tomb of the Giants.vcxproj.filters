@@ -111,8 +111,11 @@
     <ClInclude Include="Armor.hpp">
       <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Wall.hpp">
+      <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
+    </ClInclude>
     <ClInclude Include="Portal.hpp">
-      <Filter>Arquivos de Cabeçalho\GameObjects</Filter>
+      <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +195,9 @@
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp">
+      <Filter>Arquivos de Origem\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>

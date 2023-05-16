@@ -1,7 +1,9 @@
 #pragma once
-#include "Entity.hpp"
-#include "Light.hpp"
-#include <vector>
+#include "Entity.hpp" // vector e memory
+
+struct Item;
+struct Light;
+//struct GameObject;
 
 struct Player : Entity 
 {
@@ -18,7 +20,7 @@ struct Player : Entity
 	Player(const char*);
 	~Player();
 
-	void Actions(char);
+	void Actions(char, std::vector<std::shared_ptr<GameObject>>);
 	void CreateFOV();
 	void UpdateFOV();
 };

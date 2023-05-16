@@ -1,8 +1,9 @@
 #include "Portal.hpp"
 
-Portal::Portal(short _spawnX, short _spawnY)
+Portal::Portal(short _posX, short _posY)
 {
-	SpawnAt(_spawnX, _spawnY);
+	posX = _posX;
+	posY = _posY;
 }
 
 Portal::~Portal()

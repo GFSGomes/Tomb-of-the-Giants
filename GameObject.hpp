@@ -1,8 +1,7 @@
 #pragma once
-#include "Renderer.hpp"
-#include "Global.hpp"
-#include <memory>
-#include <string>
+#include <iostream>
+
+enum class Sprite;
 
 struct GameObject 
 {

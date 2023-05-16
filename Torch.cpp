@@ -1,4 +1,6 @@
 #include "Torch.hpp"
+#include "Renderer.hpp"
+#include "Player.hpp"
 
 Torch::Torch() : Item("Torch",1)
 {

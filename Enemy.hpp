@@ -9,5 +9,5 @@ struct Enemy : Entity
 
 	~Enemy();
 
-	void Actions(bool);
+	void Actions(bool, std::vector<std::shared_ptr<GameObject>>);
 };

@@ -1,4 +1,9 @@
 #include "Renderer.hpp"
+#include "Global.hpp"
+#include <Windows.h> // Sleep
+#include <conio.h> // _getch()
+#include <iomanip> // conversões de precisão
+#include <iostream> // cout / cin
 
 Renderer::Renderer() {
 
@@ -295,20 +300,20 @@ void Renderer::DisplaySprite(Sprite _sprite)
         {
             std::cout << R"(                                  
                                                             
-                                    .--.   _.._______         
-                                   /--.'\  \..------._\       
-                                   \   \/\  ||        '       
-                                   /      \ ||                
-                                  /\    |  \||                
-                                  ||    |/ _||                
-                                  ||    | /'+:                
-                                  ||     \_/||                
-                _[]_              \|    \   ||                   
-               // /\\              |       \||                 
-              /// \ \\.____        |    \   ||\                      
-              _/   \  '           /|     \  ||\                
-             /__/\_/              \|        ||/                
-            \(   /(_               \_.-.__./||                 
+                                           .--.   _.._______         
+                                          /--.'\  \..------._\       
+                                          \   \/\  ||        '       
+                                          /      \ ||                
+                                         /\    |  \||                
+                                         ||    |/ _||                
+                                         ||    | /'+:                
+                                         ||     \_/||                
+                _[]_                     \|    \   ||                   
+               // /\\                     |       \||                 
+              /// \ \\.____               |    \   ||\                      
+              _/   \  '                  /|     \  ||\                
+             /__/\_/                     \|        ||/                
+            \(   /(_                      \_.-.__./||                 
                                                                
  
 |   DEATH                                                      |

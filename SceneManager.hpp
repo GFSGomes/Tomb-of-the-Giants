@@ -1,5 +1,8 @@
 #pragma once
-#include "Scene.hpp"
+#include <vector>
+#include <memory>
+
+struct Scene;
 
 struct SceneManager
 {

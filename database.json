@@ -24,7 +24,7 @@
       "cost": 1,
       "multiplier": 0.8,
       "base_value": 0,
-      "accuracy": 80,
+      "accuracy": 85,
       "id": 2
     },
     {
@@ -33,13 +33,13 @@
       "cost": 2,
       "multiplier": 1.5,
       "base_value": 0,
-      "accuracy": 65,
+      "accuracy": 70,
       "id": 3
     },
     {
       "name": "FIREBALL",
       "description": "Throw a fireball on an target that deals (180%) Magical Damage.\n   FIREBALL also set Burn to your target dealing (50%) Magical Damage for 4 rounds.",
-      "cost": 0,
+      "cost": 3,
       "multiplier": 1.8,
       "base_value": 0,
       "accuracy": 80,
@@ -47,9 +47,9 @@
     },
     {
       "name": "MANA SHIELD",
-      "description": "Surround yourself with mana, creating a barrier.\n   The barrier lasts for 4 rounds and can absorb (100%) Magical Power as damage.",
-      "cost": 0,
-      "multiplier": 1,
+      "description": "Surround yourself with mana, creating a barrier.\n   The barrier lasts for 4 rounds and can absorb (200%) Magical Power as damage.",
+      "cost": 3,
+      "multiplier": 2,
       "base_value": 0,
       "accuracy": 100,
       "id": 5

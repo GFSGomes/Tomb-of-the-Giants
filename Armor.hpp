@@ -1,6 +1,8 @@
 #pragma once
 #include "Equipment.hpp"
 
+enum class Sprite;
+
 enum class ArmorType
 {
 	BODY, HEAD, ARMS, LEGS

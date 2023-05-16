@@ -1,4 +1,8 @@
 #include "Player.hpp"
+#include "AbilityCast.hpp"
+#include "Wall.hpp"
+#include "Light.hpp"
+#include "Global.hpp"
 
 Player PLAYER("PLAYER");
 
@@ -7,6 +11,9 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, FOV
 	name = _name;
 	CreateFOV();
 	UpdateFOV();
+
+	abilities.push_back(Ability::DOUBLE_STRIKE);
+	abilities.push_back(Ability::BRUTAL_STRIKE);
 	abilities.push_back(Ability::MANA_SHIELD);
 }
 
@@ -16,25 +23,110 @@ Player::~Player()
 	posY = 0;
 }
 
-void Player::Actions(char input)
+void Player::Actions(char input, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
+
 	switch (input)
 	{
-		case 'w': case 'W': 
-			if (posY > 0) posY--;
+		case 'w': case 'W':
+		{
+			if (posY > 0)
+			{
+				bool canMoveUp = true;
+
+				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				{
+					if (std::dynamic_pointer_cast<Wall>(obj))
+					{
+						if (obj->posX == posX && obj->posY + 1 == posY)
+						{
+							canMoveUp = false;
+							continue;
+						}
+					}
+				}
+				if (canMoveUp)
+				{
+					posY--;
+				}
+			}
 			break;
+		}
 
 		case 's': case 'S':
-			if (posY < GridSizeY - 1) posY++;
+		{
+			if (posY < GridSizeY - 1)
+			{
+				bool canMoveDown = true;
+
+				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				{
+					if (std::dynamic_pointer_cast<Wall>(obj))
+					{
+						if (obj->posX == posX && obj->posY - 1 == posY)
+						{
+							canMoveDown = false;
+							continue;
+						}
+					}
+				}
+				if (canMoveDown)
+				{
+					posY++;
+				}
+			}
 			break;
+		}
 
 		case 'a': case 'A':
-			if (posX > 0) posX--;
+		{
+			if (posX > 0)
+			{
+				bool canMoveLeft = true;
+
+				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				{
+					if (std::dynamic_pointer_cast<Wall>(obj))
+					{
+						if (obj->posX + 1 == posX && obj->posY == posY)
+						{
+							canMoveLeft = false;
+							continue;
+						}
+					}
+				}
+				if (canMoveLeft)
+				{
+					posX--;
+				}
+			}
 			break;
+		}
 
 		case 'd': case 'D':
-			if (posX < GridSizeX - 1) posX++;
+		{
+			if (posX < GridSizeX - 1)
+			{
+				bool canMoveRight = true;
+
+				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				{
+					if (std::dynamic_pointer_cast<Wall>(obj))
+					{
+						if (obj->posX - 1 == posX && obj->posY == posY)
+						{
+							canMoveRight = false;
+							continue;
+						}
+					}
+				}
+				if (canMoveRight)
+				{
+					posX++;
+				}
+			}
 			break;
+		}
 
 		case 't': case 'T':
 			if (torchDuration > 0)

@@ -1,5 +1,7 @@
 #pragma once
-#include "Item.hpp"
+#include <memory>
+
+struct Item;
 
 struct Slot
 {
@@ -7,6 +9,5 @@ struct Slot
 	short amount;
 
 	Slot(std::shared_ptr<Item>, short);
-
 	~Slot();
 };

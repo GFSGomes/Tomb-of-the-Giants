@@ -1,6 +1,9 @@
 #include "MainMenuUI.hpp"
+#include "Renderer.hpp"
+#include <conio.h>
+#include "Global.hpp"
+#include "SceneManager.hpp" //
 #include "GameSettingsUI.hpp"
-#include "SceneManager.hpp"
 
 MainMenuUI mainMenu;
 
@@ -21,7 +24,7 @@ bool MainMenuUI::Initialize()
 	while (active)
 	{
 		system("cls");
-		renderer.DisplaySprite(Sprite::TITLE);
+		Renderer::DisplaySprite(Sprite::TITLE);
 		std::cout << "\n";
 
 		switch (index)

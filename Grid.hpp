@@ -1,9 +1,9 @@
 #pragma once
-#include "Player.hpp"
-#include "Enemy.hpp"
-#include "Item.hpp"
-#include "Equipment.hpp"
-#include "Portal.hpp"
+#include <vector>
+#include <memory>
+
+struct GameObject;
+struct Player;
 
 struct Grid
 {

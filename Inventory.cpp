@@ -1,4 +1,9 @@
 #include "Inventory.hpp"
+#include "Renderer.hpp"
+#include "Item.hpp"
+#include "Slot.hpp"
+#include "Equipment.hpp"//
+#include <conio.h>
 
 Inventory::Inventory() : active{false}, index{0}, input{'\0'}, Container{}, hoveredSlot{nullptr}, selectedSlot{nullptr}, organize{false}
 {
@@ -370,13 +375,16 @@ std::shared_ptr<Item> Inventory::Initialize()
 				}
 				else
 				{
-					std::cout << " |   " << Container[i].item->name << " (" << Container[i].amount << ")";
+					std::cout << " |   " << Container[i].amount << " x " << Container[i].item->name;
 				}
 			}
 
-			if (selectedSlot->item->name == Container[i].item->name)
+			if (selectedSlot)
 			{
-				std::cout << " <";
+				if (selectedSlot->item->name == Container[i].item->name)
+				{
+					std::cout << " <";
+				}
 			}
 
 			std::cout << "\n";

@@ -1,13 +1,10 @@
 #pragma once
 #define NOMINMAX
-#include "Slot.hpp"
-#include "Equipment.hpp"
-#include "Renderer.hpp"
 #include <vector>
-#include <conio.h>
-#include <limits>
 #include <memory>
-#include <conio.h>
+#include "Slot.hpp" // Importante pois vector precisa saber o tamanho em bytes do Objeto;
+
+struct Item;
 
 struct Inventory
 {

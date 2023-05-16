@@ -1,6 +1,9 @@
 #pragma once
 #include "Grid.hpp"
 
+struct Portal;
+struct GameObject;
+
 struct Scene
 {
 	Grid grid;

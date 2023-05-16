@@ -168,6 +168,7 @@
     <ClInclude Include="Slot.hpp" />
     <ClInclude Include="Torch.hpp" />
     <ClInclude Include="UI.hpp" />
+    <ClInclude Include="Wall.hpp" />
     <ClInclude Include="Weapon.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +197,7 @@
     <ClCompile Include="Tomb of the Giants.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

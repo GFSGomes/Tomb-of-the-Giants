@@ -1,8 +1,4 @@
 #pragma once
-#include "Renderer.hpp"
-#include <conio.h>
-#include "Enemy.hpp"
-#include "Player.hpp"
 
 struct UI
 {

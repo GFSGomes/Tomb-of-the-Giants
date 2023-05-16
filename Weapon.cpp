@@ -1,20 +1,13 @@
 #include "Weapon.hpp"
-/// <summary>
-/// 
-/// </summary>
-/// <param name="_weapType"></param>
-/// <param name="_name"></param>
-/// <param name="_desc"></param>
-/// <param name="_physical"></param>
-/// <param name="_magical"></param>
-/// <param name="_accuracy"></param>
-/// <param name="_critical_chance"></param>
-/// <param name="_critical_damage"></param>
+#include "Entity.hpp"
+#include "Renderer.hpp"
+
 Weapon::Weapon(
 	WeaponType _weapType, 
 	const char* _name, const char* _desc,
 	short _physical = 0, short _magical = 0, short _accuracy = 0,
-	float _critical_chance = 0, float _critical_damage = 0 ) :
+	float _critical_chance = 0, float _critical_damage = 0 ) 
+	:
 	weaponType{_weapType},
 	physical_power{_physical},
 	magical_power{_magical},

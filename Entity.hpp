@@ -1,12 +1,12 @@
 #pragma once
 #include "GameObject.hpp"
-#include "AbilityCast.hpp"
-#include "Inventory.hpp"
-#include "Weapon.hpp"
-#include "Armor.hpp"
-#include "Potion.hpp"
+#include "Inventory.hpp"// !Importante
+#include "Potion.hpp"   // !Importante
+#include <vector>
+#include <memory>
 
 struct Archetype;
+struct Equipment;
 enum class Ability;
 
 struct Entity : GameObject
@@ -50,10 +50,9 @@ struct Entity : GameObject
 	bool alive;
 	#pragma endregion
 
-	Inventory inventory;
+	Inventory inventory; //
 	std::vector<Ability> abilities;
 	std::shared_ptr<Archetype> archetype;
-
 
 	Entity();
 	virtual ~Entity() = 0;

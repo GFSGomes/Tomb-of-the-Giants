@@ -1,6 +1,15 @@
 #include "Scene.hpp"
 #include "GameInterfaceUI.hpp"
 #include "InteractionUI.hpp"
+#include "Player.hpp"
+#include "Enemy.hpp"
+#include "Light.hpp"
+#include "Portal.hpp"
+#include "Slot.hpp"
+#include "Global.hpp"
+#include "Renderer.hpp"
+#include <conio.h>
+#include "Wall.hpp"
 
 Scene::Scene(short _gridSizeX, short _gridSizeY) : grid{_gridSizeX, _gridSizeY}, currentScene{false}
 {
@@ -35,22 +44,29 @@ void Scene::SpawnObjects()
 {
 	for (std::shared_ptr<GameObject> obj : SceneOBJ)
 	{
-		if (!std::dynamic_pointer_cast<Portal>(obj) || !std::dynamic_pointer_cast<Player>(obj))
+		std::shared_ptr<Portal> spawnPoint;
+
+		if (std::dynamic_pointer_cast<Portal>(obj) || std::dynamic_pointer_cast<Player>(obj) || std::dynamic_pointer_cast<Wall>(obj))
+		{
+			obj->SpawnAt(obj->posX, obj->posY);
+		}
+		else
 		{
 			obj->SpawnRandom();
-		}
 
-		// Prevenindo sobreposição durante o spawn;
-		for (std::shared_ptr<GameObject> other : SceneOBJ)
-		{
-			if (other != obj)
+			// Prevenindo sobreposição durante o spawn;
+			for (std::shared_ptr<GameObject> other : SceneOBJ)
 			{
-				while (obj->posX == other->posX && obj->posY == other->posY)
+				if (other != obj)
 				{
-					obj->SpawnRandom();
+					while (obj->posX == other->posX && obj->posY == other->posY)
+					{
+						obj->SpawnRandom();
+					}
 				}
 			}
 		}
+
 	}
 
 	if (player != nullptr)
@@ -71,9 +87,9 @@ void Scene::Interaction()
 		{
 			if (player->posX == obj->posX && player->posY == obj->posY)
 			{
-				if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(obj))
+				if (std::dynamic_pointer_cast<Item>(obj))
 				{
-					bool removeObject = UI_Interaction.Initialize(player, item);
+					bool removeObject = UI_Interaction.Initialize(player, obj, SceneOBJ);
 					
 					if (removeObject)
 					{
@@ -83,7 +99,7 @@ void Scene::Interaction()
 
 				else if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(obj))
 				{
-					UI_Interaction.Initialize(player, enemy);
+					UI_Interaction.Initialize(player, enemy, SceneOBJ);
 					
 					if (!enemy->alive)
 					{
@@ -97,11 +113,11 @@ void Scene::Interaction()
 					if (portal->active)
 					{
 						loadPortal = portal;
+						player->posX = portal->out->posX;
+						player->posY = portal->out->posY;
+
 						loadPortal->scene->AddObject(player);
-						for (short i = 0; i < player->inventory.Container.size(); i++)
-						{
-							loadPortal->scene->player->inventory.AddItem(player->inventory.Container[i].item, player->inventory.Container[i].amount);
-						}
+
 						currentScene = false;
 					}
 					return;
@@ -111,7 +127,7 @@ void Scene::Interaction()
 
 		if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
 		{
-			enemy->Actions(false);
+			enemy->Actions(false, SceneOBJ);
 		}
 	}
 }
@@ -127,10 +143,6 @@ void Scene::LoadScene()
 
 	SpawnObjects();
 
-	system("cls");
-	Renderer::Dialog("Done. Press any key to continue...");
-	_getch();
-
 	while (currentScene)
 	{
 		if (GameOver){
@@ -142,7 +154,7 @@ void Scene::LoadScene()
 
 		grid.UpdateGrid(SceneOBJ, player);
 
-		UI_GameInterface.Input(player);
+		UI_GameInterface.Input(player, SceneOBJ);
 
 		if (IsPaused)
 		{
@@ -156,7 +168,7 @@ void Scene::LoadScene()
 			{
 				if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
 				{
-					enemy->Actions(false);
+					enemy->Actions(false, SceneOBJ);
 				}
 			}
 		}

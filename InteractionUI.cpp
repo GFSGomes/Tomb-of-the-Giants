@@ -1,4 +1,14 @@
 #include "InteractionUI.hpp"
+#include "AbilityCast.hpp"
+#include "Item.hpp"
+#include <Windows.h>
+#include <conio.h>
+#include "Equipment.hpp"
+#include "Player.hpp"
+#include "Enemy.hpp"
+#include "Equipment.hpp"
+#include "Renderer.hpp"
+#include "Global.hpp"
 
 InteractionUI UI_Interaction;
 
@@ -14,49 +24,6 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 
 	while (active)
 	{
-		#pragma region BattleResults
-		if (player->cur_health <= 0)
-		{
-			player->alive = false;
-			system("cls");
-			Renderer::DisplaySprite(Sprite::DEATH);
-			input = _getch();
-
-			std::cout << "\n";
-			std::cout << " -------------------------- GAME OVER --------------------------" << "\n";
-			input = _getch();
-
-			active = false;
-			GameOver = true;
-			return;
-		}
-
-		if (enemy->cur_health <= 0)
-		{
-			system("cls");
-			std::cout << " | " << enemy->name << " Lv." << enemy->level << "\n";
-			Renderer::StatusBar("HP", enemy->cur_health, enemy->max_health);
-			Renderer::DisplaySprite(enemy->sprite);
-			short exp = enemy->level + player->level + enemy->level * 15;
-
-			Renderer::Dialog("SUCESS:" + enemy->name + " died!");
-			Renderer::Dialog("Exp:" + std::to_string(exp));
-
-			player->cur_experience += exp;
-			if (player->cur_experience >= player->max_experience)
-			{
-				float over = -(player->max_experience - player->cur_experience);
-				player->UpdateStatus(true);
-				player->cur_experience += over;
-			}
-
-			input = _getch();
-			enemy->alive = false;
-			active = false;
-			return;
-		}
-		#pragma endregion
-
 		#pragma region Rendering
 		system("cls");
 
@@ -78,7 +45,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 			battleLog = "\0";
 			if (battleEffect != "\0")
 			{
-				_getch();
+				if(_getch()){};
 			}
 		}
 
@@ -91,7 +58,54 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 
 		std::cout << "\n";
 		std::cout << "\n";
+		#pragma endregion
 
+		#pragma region BattleResults
+		if (player->cur_health <= 0)
+		{
+			input = _getch();
+			player->alive = false;
+			system("cls");
+			Renderer::DisplaySprite(Sprite::DEATH);
+
+			std::cout << "\n";
+			std::cout << " -------------------------- GAME OVER --------------------------" << "\n";
+
+			input = _getch();
+			GameOver = true;
+			active = false;
+			return;
+		}
+
+		else if (enemy->cur_health <= 0)
+		{
+			input = _getch();
+			enemy->alive = false;
+			system("cls");
+			std::cout << " | " << "\n";
+			std::cout << " | " << enemy->name << " Lv." << enemy->level << "\n";
+			Renderer::StatusBar("HP", enemy->cur_health, enemy->max_health);
+
+			Renderer::DisplaySprite(enemy->sprite);
+
+			short exp = enemy->level + player->level + enemy->level * 15;
+
+			Renderer::Dialog("SUCESS:" + enemy->name + " died!");
+			Renderer::Dialog("Exp:" + std::to_string(exp));
+
+			player->cur_experience += exp;
+
+			if (player->cur_experience >= player->max_experience)
+			{
+				float over = -(player->max_experience - player->cur_experience);
+				player->UpdateStatus(true);
+				player->cur_experience += over;
+			}
+
+			input = _getch();
+			active = false;
+			return;
+		}
 		#pragma endregion
 
 		// PLAYER TURN
@@ -145,6 +159,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 					{
 
 						battleEffect = player->UpdateSideEffects();
+
 						StartCombat(player, enemy, !advantage);
 					}
 					break;
@@ -170,19 +185,15 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 				battleLog = AbilityCast::Cast(enemy->abilities[0], enemy, player);
 			}
 
-			if (!_getch())
-			{
-				Sleep(500);
-			}
+			if (_getch()){};
 
 			battleEffect = enemy->UpdateSideEffects();
-			StartCombat(player, enemy, !advantage);
+			StartCombat(player, enemy, !advantage); // Bug
 		}
-
 	}
 }
 
-void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy)
+void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
 	index = 0;
 
@@ -254,6 +265,11 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 					{
 						bool advantage = rand() % 2 + 1; // 0 and 1;
 						StartCombat(player, enemy, advantage);
+						if (enemy->cur_health <= 0)
+						{
+							enemy->SpawnRandom();
+						}
+						active = false;
 						break;
 					} 
 
@@ -261,7 +277,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 					{
 						if (player->isTorchActive)
 						{
-							enemy->Actions(true); // Força o movimento do Inimigo para sair da mesma coordenada que o jogador.
+							enemy->Actions(true, SceneOBJ); // Força o movimento do Inimigo para sair da mesma coordenada que o jogador.
 							std::cout << "\n";
 							Renderer::Dialog(enemy->name + " didn't noticed you.");
 							_getch();
@@ -271,7 +287,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 						{
 							if (DebugMode)
 							{
-								enemy->Actions(true);
+								enemy->Actions(true, SceneOBJ);
 								active = false;
 							}
 
@@ -282,7 +298,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 								std::cout << "\n";
 								Renderer::Dialog("Luckily, you were ignored.");
 								_getch();
-								enemy->Actions(true);
+								enemy->Actions(true, SceneOBJ);
 								active = false;
 							}
 							else
@@ -291,6 +307,11 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 								Renderer::Dialog("You failed to escape. Starting combat...");
 								_getch();
 								StartCombat(player, enemy, false);
+								if (enemy->cur_health <= 0)
+								{
+									enemy->SpawnRandom();
+								}
+								active = false;
 							}
 						}
 						break;
@@ -388,10 +409,10 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 							player->DrinkPotion(potion);
 							return sceneItemRemoval;
 						}
-						else if (std::shared_ptr<Weapon> weapon = std::dynamic_pointer_cast<Weapon>(item))
+						else if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
 						{
-							player->inventory.AddItem(weapon, 1);
-							player->ChangeEquipment(weapon, true, false);
+							player->inventory.AddItem(equip, 1);
+							player->ChangeEquipment(equip, true, false);
 							return sceneItemRemoval;
 						}
 
@@ -434,7 +455,7 @@ bool InteractionUI::Initialize()
 	return false;
 }
 
-bool InteractionUI::Initialize(std::shared_ptr<Player> player, std::shared_ptr<GameObject> object)
+bool InteractionUI::Initialize(std::shared_ptr<Player> player, std::shared_ptr<GameObject> object, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
 	bool result = false;
 
@@ -442,7 +463,7 @@ bool InteractionUI::Initialize(std::shared_ptr<Player> player, std::shared_ptr<G
 
 	if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(object))
 	{
-		InteractionEnemy(player, enemy);
+		InteractionEnemy(player, enemy, SceneOBJ);
 	}
 	else if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(object))
 	{

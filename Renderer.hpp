@@ -1,9 +1,5 @@
 #pragma once
 #include <iostream>
-#include <iomanip>
-#include <Windows.h>
-#include "Global.hpp"
-#include <conio.h>
 
 enum class Sprite {
     NONE,

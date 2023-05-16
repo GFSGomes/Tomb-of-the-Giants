@@ -1,5 +1,10 @@
 #include "GameInterfaceUI.hpp"
 #include "GameSettingsUI.hpp"
+#include "Global.hpp"
+#include <iostream>
+#include <conio.h>
+#include "Player.hpp"
+#include "Renderer.hpp"
 
 GameInterfaceUI UI_GameInterface;
 bool IsPaused = false;
@@ -104,7 +109,7 @@ bool GameInterfaceUI::Initialize(std::shared_ptr<Player> player)
 	return active;
 }
 
-void GameInterfaceUI::Input(std::shared_ptr<Player> player)
+void GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
 	std::cout << "\n";
 	std::cout << "\n";
@@ -236,7 +241,7 @@ void GameInterfaceUI::Input(std::shared_ptr<Player> player)
 					break;
 			}
 			
-			default: player->Actions(input);
+			default: player->Actions(input, SceneOBJ);
 				break;
 		}
 	}

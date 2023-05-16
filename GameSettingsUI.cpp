@@ -1,4 +1,7 @@
 #include "GameSettingsUI.hpp"
+#include "Global.hpp"
+#include <conio.h>
+#include <iostream>
 
 GameSettingsUI UI_GameSettings;
 

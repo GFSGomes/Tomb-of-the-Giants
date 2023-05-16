@@ -1,5 +1,5 @@
 #pragma once
-#include "Player.hpp"
+#include "Item.hpp"
 
 struct Torch : Item
 {

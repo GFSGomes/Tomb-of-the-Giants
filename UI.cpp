@@ -1,4 +1,5 @@
 #include "UI.hpp";
+#include "Global.hpp"
 
 bool DebugMode = false;
 bool CompatibilityMode = false;

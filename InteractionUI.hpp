@@ -1,5 +1,13 @@
 #pragma once
 #include "UI.hpp"
+#include <memory>
+#include <iostream>
+#include <vector>
+
+struct GameObject;
+struct Player;
+struct Enemy;
+struct Item;
 
 struct InteractionUI : UI
 {
@@ -10,11 +18,11 @@ struct InteractionUI : UI
 	~InteractionUI();
 
 	void StartCombat(std::shared_ptr<Player>, std::shared_ptr<Enemy>, bool);
-	void InteractionEnemy(std::shared_ptr<Player>, std::shared_ptr<Enemy>);
+	void InteractionEnemy(std::shared_ptr<Player>, std::shared_ptr<Enemy>, std::vector<std::shared_ptr<GameObject>>);
 	bool InteractionItem(std::shared_ptr<Player>, std::shared_ptr<Item>);
 
 	bool Initialize() override;
-	bool Initialize(std::shared_ptr<Player>, std::shared_ptr<GameObject>);
+	bool Initialize(std::shared_ptr<Player>, std::shared_ptr<GameObject>, std::vector<std::shared_ptr<GameObject>>);
 };
 
 extern InteractionUI UI_Interaction;

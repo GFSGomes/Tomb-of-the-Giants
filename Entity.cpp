@@ -1,4 +1,13 @@
 #include "Entity.hpp"
+#include "Renderer.hpp"
+#include "AbilityCast.hpp"
+#include "Inventory.hpp"
+#include "Slot.hpp"
+#include "Weapon.hpp"
+#include "Armor.hpp"
+#include "Potion.hpp"
+#include <memory>
+#include <conio.h>
 
 Entity::Entity() :
 	level{0}, cur_experience{0}, max_experience{50}, status_points{0},
@@ -20,16 +29,11 @@ Entity::Entity() :
 	UpdateStatus(true);
 
 	// TEMPORARIO:
-	abilities.push_back(Ability::NONE);
 	abilities.push_back(Ability::ATTACK);
 
-	inventory.AddItem(std::make_shared<Weapon>(WeaponType::SWORD, "Necrowolf Blade", "The developer personal weapon.", 76, 76, 76, 0, 0), 1);
-	inventory.AddItem(std::make_shared<Weapon>(WeaponType::SWORD, "Training Sword", "A blunt sword used for training.", 3, 0, 0, 0, 0), 1);
-	inventory.AddItem(std::make_shared<Potion>(PotionType::MINOR_HEALTH_POTION), 2);
-
-	inventory.AddItem(std::make_shared<Armor>(ArmorType::BODY, Sprite::HEAVY_BODY, "STEEL PLATE", "", 4, 1, -10, -5, 0, 0, 0, 0, 0), 1);
-	inventory.AddItem(std::make_shared<Armor>(ArmorType::BODY, Sprite::MEDIUM_BODY, "GIBBON", "", 2, 1, 5, -2, 0, 0, 0, 0, 0), 1);
-	inventory.AddItem(std::make_shared<Armor>(ArmorType::BODY, Sprite::LIGHT_BODY, "MAGE ROBE", "", 1, 3, 7, 2, 0, 0, 4, 0, 0), 1);
+	std::shared_ptr<Weapon> initial = std::make_shared<Weapon>(WeaponType::SWORD, "Training Sword", "A blunt sword used for training.", 3, 0, 0, 0, 0);
+	inventory.AddItem(initial, 1);
+	ChangeEquipment(initial, true, true);
 }
 
 Entity::~Entity(){}
@@ -127,6 +131,7 @@ std::string Entity::UpdateSideEffects()
 	}
 	return log;
 }
+
 void Entity::ApplyEquipedItemStats()
 {
 	for (short i = 0; i < inventory.Container.size(); i++)
@@ -160,13 +165,8 @@ void Entity::ApplyEquipedItemStats()
 		}
 	}
 }
-/// <summary>
-/// 
-/// </summary>
-/// <param name="_equip"></param>
-/// <param name="_shouldBeEquiped"></param>
-/// <param name="_beingDiscarded"></param>
-void Entity::ChangeEquipment(std::shared_ptr<Equipment> _equip, bool _shouldBeEquiped = true, bool _beingDiscarded = false)
+
+void Entity::ChangeEquipment(std::shared_ptr<Equipment> _equip, bool _shouldBeEquiped = true, bool _hide_dialog = false)
 {
 	for (short i = 0; i < inventory.Container.size(); i++)
 	{
@@ -210,13 +210,16 @@ void Entity::ChangeEquipment(std::shared_ptr<Equipment> _equip, bool _shouldBeEq
 	}
 
 	std::cout << "\n";
-	if (_shouldBeEquiped == true) {
-		Renderer::Dialog(_equip->name + " has been equiped.");
-		if (_getch()){}
+	if (_shouldBeEquiped) {
+		if (!_hide_dialog)
+		{
+			Renderer::Dialog(_equip->name + " has been equiped.");
+			if (_getch()){}
+		}
 	}
 	else 
 	{
-		if (!_beingDiscarded)
+		if (!_hide_dialog)
 		{
 			Renderer::Dialog(_equip->name + " has been unequiped.");
 			if (_getch()){}
@@ -236,21 +239,25 @@ void Entity::DrinkPotion(std::shared_ptr<Potion> _potion)
 	std::cout << "\n";
 	switch (_potion->potionType)
 	{
-		case PotionType::MINOR_HEALTH_POTION: case PotionType::MEDIUM_HEALTH_POTION: case PotionType::GREATER_HEALTH_POTION:
+		case PotionType::MINOR_HEALTH_POTION: 
+		case PotionType::MEDIUM_HEALTH_POTION: 
+		case PotionType::GREATER_HEALTH_POTION:
 		{
 			if (cur_health == max_health)
 			{
-				Renderer::Dialog("Health is full. " + _potion->name + " will remain in your Inventory.");
+				Renderer::Dialog("Health is full. " + _potion->name + " was sent to Inventory.");
 				if (_getch()){}
 				return;
 			}
 			break;
 		}
-		case PotionType::MINOR_MANA_POTION: case PotionType::MEDIUM_MANA_POTION: case PotionType::GREATER_MANA_POTION:
+		case PotionType::MINOR_MANA_POTION:
+		case PotionType::MEDIUM_MANA_POTION: 
+		case PotionType::GREATER_MANA_POTION:
 		{
 			if (cur_mana == max_mana)
 			{
-				Renderer::Dialog("Mana is full. " + _potion->name + " will remain in your Inventory.");
+				Renderer::Dialog("Mana is full. " + _potion->name + " was sent to Inventory.");
 				if (_getch()){}
 				return;
 			}
@@ -275,12 +282,12 @@ void Entity::DrinkPotion(std::shared_ptr<Potion> _potion)
 	// Render:
 	if (_potion->health_recovery > 0)
 	{
-		Renderer::Dialog("+" + std::to_string(_potion->health_recovery) + " Health Points has been restored.");
+		Renderer::Dialog("+" + std::to_string(_potion->health_recovery) + " Health Points restored.");
 	}
 
 	if (_potion->mana_recovery > 0)
 	{
-		Renderer::Dialog("+" + std::to_string(_potion->mana_recovery) + " Mana Points has been restored.");
+		Renderer::Dialog("+" + std::to_string(_potion->mana_recovery) + " Mana Points restored.");
 	}
 
 	inventory.DiscardItem(_potion, 1, true);
@@ -391,9 +398,6 @@ void Entity::ManageInventory()
 							DrinkPotion(potion);
 						}
 
-						ManageInventory();
-						active = false;
-						break;
 						break;
 					}
 
