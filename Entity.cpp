@@ -31,14 +31,14 @@ Entity::Entity() :
 	// TEMPORARIO:
 	abilities.push_back(Ability::ATTACK);
 
-	std::shared_ptr<Weapon> initial = std::make_shared<Weapon>(WeaponType::SWORD, "Training Sword", "A blunt sword used for training.", 3, 0, 0, 0, 0);
+	std::shared_ptr<Weapon> initial = std::make_shared<Weapon>(WeaponType::SWORD, "Training Sword", "A blunt sword used for training.", 0.5, 0, 0, 0, 0);
 	inventory.AddItem(initial, 1);
 	ChangeEquipment(initial, true, true);
 }
 
 Entity::~Entity(){}
 
-void Entity::Actions(){}
+void Entity::Behaviour(){}
 
 std::string Entity::UpdateSideEffects()
 {

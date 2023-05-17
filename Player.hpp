@@ -7,12 +7,16 @@ struct Light;
 
 struct Player : Entity 
 {
+	enum class FOV_STATE
+	{
+		OFF, LOW, HIGH
+	};
+
+	short fov_diameter;
 	short torchDuration;
 	bool isTorchActive;
 
-	short FOV3[8];
-	short FOV7[28];
-	short FOV7_X[13];
+	FOV_STATE fov_state;
 	std::vector<std::shared_ptr<Item>> items;
 	std::vector<std::shared_ptr<Light>> FOV;
 	std::vector<std::shared_ptr<Item>> Inventory;
@@ -20,7 +24,7 @@ struct Player : Entity
 	Player(const char*);
 	~Player();
 
-	void Actions(char, std::vector<std::shared_ptr<GameObject>>);
+	void Behaviour(char, std::vector<std::shared_ptr<GameObject>>);
 	void CreateFOV();
 	void UpdateFOV();
 };

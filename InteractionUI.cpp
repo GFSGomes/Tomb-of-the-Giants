@@ -277,7 +277,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 					{
 						if (player->isTorchActive)
 						{
-							enemy->Actions(true, SceneOBJ); // Força o movimento do Inimigo para sair da mesma coordenada que o jogador.
+							enemy->Behaviour(true, SceneOBJ); // Força o movimento do Inimigo para sair da mesma coordenada que o jogador.
 							std::cout << "\n";
 							Renderer::Dialog(enemy->name + " didn't noticed you.");
 							_getch();
@@ -287,7 +287,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 						{
 							if (DebugMode)
 							{
-								enemy->Actions(true, SceneOBJ);
+								enemy->Behaviour(true, SceneOBJ);
 								active = false;
 							}
 
@@ -298,7 +298,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 								std::cout << "\n";
 								Renderer::Dialog("Luckily, you were ignored.");
 								_getch();
-								enemy->Actions(true, SceneOBJ);
+								enemy->Behaviour(true, SceneOBJ);
 								active = false;
 							}
 							else

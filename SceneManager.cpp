@@ -46,11 +46,6 @@ SceneManager::SceneManager()
 	std::shared_ptr<Potion> mana_0	 = std::make_shared<Potion>(PotionType::MINOR_MANA_POTION);
 
 	scene_00->AddObject(_Player);
-	for (short i = 0; i < 5; i++)
-	{
-		scene_00->AddObject(std::make_shared<Wall>(i, 1));
-		scene_00->AddObject(std::make_shared<Wall>(i, scene_00->gridSizeY));
-	}
 
 	scene_00->AddObject(std::make_shared<Enemy>("CAVE SPIDER", 1, Sprite::SPIDER));
 	scene_00->AddObject(std::make_shared<Enemy>("CAVE SPIDER", 1, Sprite::SPIDER));

@@ -241,7 +241,7 @@ void GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 					break;
 			}
 			
-			default: player->Actions(input, SceneOBJ);
+			default: player->Behaviour(input, SceneOBJ);
 				break;
 		}
 	}

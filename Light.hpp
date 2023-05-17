@@ -3,9 +3,9 @@
 
 struct Light : GameObject
 {
-	bool proximityReveal;
+	bool candle;
+	short index;
+
 	Light();
 	~Light();
-
-	void Reposition(short, short);
 };

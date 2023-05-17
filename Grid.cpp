@@ -67,11 +67,11 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					count = i;
 
 					// Light
-					if (std::shared_ptr<Light> fov = std::dynamic_pointer_cast<Light>(SceneOBJ[i]))
+					if (std::shared_ptr<Light> light = std::dynamic_pointer_cast<Light>(SceneOBJ[i]))
 					{
-						if (fov->active)
+						if (light->active)
 						{
-							if (fov->proximityReveal)
+							if (light->candle) // Antigo proximityReveal
 							{
 								icon = " ";  // Unicode
 							}
@@ -87,9 +87,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 							{
 								if (std::shared_ptr<Wall> wall = std::dynamic_pointer_cast<Wall>(SceneOBJ[j]))
 								{
-									if (wall->posX == fov->posX && wall->posY == fov->posY)
+									if (wall->posX == light->posX && wall->posY == light->posY)
 									{
-										if (fov->proximityReveal)
+										if (light->candle)
 										{
 											CompatibilityMode ?
 												icon = "#" :
@@ -107,11 +107,11 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 
 								if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJ[j]))
 								{
-									if (item->posX == fov->posX && item->posY == fov->posY)
+									if (item->posX == light->posX && item->posY == light->posY)
 									{
 										 /* Items - Tocha Acesa */
 
-										if (fov->proximityReveal)
+										if (light->candle)
 										{
 											CompatibilityMode ?
 											icon = "i" :
@@ -129,11 +129,11 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 
 								if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[j]))
 								{
-									if (enemy->posX == fov->posX && enemy->posY == fov->posY)
+									if (enemy->posX == light->posX && enemy->posY == light->posY)
 									{
 										 /* Monstro - Tocha Acesa */
 
-										if (fov->proximityReveal)
+										if (light->candle)
 										{
 											CompatibilityMode ?
 												icon = "M" :
@@ -151,9 +151,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 
 								if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJ[j]))
 								{
-									if (portal->posX == fov->posX && portal->posY == fov->posY)
+									if (portal->posX == light->posX && portal->posY == light->posY)
 									{
-										if (fov->proximityReveal)
+										if (light->candle)
 										{
 											CompatibilityMode ?
 												icon = "D" :
@@ -176,7 +176,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					// A disposição afeta prioridade de renderização:
 					if (std::dynamic_pointer_cast<Wall>(SceneOBJ[i]))
 					{
-						if (DebugMode) // DEBUG
+						if (DebugMode)
 						{
 							CompatibilityMode ?
 								icon = "#" :
@@ -201,7 +201,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					{
 						if (SceneOBJ[i]->active)
 						{
-							if (DebugMode) // DEBUG
+							if (DebugMode)
 							{
 								CompatibilityMode ?
 									icon = "D" :
@@ -214,7 +214,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 					{
 						if (SceneOBJ[i]->active)
 						{
-							if (DebugMode) // DEBUG
+							if (DebugMode)
 							{
 								CompatibilityMode ?
 									icon = "M" :

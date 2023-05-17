@@ -5,7 +5,7 @@
 Weapon::Weapon(
 	WeaponType _weapType, 
 	const char* _name, const char* _desc,
-	short _physical = 0, short _magical = 0, short _accuracy = 0,
+	float _physical = 0, float _magical = 0, short _accuracy = 0,
 	float _critical_chance = 0, float _critical_damage = 0 ) 
 	:
 	weaponType{_weapType},

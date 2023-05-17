@@ -10,12 +10,12 @@ struct Weapon : Equipment
 {
 	WeaponType weaponType;
 	
-	short physical_power;
-	short magical_power;
+	float physical_power;
+	float magical_power;
 	short accuracy;
 	float critical_chance;
 	float critical_damage;
 
-	Weapon(WeaponType, const char*, const char*, short, short, short, float, float);
+	Weapon(WeaponType, const char*, const char*, float, float, short, float, float);
 	~Weapon();
 };

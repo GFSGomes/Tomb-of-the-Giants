@@ -19,7 +19,7 @@ Enemy::~Enemy()
 
 }
 
-void Enemy::Actions(bool _forceMovement, std::vector<std::shared_ptr<GameObject>> SceneOBJ = std::vector<std::shared_ptr<GameObject>>())
+void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObject>> SceneOBJ = std::vector<std::shared_ptr<GameObject>>())
 {
 	short idleness;
 

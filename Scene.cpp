@@ -29,13 +29,13 @@ void Scene::AddObject(std::shared_ptr<GameObject> obj)
 	if (std::dynamic_pointer_cast<Player>(obj))
 	{
 		player = std::dynamic_pointer_cast<Player>(obj);
-	}
-
-	if (player != nullptr)
-	{
-		for (std::shared_ptr<Light> light : player->FOV)
+		
+		if (player == obj)
 		{
-			SceneOBJ.push_back(light);
+			for (std::shared_ptr<Light> light : player->FOV)
+			{
+				SceneOBJ.push_back(light);
+			}
 		}
 	}
 }
@@ -44,9 +44,7 @@ void Scene::SpawnObjects()
 {
 	for (std::shared_ptr<GameObject> obj : SceneOBJ)
 	{
-		std::shared_ptr<Portal> spawnPoint;
-
-		if (std::dynamic_pointer_cast<Portal>(obj) || std::dynamic_pointer_cast<Player>(obj) || std::dynamic_pointer_cast<Wall>(obj))
+		if (std::dynamic_pointer_cast<Portal>(obj) || std::dynamic_pointer_cast<Player>(obj) || std::dynamic_pointer_cast<Wall>(obj) || std::dynamic_pointer_cast<Light>(obj))
 		{
 			obj->SpawnAt(obj->posX, obj->posY);
 		}
@@ -71,10 +69,6 @@ void Scene::SpawnObjects()
 
 	if (player != nullptr)
 	{
-		for (std::shared_ptr<Light> _light : player->FOV)
-		{
-			SceneOBJ.push_back(_light);
-		}
 		player->UpdateFOV();
 	}
 }
@@ -118,6 +112,14 @@ void Scene::Interaction()
 
 						loadPortal->scene->AddObject(player);
 
+						for (short i = 0; i < SceneOBJ.size(); i++)
+						{
+							if (std::dynamic_pointer_cast<Light>(SceneOBJ[i]) || std::dynamic_pointer_cast<Player>(SceneOBJ[i]))
+							{
+								SceneOBJ.erase(SceneOBJ.begin() + i);
+							}
+						}
+
 						currentScene = false;
 					}
 					return;
@@ -127,7 +129,7 @@ void Scene::Interaction()
 
 		if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
 		{
-			enemy->Actions(false, SceneOBJ);
+			enemy->Behaviour(false, SceneOBJ);
 		}
 	}
 }
@@ -168,7 +170,7 @@ void Scene::LoadScene()
 			{
 				if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
 				{
-					enemy->Actions(false, SceneOBJ);
+					enemy->Behaviour(false, SceneOBJ);
 				}
 			}
 		}

@@ -57,7 +57,7 @@ struct Entity : GameObject
 	Entity();
 	virtual ~Entity() = 0;
 
-	virtual void Actions();
+	virtual void Behaviour();
 	std::string UpdateSideEffects();
 	void ApplyEquipedItemStats();
 	void ChangeEquipment(std::shared_ptr<Equipment>, bool, bool);
