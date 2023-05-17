@@ -48,8 +48,6 @@ SceneManager::SceneManager()
 	scene_00->AddObject(_Player);
 
 	scene_00->AddObject(std::make_shared<Enemy>("CAVE SPIDER", 1, Sprite::SPIDER));
-	scene_00->AddObject(std::make_shared<Enemy>("CAVE SPIDER", 1, Sprite::SPIDER));
-	scene_00->AddObject(std::make_shared<Enemy>("CAVE SPIDER", 1, Sprite::SPIDER));
 	scene_00->AddObject(_0_1);
 
 	scene_01->AddObject(std::make_shared<Enemy>("SKELETON FOOTMAN", 2, Sprite::SKELETON_FOOTMAN));

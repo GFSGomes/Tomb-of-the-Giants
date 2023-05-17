@@ -18,12 +18,21 @@ InteractionUI::~InteractionUI(){}
 
 void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy, bool advantage)
 {
+	if (!enemy->alive || !player->alive)
+	{
+		return;
+	}
+
 	index = 0;
 	short barLength = 10;
 	short barUnit = 100 / barLength;
 
 	while (active)
 	{
+		if (!enemy->alive || !player->alive)
+		{
+			return;
+		}
 		#pragma region Rendering
 		system("cls");
 
@@ -53,7 +62,10 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		{
 			battleLog = battleEffect;
 			battleEffect = "\0";
-			StartCombat(player, enemy, advantage);
+			if (player->alive && enemy->alive)
+			{
+				StartCombat(player, enemy, advantage);
+			}
 		}
 
 		std::cout << "\n";
@@ -63,15 +75,15 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		#pragma region BattleResults
 		if (player->cur_health <= 0)
 		{
-			input = _getch();
-			player->alive = false;
+			_getch();
+
 			system("cls");
 			Renderer::DisplaySprite(Sprite::DEATH);
+			Renderer::Dialog(" -------------------------- GAME OVER --------------------------");
 
-			std::cout << "\n";
-			std::cout << " -------------------------- GAME OVER --------------------------" << "\n";
-
-			input = _getch();
+			_getch();
+			
+			player->alive = false;
 			GameOver = true;
 			active = false;
 			return;
@@ -91,6 +103,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 			short exp = enemy->level + player->level + enemy->level * 15;
 
 			Renderer::Dialog("SUCESS:" + enemy->name + " died!");
+			std::cout << "\n";
 			Renderer::Dialog("Exp:" + std::to_string(exp));
 
 			player->cur_experience += exp;
@@ -160,7 +173,10 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 
 						battleEffect = player->UpdateSideEffects();
 
-						StartCombat(player, enemy, !advantage);
+						if (enemy->alive && player->alive)
+						{
+							StartCombat(player, enemy, !advantage);
+						}
 					}
 					break;
 				}
@@ -188,7 +204,11 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 			if (_getch()){};
 
 			battleEffect = enemy->UpdateSideEffects();
-			StartCombat(player, enemy, !advantage); // Bug
+			
+			if (enemy->alive && player->alive)
+			{
+				StartCombat(player, enemy, !advantage);
+			}
 		}
 	}
 }

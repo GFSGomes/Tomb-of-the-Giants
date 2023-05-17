@@ -151,6 +151,7 @@ void Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 
 void Player::CreateFOV()
 {
+	fov_diameter = 7;
 	short index = 0;
 
 	FOV.clear();
@@ -178,35 +179,35 @@ void Player::CreateFOV()
 	{
 		if (fov_diameter == 7)
 		{
-			// Deletando Corners
+			// !!! Por questão de segurança, manter nesta ordem: 'i' será reduzido !!!
 			switch (FOV[i]->index)
 			{
-				case 0: case 6: case 33: case 60: case 66: case 1: case 5: case 10: case 16: case 50: case 56: case 61: case 65:
-					FOV.erase(FOV.begin() + i);
-					i--; // ! Importante;
-					break;
-			}
-
-			switch (FOV[i]->index)
-			{
+				// Candle / ProximityReveal
 				case 22: case 23: case 24: case 32: case 34: case 42: case 43: case 44:
 					FOV[i]->candle = true;
+					break;
+
+				// Deletando Corners
+				case 0: case 6: case 33: case 60: case 66: case 1: case 5: case 10: case 16: case 50: case 56: case 61: case 65:
+					FOV.erase(FOV.begin() + i);
+					i--;
 					break;
 			}
 		}
 		else if (fov_diameter == 5)
 		{
-			// Deletando Corners
+			// !!! Por questão de segurança, manter nesta ordem: 'i' será reduzido !!!
 			switch (FOV[i]->index)
 			{
-				case 0: case 4: case 22: case 40: case 44: 
-					FOV.erase(FOV.begin() + i);
-					i--;
-					break;
-
 				// Definindo InnerSenses
 				case 11: case 12: case 13: case 21: case 23: case 31: case 32: case 33:
 					FOV[i]->candle = true;
+					break;
+
+				// Deletando Corners
+				case 0: case 4: case 22: case 40: case 44:
+					FOV.erase(FOV.begin() + i);
+					i--;
 					break;
 			}
 		}
