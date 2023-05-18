@@ -6,11 +6,12 @@
 #include "Weapon.hpp"
 #include "Armor.hpp"
 #include "Potion.hpp"
+#include "Key.hpp"
 #include <memory>
 #include <conio.h>
 
 Entity::Entity() :
-	level{0}, cur_experience{0}, max_experience{50}, status_points{0},
+	level{0}, cur_experience{50}, max_experience{50}, status_points{0},
 	STR{0}, CON{0}, INT{0}, AGI{0}, DEX{0},
 	cur_health{0}, max_health{0}, 
 	cur_mana{0}, max_mana{0},
@@ -515,16 +516,31 @@ void Entity::UpdateStatus(bool level_up = false)
 
 	if (level_up)
 	{
+		float over = -(max_experience - cur_experience);
+
 		level++;
+		status_points++;
+
 		cur_experience = 0;
 		max_experience *= 1.15;
-		status_points++;
 
 		STR++; CON++; INT++; AGI++; DEX++;
 		UpdateStatus(false);
 		cur_health	= max_health;
 		cur_mana	= max_mana;
+
+		cur_experience += over;
 	}
 
 	ApplyEquipedItemStats();
+}
+
+void Entity::SetLevel(short _level)
+{
+	level = _level;
+
+	STR = CON = INT = AGI = DEX = _level;
+	status_points = _level;
+		
+	UpdateStatus(false);
 }

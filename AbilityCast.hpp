@@ -3,7 +3,6 @@
 #include <fstream>
 #include "Entity.hpp"
 #include <nlohmann/json.hpp>
-//#include <iomanip>;
 
 using json = nlohmann::json;
 struct Entity;

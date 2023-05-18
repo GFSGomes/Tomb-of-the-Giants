@@ -13,7 +13,7 @@ Renderer::~Renderer() {
 
 }
 
-void Renderer::Dialog(std::string _text)
+void Renderer::Dialog(std::string _text, short _read_speed)
 {
     char temp[255];
     short count = 0;
@@ -25,7 +25,7 @@ void Renderer::Dialog(std::string _text)
    
     while (true)
     {
-        Sleep(5);
+        Sleep(_read_speed);
         std::cout << temp[count];
 
         if (count == strlen(temp) || _kbhit())
@@ -90,25 +90,6 @@ void Renderer::DisplaySprite(Sprite _sprite)
 
     switch (_sprite)
     {
-        case Sprite::NONE:
-        {
-            std::cout << R"(
-        # # # # # # # #   
-    # # # # # # # # # # # #  
-  # # # # + + + + + + # # # #  
-  # # + + + - - - - + + + # #  
-# # # + + - - - - - - + + # # # 
-# # + + - - -     - - - + + # # 
-# # + + - -   .(    - - + + # # 
-# # + + - -   (.)'  - - + + # # 
-# # + + + - - [ ] - - + + + # # 
-# # # + + + - | | - + + + # # # 
-  # # + + + + | | + + + + # # 
-  # # # # + + | | + + # # # # 
-    # # # # # | | # # # # #  
-        # # # |_| # # #
-)";
-        } break;
 
         // EQUIPMENT:
         case Sprite::OH_SWORD:
@@ -239,6 +220,70 @@ void Renderer::DisplaySprite(Sprite _sprite)
 )";
         } break;
 
+        case Sprite::CANDLE:
+        {
+            std::cout << R"(
+        # # # # # # # #   
+    # # # # # # # # # # # #  
+  # # # # + + + + + + # # # #  
+  # # + + + - - - - + + + # #  
+# # # + + - - - - - - + + # # # 
+# # + + - - -     - - - + + # # 
+# # + + - -   .(    - - + + # # 
+# # + + - -   (.)'  - - + + # # 
+# # + + + - - [ ] - - + + + # # 
+# # # + + + - | | - + + + # # # 
+  # # + + + + | | + + + + # # 
+  # # # # + + | | + + # # # # 
+    # # # # # | | # # # # #  
+        # # # |_| # # #
+)";
+        } break;
+
+        case Sprite::KEY_1:
+        {
+            std::cout << R"(                 ____
+                / __ \
+                \(  )/
+                 \\//
+                  ||
+                  ||
+                  ||-.
+                  ||[
+                  ||-'
+)";
+        } break;
+
+        case Sprite::KEY_0:
+        {
+            std::cout << R"(             ____
+           .'.--.'.
+           ||.  .||
+           '._--_.'
+              ||
+              ||
+              ||-.
+              || |
+              ||-'
+)";
+        } break;
+
+        case Sprite::KEY_2:
+        {
+            std::cout << R"(              __
+             //\\
+            ((  ))
+             \\//
+              ||
+              ||
+              ||-.
+              ||(
+              ||-'
+)";
+        } break;
+
+
+
         // MONSTERS
         case Sprite::SKELETON_GIANT:
         {
@@ -313,8 +358,7 @@ void Renderer::DisplaySprite(Sprite _sprite)
 
         case Sprite::DEATH:
         {
-            std::cout << R"(                                  
-                                                            
+            std::cout << R"(    
                                            .--.   _.._______         
                                           /--.'\  \..------._\       
                                           \   \/\  ||        '       
@@ -328,20 +372,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
               /// \ \\.____               |    \   ||\                      
               _/   \  '                  /|     \  ||\                
              /__/\_/                     \|        ||/                
-            \(   /(_                      \_.-.__./||                 
-                                                               
- 
-|   DEATH                                                      |
-|  ----------------------------------------------------------  |
-|   How sad.                                                   |
-|                                                              |
-|   Now, you are one of them... draggin a weapon to and fro.   |
-|   I can't reap your soul. The Tomb of the Giants is          |
-|   out of my domains.                                         |
-|                                                              |
-|   ...                                                        |
-|   There is no "rest in peace" for you...                     |
-|                                                              |)";
+            \(   /(_                      \_.-.__./||
+)";
         } break;
     }
 }

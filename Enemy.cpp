@@ -19,7 +19,7 @@ Enemy::~Enemy()
 
 }
 
-void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObject>> SceneOBJ = std::vector<std::shared_ptr<GameObject>>())
+void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
 	short idleness;
 
@@ -37,14 +37,14 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 
 				for (std::shared_ptr<GameObject> obj : SceneOBJ)
 				{
-					if (std::dynamic_pointer_cast<Wall>(obj))
-					{
+					//if (std::dynamic_pointer_cast<Wall>(obj))
+					//{
 						if (obj->posX == posX && obj->posY + 1 == posY)
 						{
 							canMoveUp = false;
 							continue;
 						}
-					}
+					//}
 				}
 				if (canMoveUp)
 				{
@@ -62,14 +62,14 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 
 				for (std::shared_ptr<GameObject> obj : SceneOBJ)
 				{
-					if (std::dynamic_pointer_cast<Wall>(obj))
-					{
+					//if (std::dynamic_pointer_cast<Wall>(obj))
+					//{
 						if (obj->posX == posX && obj->posY - 1 == posY)
 						{
 							canMoveDown = false;
 							continue;
 						}
-					}
+					//}
 				}
 				if (canMoveDown)
 				{
@@ -87,14 +87,14 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 
 				for (std::shared_ptr<GameObject> obj : SceneOBJ)
 				{
-					if (std::dynamic_pointer_cast<Wall>(obj))
-					{
+					//if (std::dynamic_pointer_cast<Wall>(obj))
+					//{
 						if (obj->posX + 1 == posX && obj->posY == posY)
 						{
 							canMoveLeft = false;
 							continue;
 						}
-					}
+					//}
 				}
 				if (canMoveLeft)
 				{
@@ -112,14 +112,14 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 
 				for (std::shared_ptr<GameObject> obj : SceneOBJ)
 				{
-					if (std::dynamic_pointer_cast<Wall>(obj))
-					{
+					//if (std::dynamic_pointer_cast<Wall>(obj))
+					//{
 						if (obj->posX - 1 == posX && obj->posY == posY)
 						{
 							canMoveRight = false;
 							continue;
 						}
-					}
+					//}
 				}
 				if (canMoveRight)
 				{

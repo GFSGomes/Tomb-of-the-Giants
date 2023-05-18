@@ -7,6 +7,8 @@ struct GameObject
 {
 	short posX;
 	short posY;
+	bool force_spawn_at_zero;
+
 	bool active;
 	std::string name;
 	std::string description;

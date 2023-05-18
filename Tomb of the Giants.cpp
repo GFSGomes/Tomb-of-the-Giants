@@ -1,12 +1,13 @@
 #include "MainMenuUI.hpp"
 #include <iostream>
 #include <iomanip>
+//#include <windows.h>
+//#include <conio.h>
 
 int main()
 {
 	std::cout << std::fixed << std::setprecision(1);
 	std::ios::sync_with_stdio(false);
-	srand(time(0));
 	mainMenu.Initialize();
 	return 0;
 
@@ -16,7 +17,10 @@ int main()
 		{
 			break;
 		}
-		short g = rand() % 4 + 0; // Range / MIN value;
+		//short g = rand() % 5;		// Saída: 0, 1, 2, 3, 4
+		//short g = rand() % 5 + 1;	// Saída: 1, 2, 3, 4, 5
+		//short g = rand() % 6;		// Saída: 0, 1, 2, 3, 4, 5
+		short g = rand() % (6+1);	// Saída: 0, 1, 2, 3, 4, 5, 6
 		Sleep(100);
 		std::cout << g << " ";
 	}

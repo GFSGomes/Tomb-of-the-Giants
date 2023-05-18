@@ -5,9 +5,16 @@
 
 struct GameObject;
 struct Player;
+struct Enemy;
+struct Scene;
 
 struct GameInterfaceUI : UI
 {
+	bool _resources_manip;
+	bool _exp_manip;
+	bool _level_manip;
+	bool _torch_manip;
+
 	GameInterfaceUI();
 	~GameInterfaceUI();
 

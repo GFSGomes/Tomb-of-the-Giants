@@ -88,7 +88,7 @@ bool GameSettingsUI::Initialize()
 				if (index < 2) index++; 
 				break;
 
-			case 27: 
+			case 27: case 'o': case 'O':
 				active = false; 
 				break;
 

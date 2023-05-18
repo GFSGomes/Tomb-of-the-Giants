@@ -4,12 +4,13 @@
 #include <iostream>
 #include <conio.h>
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include "Renderer.hpp"
 
 GameInterfaceUI UI_GameInterface;
 bool IsPaused = false;
 
-GameInterfaceUI::GameInterfaceUI()
+GameInterfaceUI::GameInterfaceUI() : _resources_manip{true}, _exp_manip{true}, _level_manip{true}, _torch_manip{true}
 {
 
 }
@@ -126,6 +127,29 @@ void GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 	}
 
 	std::cout << "\n";
+	std::cout << "\n";
+
+	if (DebugMode)
+	{
+		if (_resources_manip)
+		{
+			std::cout << " |Rtrn|  Increasing : D" << "\n";
+			std::cout << "\n";
+			std::cout << " |1| HP and MP ++"<< "\n";
+			std::cout << " |2| Exp += 5 * " << player->level << "\n";
+			std::cout << " |3| Level ++" << "\n";
+			std::cout << " |3| Torch += 10" << "\n";
+		}
+		else
+		{
+			std::cout << " |Rtrn|  I : Decreasing" << "\n";
+			std::cout << "\n";
+			std::cout << " |1| HP and MP --" << "\n";
+			std::cout << " |2| Exp = 1 "<< "\n";
+			std::cout << " |3| Level = 1" << "\n";
+			std::cout << " |3| Torch -= 10" << "\n";
+		}
+	}
 
 	input = _getch();
 
@@ -222,26 +246,94 @@ void GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 
 			if (DebugMode)
 			{
-				case '1':
-					player->torchDuration = 999;
+				case '\r': 
+					_resources_manip = !_resources_manip;
+					_exp_manip = !_exp_manip;
+					_level_manip = !_level_manip;
+					_torch_manip = !_torch_manip;
 					break;
+				
+				case '1':
+				{
+					if (_resources_manip)
+					{
+						player->cur_health += 1;
+						player->cur_mana += 1;
+					}
+					else
+					{
+						player->cur_health -= 1;
+						player->cur_mana -= 1;
+
+						if (player->cur_health <= 0)
+						{
+							player->cur_health = 0;
+						}
+
+						if (player->cur_mana <= 0)
+						{
+							player->cur_mana = 0;
+						}
+					}
+
+					break;
+				}
 
 				case '2':
-					player->cur_health += 5;
-					player->cur_mana += 5;
+				{
+					if (_exp_manip)
+					{
+						player->cur_experience += 5 * player->level;
+						if (player->cur_experience >= player->max_experience)
+						{
+							player->UpdateStatus(true);
+						}
+					}
+					else
+					{
+						player->cur_experience = 0;
+					}
 					break;
+				}
 
 				case '3':
-					player->cur_health -= 2;
-					player->cur_mana -= 2;
+				{
+					if (_level_manip)
+					{
+						player->cur_experience = player->max_experience;
+						player->UpdateStatus(true);
+					}
+					else
+					{
+						player->cur_experience = 0;
+						player->SetLevel(1);
+					}
 					break;
+				}
 
 				case '4':
-					player->UpdateStatus(true);
+				{
+					if (_torch_manip)
+					{
+						player->torchDuration += 10;
+					}
+					else
+					{
+						player->torchDuration -= 10;
+
+						if (player->torchDuration <= 0)
+						{
+							player->torchDuration = 0;
+						}
+					}
+
 					break;
+				}
 			}
 			
-			default: player->Behaviour(input, SceneOBJ);
+			
+			default: 
+				player->Behaviour(input, SceneOBJ);
 				break;
 		}
 	}

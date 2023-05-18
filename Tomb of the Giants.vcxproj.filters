@@ -117,6 +117,9 @@
     <ClInclude Include="Portal.hpp">
       <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Key.hpp">
+      <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Grid.cpp">
@@ -200,5 +203,10 @@
     <ClCompile Include="Wall.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Key.cpp">
+      <Filter>Arquivos de Origem\GameObjects</Filter>
+    </None>
   </ItemGroup>
 </Project>

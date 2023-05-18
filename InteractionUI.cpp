@@ -33,6 +33,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		{
 			return;
 		}
+
 		#pragma region Rendering
 		system("cls");
 
@@ -75,14 +76,34 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		#pragma region BattleResults
 		if (player->cur_health <= 0)
 		{
+			std::string dialog;
+			short count = 0;
 			_getch();
 
-			system("cls");
-			Renderer::DisplaySprite(Sprite::DEATH);
-			Renderer::Dialog(" -------------------------- GAME OVER --------------------------");
+			while (count < 3)
+			{
+				system("cls");
+				switch (count)
+				{
+					case 0: dialog = "How sad..."; break;
+					case 1: dialog = "Now, you are one of them... draggin a weapon to and fro."; break;
+					case 2: dialog = "I can't reap your soul.\n | The Tomb of the Giants is out of my domains."; break;
+					case 3: dialog = "I'm sorry, but there will be no \"rest in peace\" for you."; break;
+				}
 
-			_getch();
-			
+				Renderer::DisplaySprite(Sprite::DEATH);
+				std::cout << " | DEATH:" << "\n";
+				std::cout << "\n";
+				Renderer::Dialog(dialog, 20);
+
+				if (!_getch())
+				{
+					Sleep(1000);
+				}
+
+				count++;
+			}
+
 			player->alive = false;
 			GameOver = true;
 			active = false;
@@ -110,9 +131,9 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 
 			if (player->cur_experience >= player->max_experience)
 			{
-				float over = -(player->max_experience - player->cur_experience);
+				//float over = -(player->max_experience - player->cur_experience);
 				player->UpdateStatus(true);
-				player->cur_experience += over;
+				//player->cur_experience += over;
 			}
 
 			input = _getch();
@@ -121,6 +142,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		}
 		#pragma endregion
 
+		#pragma region COMBAT_TURNS
 		// PLAYER TURN
 		if (advantage == true)
 		{			
@@ -210,6 +232,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 				StartCombat(player, enemy, !advantage);
 			}
 		}
+		#pragma endregion
 	}
 }
 

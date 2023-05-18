@@ -128,6 +128,8 @@ std::shared_ptr<Slot> Inventory::GetSlot(std::shared_ptr<Item> _item)
 
 void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0, bool _usingItem = false)
 {
+	active = true;
+
 	if (_amount == 0)
 	{
 		std::cout << "\n";
@@ -394,11 +396,11 @@ std::shared_ptr<Item> Inventory::Initialize()
 
 		switch (input)
 		{
-			case 'w': 
+			case 'w': case 'W':
 				if (index > 0) index--; 
 				break;
 
-			case 's': 
+			case 's': case 'S':
 				if (index < Container.size() - 1) index++; 
 				break;
 
@@ -427,7 +429,7 @@ std::shared_ptr<Item> Inventory::Initialize()
 			}
 			break;
 			
-			case 27: 
+			case 27: case 'i': case 'I':
 			{
 				active = false;
 				selectedSlot = nullptr;

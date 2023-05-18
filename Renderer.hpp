@@ -5,7 +5,7 @@ enum class Sprite {
     NONE,
     OH_SWORD, OH_AXE, TH_SWORD, TH_AXE, DAGGER, BOW, STAFF,
     HEAVY_BODY, MEDIUM_BODY, LIGHT_BODY, HEAVY_HEAD, LIGHT_HEAD,
-    TORCH, POTION,
+    TORCH, POTION, CANDLE, KEY_0, KEY_1, KEY_2,
     SKELETON_FOOTMAN, SKELETON_GIANT, SPIDER, GHOUL,
     TITLE,
     DEATH,
@@ -17,7 +17,7 @@ struct Renderer
     Renderer();
     ~Renderer();
 
-    static void Dialog(std::string);
+    static void Dialog(std::string, short _read_speed = 5);
     static void StatusBar(const char*, float, float);
     static void DisplaySprite(Sprite);
 };

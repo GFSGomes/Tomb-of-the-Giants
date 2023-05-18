@@ -65,4 +65,5 @@ struct Entity : GameObject
 	void ManageInventory();
 	void UpdateStatus(bool);
 	void DisplayStatus();
+	void SetLevel(short);
 };
