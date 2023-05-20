@@ -1,4 +1,7 @@
 #include "AbilityCast.hpp"
+#include "Entity.hpp"
+#include <sstream>
+#include <fstream>
 
 AbilityCast::~AbilityCast()
 {
@@ -87,13 +90,13 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 	short accuracy = data["accuracy"];
 	
 	Condition condition;
-	float brute_value = 0; // Dano bruto, antes de passar pelas resistências;
-	float apply_value = 0; // Após passar por resistências;
+	float raw_value = 0; // Dano bruto, antes de passar pelas resistências;
+	float applyed_value = 0; // Após passar por resistências;
 
 	std::string log = "";
 	std::ostringstream out;
 	
-	out.precision(1);
+	out.precision(2);
 	#pragma endregion
 
 	// REDUÇÃO NA MANA DO CASTER:
@@ -115,6 +118,44 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 	switch (ability)
 	{
+		case Ability::ATTACK:
+		{
+			switch (condition)
+			{
+				case Condition::HIT: case Condition::CRIT:
+				{
+					condition == Condition::CRIT ?
+						raw_value = (caster->physical_damage * multiplier * caster->critical_damage) + base_value :
+						raw_value = (caster->physical_damage * multiplier) + base_value;
+
+					applyed_value = ((raw_value * 100) + caster->level) / (100 + target->physical_resistance + target->level);
+
+					out << std::fixed << applyed_value;
+
+					target->cur_health -= applyed_value;
+
+					log = caster->name + ":" + name + ":\n | " + target->name + " -" + std::move(out).str() + " HP.";
+					break;
+				}
+
+				case Condition::MISS:
+				{
+					if (caster->cur_mana < 0) caster->cur_mana = 0;
+
+					log = caster->name + ":" + name + ": " + target->name + " dodged!";
+					break;
+				}
+
+				case Condition::OFM:
+				{
+					log = "";
+					break;
+				}
+			}
+
+			break;
+		}
+
 		case Ability::DOUBLE_STRIKE:
 		{
 			short hit_chance;
@@ -135,12 +176,12 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				if (caster->accuracy + accuracy >= hit_chance + target->dodge)
 				{
 					if (hit_chance + target->critical_chance >= 90) {
-						brute_value += (caster->physical_damage * multiplier * caster->critical_damage);
+						raw_value += (caster->physical_damage * multiplier * caster->critical_damage);
 						log += " Critical Hit!";
 					}
 					else
 					{
-						brute_value += (caster->physical_damage * multiplier);
+						raw_value += (caster->physical_damage * multiplier);
 						log += " Hit!";
 					}
 				}
@@ -150,9 +191,11 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				}
 			}
 
-			out << std::fixed << brute_value;
+			applyed_value = ((raw_value * 100) + caster->level) / (100 + target->physical_resistance + target->level);
 
-			target->cur_health -= brute_value;
+			out << std::fixed << applyed_value;
+
+			target->cur_health -= applyed_value;
 
 			log += "\n | " + target->name + " -" + std::move(out).str() + " HP.";
 
@@ -166,17 +209,18 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				case Condition::HIT: case Condition::CRIT:
 				{
 					condition == Condition::CRIT ?
-					brute_value = (caster->physical_damage * multiplier * caster->critical_damage) + base_value :
-					brute_value = (caster->physical_damage * multiplier) + base_value;
+					raw_value = (caster->physical_damage * multiplier * caster->critical_damage) + base_value :
+					raw_value = (caster->physical_damage * multiplier) + base_value;
 
-					out << std::fixed << brute_value;
+					applyed_value = ((raw_value * 100) + caster->level) / (100 + target->physical_resistance + target->level);
 
-					target->cur_health -= brute_value;
-					caster->cur_mana -= cost;
+					out << std::fixed << applyed_value;
+
+					target->cur_health -= applyed_value;
 
 					log = caster->name + ":" + name + ":\n | " + target->name + " -" + std::move(out).str() + " HP.";
 
-					short bleedChance =  rand() % 2 + 1; // Range e MIN value / 50% / 0 e 1;
+					short bleedChance =  rand() % 2 + 1; // Está 100!
 
 					if (bleedChance == 1)
 					{
@@ -197,7 +241,6 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 				case Condition::MISS:
 				{
-					caster->cur_mana -= cost;
 					if (caster->cur_mana < 0) caster->cur_mana = 0;
 
 					log = caster->name + ":" + name + ": " + target->name + " dodged!";
@@ -220,12 +263,14 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 			{
 				case Condition::HIT: case Condition::CRIT:
 				{
-					brute_value = (caster->magical_damage * multiplier) + base_value;
+					raw_value = (caster->magical_damage * multiplier) + base_value;
 
-					out << std::fixed << brute_value;
+					applyed_value = ((raw_value * 100) + caster->level) / (100 + target->magical_resistance + target->level);
 
-					target->cur_health -= brute_value;
-					caster->cur_mana -= cost;
+
+					out << std::fixed << applyed_value;
+
+					target->cur_health -= applyed_value;
 
 					log = caster->name + ":" + name + ": " + target->name + " -" + std::move(out).str() + " HP.";
 
@@ -246,7 +291,6 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 				case Condition::MISS:
 				{
-					caster->cur_mana -= cost;
 					if (caster->cur_mana < 0) caster->cur_mana = 0;
 
 					log = caster->name + ":" + name + ": " + target->name + " dodged!";
@@ -264,9 +308,9 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 		case Ability::MANA_SHIELD:
 		{
-			brute_value = base_value + (caster->magical_damage * multiplier);
+			raw_value = base_value + (caster->magical_damage * multiplier);
 
-			caster->barrier_value = brute_value;
+			caster->barrier_value = raw_value;
 
 			if (caster->__barrier_turns == 0)
 			{
@@ -293,13 +337,14 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				case Condition::HIT: case Condition::CRIT:
 				{
 					condition == Condition::CRIT ?
-						brute_value = (caster->physical_damage * multiplier * caster->critical_damage) + base_value :
-						brute_value = (caster->physical_damage * multiplier) + base_value;
+						raw_value = (caster->physical_damage * multiplier * caster->critical_damage) + base_value :
+						raw_value = (caster->physical_damage * multiplier) + base_value;
 
-					out << std::fixed << brute_value;
+					applyed_value = ((raw_value * 100) + caster->level) / (100 + target->physical_resistance + target->level);
 
-					target->cur_health -= brute_value;
-					caster->cur_mana -= cost;
+					out << std::fixed << applyed_value;
+
+					target->cur_health -= applyed_value;
 
 					log = caster->name + ":" + name + ":\n | " + target->name + " -" + std::move(out).str() + " HP.";
 					break;
@@ -307,7 +352,6 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 
 				case Condition::MISS:
 				{
-					caster->cur_mana -= cost;
 					if (caster->cur_mana < 0) caster->cur_mana = 0;
 
 					log = caster->name + ":" + name + ": " + target->name + " dodged!";

@@ -2,7 +2,7 @@
 #include "Global.hpp"
 #include "Renderer.hpp"
 
-GameObject::GameObject() : name{'\0'}, description{'\0'}, posX{0}, posY{0}, active{true}, force_spawn_at_zero{false}, sprite{Sprite::NONE}
+GameObject::GameObject() : name{'\0'}, description{'\0'}, posX{-1}, posY{-1}, active{true}, force_spawn_at_zero{false}, sprite{Sprite::NONE}
 {
 
 }

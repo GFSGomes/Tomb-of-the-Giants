@@ -110,7 +110,7 @@ bool GameInterfaceUI::Initialize(std::shared_ptr<Player> player)
 	return active;
 }
 
-void GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
+bool GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
 	std::cout << "\n";
 	std::cout << "\n";
@@ -332,9 +332,8 @@ void GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 			}
 			
 			
-			default: 
-				player->Behaviour(input, SceneOBJ);
-				break;
+			default:
+				return player->Behaviour(input, SceneOBJ);
 		}
 	}
 }

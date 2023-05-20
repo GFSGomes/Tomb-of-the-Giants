@@ -3,7 +3,6 @@
 
 struct Item;
 struct Light;
-//struct GameObject;
 
 struct Player : Entity 
 {
@@ -24,7 +23,7 @@ struct Player : Entity
 	Player(const char*);
 	~Player();
 
-	void Behaviour(char, std::vector<std::shared_ptr<GameObject>>);
+	bool Behaviour(char, std::vector<std::shared_ptr<GameObject>>);
 	void CreateFOV();
 	void UpdateFOV();
 };

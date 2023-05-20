@@ -7,11 +7,15 @@ struct GameObject;
 
 struct Scene
 {
-	Grid grid;
 	bool currentScene;
+
 	short gridSizeX;
 	short gridSizeY;
 
+	bool player_idle;
+	bool asign_log;
+
+	Grid grid;
 	std::string scene_log;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Portal> chosen_portal;

@@ -47,9 +47,9 @@
     },
     {
       "name": "MANA SHIELD",
-      "description": "Surround yourself with mana, creating a barrier.\n   The barrier lasts for 4 rounds and can absorb (200%) Magical Power as damage.",
+      "description": "Surround yourself with mana, creating a barrier.\n   The barrier lasts for 4 rounds and can absorb (600%) Magical Power as damage.",
       "cost": 3,
-      "multiplier": 2,
+      "multiplier": 6,
       "base_value": 0,
       "accuracy": 100,
       "id": 5

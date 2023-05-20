@@ -16,6 +16,6 @@ struct Weapon : Equipment
 	float critical_chance;
 	float critical_damage;
 
-	Weapon(WeaponType, const char*, const char*, float, float, short, float, float);
+	Weapon(WeaponType, const char*, const char*, float, float _bonus_magical = 0, short _accuracy = 0, float _critical_change = 0, float _critical_damage = 0);
 	~Weapon();
 };

@@ -120,6 +120,15 @@
     <ClInclude Include="Key.hpp">
       <Filter>Arquivos de Cabeçalho\GameObjects\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Chest.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Miscellaneous.hpp">
+      <Filter>Arquivos de Cabeçalho\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Consumable.hpp">
+      <Filter>Arquivos de Cabeçalho\GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Grid.cpp">
@@ -203,10 +212,14 @@
     <ClCompile Include="Wall.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Key.cpp">
-      <Filter>Arquivos de Origem\GameObjects</Filter>
-    </None>
+    <ClCompile Include="Key.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Consumable.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Miscellaneous.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@
 #include "Key.hpp"
 #include <memory>
 #include <conio.h>
+#include <sstream>
 
 Entity::Entity() :
 	level{0}, cur_experience{50}, max_experience{50}, status_points{0},
@@ -31,10 +32,6 @@ Entity::Entity() :
 
 	// TEMPORARIO:
 	abilities.push_back(Ability::ATTACK);
-
-	std::shared_ptr<Weapon> initial = std::make_shared<Weapon>(WeaponType::SWORD, "Training Sword", "A blunt sword used for training.", 0.5, 0, 0, 0, 0);
-	inventory.AddItem(initial, 1);
-	ChangeEquipment(initial, true, true);
 }
 
 Entity::~Entity(){}
@@ -112,6 +109,7 @@ std::string Entity::UpdateSideEffects()
 	{
 		// Barrier was broken
 		log += name + "'s MANA SHIELD has been destroyed.";
+		_store_cur_health = 0;
 	}
 	else if (__barrier_turns == 0 && _store_cur_health != 0)
 	{
@@ -120,6 +118,7 @@ std::string Entity::UpdateSideEffects()
 		extra_health = cur_health - _store_cur_health;
 		cur_health -= extra_health;
 		log += name + "'s MANA SHIELD fades.";
+		_store_cur_health = 0;
 	}
 
 	if (cur_health < 0)
@@ -487,10 +486,10 @@ void Entity::UpdateStatus(bool level_up = false)
 	| AGI x 0.5 |           |           |
 	|           |           |           |
 	*/
-	max_health = 5 + (CON * 1.0) + (STR * 0.5);
-	max_mana   = 5 + (INT * 1.5);
+	max_health = 10 + (CON * 1.0) + (STR * 0.5);
+	max_mana   = 10 + (INT * 1.5);
 
-	physical_damage = (STR * 0.7) + (DEX * 0.1);
+	physical_damage = (STR * 0.6) + (DEX * 0.1);
 	magical_damage  = (INT * 0.8);
 
 	physical_resistance = (CON * 0.5) + (AGI * 0.2);

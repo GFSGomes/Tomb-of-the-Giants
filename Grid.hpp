@@ -10,6 +10,8 @@ struct Grid
 	short sizeX;
 	short sizeY;
 
+	bool secret_portal_reveal;
+
 	Grid(short,short);
 	~Grid();
 

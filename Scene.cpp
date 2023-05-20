@@ -9,10 +9,13 @@
 #include "Global.hpp"
 #include "Renderer.hpp"
 #include <conio.h>
+#include <windows.h>
 #include "Wall.hpp"
 
-Scene::Scene(short _gridSizeX, short _gridSizeY) : grid{_gridSizeX, _gridSizeY}, scene_log{"\0"}, currentScene{false}
+Scene::Scene(short _gridSizeX, short _gridSizeY) : grid{_gridSizeX, _gridSizeY}, asign_log{true}, scene_log{"\0"}, currentScene{false}, player_idle{false}
 {
+	// +1 pois nos loops de formação da Grid, i <= GridSizeN
+	// Necessário para que a Grid gerada tenha o tamanho literal definido
 	gridSizeX = _gridSizeX + 1;
 	gridSizeY = _gridSizeY + 1;
 }
@@ -47,12 +50,13 @@ void Scene::SpawnObjects()
 {
 	for (std::shared_ptr<GameObject> obj : SceneOBJ)
 	{
-		if (std::dynamic_pointer_cast<Portal>(obj) ||
-			std::dynamic_pointer_cast<Player>(obj) ||
-			std::dynamic_pointer_cast<Wall>(obj) ||
-			std::dynamic_pointer_cast<Light>(obj) ||
-			std::dynamic_pointer_cast<Key>(obj)
-			)
+		/* 
+		 1. Foi definida coordenada (posX:-1, posY:-1) em GameObject;
+		 
+		 2.	Então, tudo que receber uma posição específica após sua criação,
+			será posicionado adequadamente. 
+		*/
+		if (obj->posX != -1 && obj->posY != -1)
 		{
 			obj->SpawnAt(obj->posX, obj->posY);
 		}
@@ -89,6 +93,7 @@ void Scene::Interaction()
 	{
 		if (std::shared_ptr<GameObject> obj = std::dynamic_pointer_cast<GameObject>(SceneOBJ[i]))
 		{
+			// Proximidade
 			if (player->posY - 1 == obj->posY && player->posX == obj->posX || player->posY + 1 == obj->posY && player->posX == obj->posX || player->posY == obj->posY && player->posX - 1 == obj->posX || player->posY == obj->posY && player->posX + 1 == obj->posX)
 			{
 				if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
@@ -101,6 +106,11 @@ void Scene::Interaction()
 							{
 								if (_key->key_type == portal->key_type)
 								{
+									if (portal->key_type == KeyType::SECRET_KEY)
+									{
+										grid.secret_portal_reveal = true;
+									}
+
 									player->inventory.DiscardItem(_key, 1, true);
 									portal->is_locked = false;
 									portal->mirror->is_locked = false;
@@ -111,16 +121,39 @@ void Scene::Interaction()
 						}
 						if (!has_key)
 						{
-							scene_log = "[!] This door is locked. Find a key first.";
+							if(portal->key_type == KeyType::SECRET_KEY)
+							{
+								return;
+							}
+							
+							if (asign_log)
+							{
+								scene_log = "[!] This door is locked. Find a key first.";
+							}
 						}
 						else
 						{
-							scene_log = "[!] The door opened.";
+							if (asign_log)
+							{
+								if (portal->key_type == KeyType::SECRET_KEY)
+								{
+									scene_log = "[!] A secrect chamber was opened.";
+									asign_log = !asign_log;
+								}
+								else
+								{
+									scene_log = "[!] The door opened.";
+									asign_log = !asign_log;
+								}
+							}
 						}
+
+						asign_log = true;
 					}
-				}	
+				}
 			}
 
+			// Pontual
 			else if (player->posX == obj->posX && player->posY == obj->posY)
 			{
 				if (std::dynamic_pointer_cast<Item>(obj))
@@ -137,31 +170,39 @@ void Scene::Interaction()
 
 				else if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(obj))
 				{
-					UI_Interaction.Initialize(player, enemy, SceneOBJ);
-					
-					if (!enemy->alive)
+					if (enemy->alive)
 					{
-						SceneOBJ.erase(SceneOBJ.begin() + i);
+						UI_Interaction.Initialize(player, enemy, SceneOBJ);
+						
+						if (!enemy->alive)
+						{
+							SceneOBJ.erase(SceneOBJ.begin() + i);
+						}
 					}
 				}
 
 				else if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 				{
-					#pragma region FUNCIONANDO
-					chosen_portal = portal;
+					asign_log = !asign_log;
 
-					// Definindo spawn do player na outra scena;
-					player->posX = portal->mirror->posX;
-					player->posY = portal->mirror->posY;
+					if (!portal->is_locked)
+					{	
+						#pragma region FUNCIONANDO
+						chosen_portal = portal;
 
-					// Passando o player, caso o mesmo seja null para a proxima cena.
-					if (chosen_portal->destiny->player == nullptr)
-					{
-						chosen_portal->destiny->AddObject(player);
+						// Definindo spawn do player na outra scena;
+						player->posX = portal->mirror->posX;
+						player->posY = portal->mirror->posY;
+
+						// Passando o player, caso o mesmo seja null para a proxima cena.
+						if (chosen_portal->destiny->player == nullptr)
+						{
+							chosen_portal->destiny->AddObject(player);
+						}
+
+						currentScene = false;
+						#pragma endregion
 					}
-
-					currentScene = false;
-					#pragma endregion
 				}
 			}
 
@@ -197,15 +238,14 @@ void Scene::LoadScene()
 
 		grid.UpdateGrid(SceneOBJ, player);
 
-		if (scene_log != "\0")
+		if (scene_log != "\0" && !player_idle)
 		{
-			std::cout << "\n";
-			std::cout << "\n";
-			Renderer::Dialog(scene_log);
+			std::cout << "\n\n";
+			Renderer::Dialog(scene_log, 5);
 		}
 
-		UI_GameInterface.Input(player, SceneOBJ);
-
+		player_idle = UI_GameInterface.Input(player, SceneOBJ);
+		
 		scene_log = "\0";
 
 		if (IsPaused)

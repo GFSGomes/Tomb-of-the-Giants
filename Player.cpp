@@ -4,6 +4,11 @@
 #include "Light.hpp"
 #include "Global.hpp"
 
+#include "Weapon.hpp"
+#include "Armor.hpp"
+#include "Potion.hpp"
+#include "Renderer.hpp"
+
 Player PLAYER("PLAYER");
 
 Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov_diameter{5}, fov_state{FOV_STATE::OFF}, FOV{}
@@ -15,6 +20,14 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov
 	abilities.push_back(Ability::DOUBLE_STRIKE);
 	abilities.push_back(Ability::BRUTAL_STRIKE);
 	abilities.push_back(Ability::MANA_SHIELD);
+
+	std::shared_ptr<Weapon> sword = std::make_shared<Weapon>(WeaponType::SWORD, "Short Sword", "Simple, sharp and efficient.", 3);
+	std::shared_ptr<Armor> equip = std::make_shared<Armor>(ArmorType::BODY, Sprite::MEDIUM_BODY, "Gambeson", "An armor resistent against cuts.", 3, 1, 5);
+
+	inventory.AddItem(sword, 1);
+	inventory.AddItem(equip, 1);
+	ChangeEquipment(sword, true, true);
+	ChangeEquipment(equip, true, true);
 }
 
 Player::~Player()
@@ -23,7 +36,7 @@ Player::~Player()
 	posY = 0;
 }
 
-void Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
+bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
 
 	switch (input)
@@ -138,7 +151,10 @@ void Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 			break;
 		}
 
-		default: return;
+		case '\r':
+		{
+			return true;
+		}
 	}
 
 	if (isTorchActive)
@@ -147,6 +163,8 @@ void Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 	}
 
 	UpdateFOV();
+
+	return false;
 }
 
 void Player::CreateFOV()
@@ -184,7 +202,7 @@ void Player::CreateFOV()
 			{
 				// Candle / ProximityReveal
 				case 22: case 23: case 24: case 32: case 34: case 42: case 43: case 44:
-					FOV[i]->candle = true;
+					FOV[i]->near = true;
 					break;
 
 				// Deletando Corners
@@ -201,7 +219,7 @@ void Player::CreateFOV()
 			{
 				// Definindo InnerSenses
 				case 11: case 12: case 13: case 21: case 23: case 31: case 32: case 33:
-					FOV[i]->candle = true;
+					FOV[i]->near = true;
 					break;
 
 				// Deletando Corners
@@ -238,7 +256,7 @@ void Player::UpdateFOV()
 				switch (FOV[i]->index)
 				{
 					case 22: case 23: case 24: case 32: case 34: case 42: case 43: case 44:
-						FOV[i]->candle = true;
+						FOV[i]->near = true;
 						break;
 				}
 			}
@@ -251,7 +269,7 @@ void Player::UpdateFOV()
 				switch (FOV[i]->index)
 				{
 					case 11: case 12: case 13: case 21: case 23: case 31: case 32: case 33:
-						FOV[i]->candle = true;
+						FOV[i]->near = true;
 						break;
 				}
 			}

@@ -3,7 +3,7 @@
 
 struct Light : GameObject
 {
-	bool candle;
+	bool near;
 	short index;
 
 	Light();
