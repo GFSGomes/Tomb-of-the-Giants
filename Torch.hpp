@@ -1,10 +1,8 @@
 #pragma once
-#include "Item.hpp"
+#include "Consumable.hpp"
 
-struct Torch : Item
+struct Torch : Consumable
 {
 	Torch();
 	~Torch();
-
-	void Use();
 };

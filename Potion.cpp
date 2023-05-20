@@ -1,7 +1,7 @@
 #include "Potion.hpp";
 #include "Renderer.hpp"
 
-Potion::Potion(PotionType _type) : health_recovery{0}, mana_recovery{0}, Item("\0", 5)
+Potion::Potion(PotionType _type) : health_recovery{0}, mana_recovery{0}, Consumable("\0", 5)
 {
 	potionType = _type;
 

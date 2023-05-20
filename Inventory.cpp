@@ -15,7 +15,7 @@ Inventory::~Inventory()
 
 }
 
-void Inventory::AddItem(std::shared_ptr<Item> _item, short _amount = 1)
+void Inventory::AddItem(std::shared_ptr<Item> _item, short _amount)
 {
 	while (_amount > _item->stack)
 	{
@@ -126,14 +126,14 @@ std::shared_ptr<Slot> Inventory::GetSlot(std::shared_ptr<Item> _item)
 	return nullptr;
 }
 
-void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0, bool _usingItem = false)
+void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _usingItem)
 {
 	active = true;
 
 	if (_amount == 0)
 	{
 		std::cout << "\n";
-		std::cout << " | [?] How many " << _item->name << " do you want to discard?" << "\n";
+		std::cout << " | [?] How many " << _item->name << " do you'd like to discard?" << "\n";
 		std::cout << " | > ";
 	}
 
@@ -148,6 +148,11 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0, bool
 		if (_amount == 0)
 		{
 			std::cin >> amount;
+			if (amount == 0)
+			{
+				active = false;
+				return;
+			}
 
 			if (!std::cin)
 			{
@@ -229,7 +234,7 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0, bool
 		if (!Container.empty())
 		{
 			// Primeira varredura:
-			for (short i = 0; i < Container.size(); i++)
+			for (short i = 0; i < Container.size(); ++i)
 			{
 				if (Container[i].item->name == _item->name)
 				{
@@ -251,14 +256,15 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0, bool
 					/* <-- Limitando 'amount' ao somatório dos itens identicos
 					
 					Gerenciamento de Itens --> */
-					while (amount >= Container[i].item->stack)
+					while (amount > Container[i].item->stack)
 					{
 						amount -=  Container[i].item->stack;
 						Container.erase(Container.begin() + i);
+						i--;
 						input = '\0';
 						index = 0;
 						hoveredSlot = nullptr;
-						hoveredSlot = nullptr;
+						selectedSlot = nullptr;
 					}
 
 					if (amount <= Container[i].amount)
@@ -268,9 +274,11 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount = 0, bool
 						if (Container[i].amount == 0)
 						{
 							Container.erase(Container.begin() + i);
+							i--;
 							input = '\0';
 							index = 0;
 							hoveredSlot = nullptr;
+							selectedSlot = nullptr;
 						}
 					}
 					if (!_usingItem)

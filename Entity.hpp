@@ -60,7 +60,7 @@ struct Entity : GameObject
 	virtual void Behaviour();
 	std::string UpdateSideEffects();
 	void ApplyEquipedItemStats();
-	void ChangeEquipment(std::shared_ptr<Equipment>, bool, bool);
+	void ChangeEquipment(std::shared_ptr<Equipment>, bool _shouldEquip = false, bool _hideDialog = true);
 	void DrinkPotion(std::shared_ptr<Potion>);
 	void ManageInventory();
 	void UpdateStatus(bool);

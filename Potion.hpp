@@ -1,5 +1,5 @@
 #pragma once
-#include "Item.hpp"
+#include "Consumable.hpp"
 
 enum class PotionType
 {
@@ -12,7 +12,7 @@ enum class PotionType
 	GREATER_MANA_POTION,
 };
 
-struct Potion : Item
+struct Potion : Consumable
 {
 	PotionType potionType;
 	short health_recovery;

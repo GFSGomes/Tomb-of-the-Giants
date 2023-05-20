@@ -112,6 +112,7 @@ void Scene::Interaction()
 									}
 
 									player->inventory.DiscardItem(_key, 1, true);
+									i--;
 									portal->is_locked = false;
 									portal->mirror->is_locked = false;
 									has_key = true;

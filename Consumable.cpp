@@ -9,8 +9,3 @@ Consumable::~Consumable()
 {
 
 }
-
-float Consumable::Use(std::shared_ptr<Entity>)
-{
-	return 0;
-}

@@ -166,7 +166,7 @@ void Entity::ApplyEquipedItemStats()
 	}
 }
 
-void Entity::ChangeEquipment(std::shared_ptr<Equipment> _equip, bool _shouldBeEquiped = true, bool _hide_dialog = false)
+void Entity::ChangeEquipment(std::shared_ptr<Equipment> _equip, bool _shouldBeEquiped, bool _hide_dialog)
 {
 	for (short i = 0; i < inventory.Container.size(); i++)
 	{
@@ -410,11 +410,11 @@ void Entity::ManageInventory()
 							{
 								ChangeEquipment(equip, false, true);
 							}
-							inventory.DiscardItem(item, 1, false);
+							inventory.DiscardItem(item, 1);
 						}
 						else
 						{
-							inventory.DiscardItem(item, 0, false);
+							inventory.DiscardItem(item);
 						}
 
 						break;

@@ -42,11 +42,11 @@ SceneManager::SceneManager()
 	player->SpawnAt(4, 5);
 	scene_0->AddObject(player);
 	scene_0->AddObject(std::make_shared<Key>(KeyType::SECRET_KEY));
-	scene_0->AddObject(std::make_shared<Enemy>("Cave Spider", 2, Sprite::SPIDER));
+	/*scene_0->AddObject(std::make_shared<Enemy>("Cave Spider", 2, Sprite::SPIDER));
 	scene_0->AddObject(std::make_shared<Enemy>("Cave Spider", 2, Sprite::SPIDER));
 	scene_0->AddObject(std::make_shared<Enemy>("Cave Spider", 2, Sprite::SPIDER));
 	scene_0->AddObject(std::make_shared<Enemy>("Spider Queen", 3, Sprite::SPIDER));
-	scene_0->AddObject(std::make_shared<Torch>());
+	scene_0->AddObject(std::make_shared<Torch>());*/
 	scene_0->AddObject(std::make_shared<Potion>(PotionType::MINOR_HEALTH_POTION));
 	scene_0->AddObject(S0_T1);
 	scene_0->AddObject(S0_SECRET);

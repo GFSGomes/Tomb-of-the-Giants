@@ -9,6 +9,9 @@
 #include "Equipment.hpp"
 #include "Renderer.hpp"
 #include "Global.hpp"
+#include "Miscellaneous.hpp"
+#include "Consumable.hpp"
+#include "Torch.hpp"
 
 InteractionUI UI_Interaction;
 
@@ -386,27 +389,33 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 		{
 			case 0: 
 				std::cout << " | > Add to Inventory" << "\n";
-				std::dynamic_pointer_cast<Equipment>(item) ?
-				std::cout << " |   Equip" << "\n" :
-				std::cout << " |   Use" << "\n";
+				if (std::dynamic_pointer_cast<Equipment>(item)){std::cout << " |   Equip" << "\n";}
+				else if (std::dynamic_pointer_cast<Consumable>(item)){std::cout << " |   Use" << "\n";}
 				std::cout << " |   Ignore" << "\n";
 				break;
 				
 			case 1: 
 				std::cout << " |   Add to Inventory" << "\n";
-				std::dynamic_pointer_cast<Equipment>(item) ?
-				std::cout << " | > Equip" << "\n" :
-				std::cout << " | > Use" << "\n";
-				std::cout << " |   Ignore" << "\n";
+				
+				if (std::dynamic_pointer_cast<Equipment>(item)){std::cout << " | > Equip" << "\n";}
+				else if (std::dynamic_pointer_cast<Consumable>(item)){std::cout << " | > Use" << "\n";}
+				
+				if (std::dynamic_pointer_cast<Miscellaneous>(item)){std::cout << " | > Ignore" << "\n";}
+				else {std::cout << " |   Ignore" << "\n";}
+				
 				break;
 
-			case 2: 
-				std::cout << " |   Add to Inventory" << "\n";
-				std::dynamic_pointer_cast<Equipment>(item) ?
-				std::cout << " |   Equip" << "\n" :
-				std::cout << " |   Use" << "\n";
-				std::cout << " | > Ignore" << "\n";
-				break;
+			if (!std::dynamic_pointer_cast<Miscellaneous>(item))
+			{
+				case 2:
+					std::cout << " |   Add to Inventory" << "\n";
+					std::dynamic_pointer_cast<Equipment>(item) ?
+					std::cout << " |   Equip" << "\n" :
+					std::cout << " |   Use" << "\n";
+					std::cout << " | > Ignore" << "\n";
+					break;
+			}
+			
 
 			default: break;
 		}
@@ -423,7 +432,14 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 
 			case 's': case 'S':
 			{
-				if (index < 2) index++;
+				if (std::dynamic_pointer_cast<Miscellaneous>(item))
+				{
+					if (index < 1) index++;
+				}
+				else
+				{
+					if (index < 2) index++;
+				}
 				break;
 			}
 
@@ -452,13 +468,27 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 						if (std::shared_ptr<Potion> potion = std::dynamic_pointer_cast<Potion>(item))
 						{
 							player->DrinkPotion(potion);
-							return sceneItemRemoval;
+							break;
 						}
 						else if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
 						{
 							player->inventory.AddItem(equip, 1);
-							player->ChangeEquipment(equip, true, false);
-							return sceneItemRemoval;
+							player->ChangeEquipment(equip);
+							break;
+						}
+						else if (std::shared_ptr<Torch> torch = std::dynamic_pointer_cast<Torch>(item))
+						{
+							short value = rand() % 30 + 10;
+							player->torchDuration += value;
+							Renderer::Dialog("Torch +" + value);
+							break;
+						}
+						else
+						{
+							sceneItemRemoval = false;
+							std::cout << "\n";
+							Renderer::Dialog(item->name + " was ignored.");
+							break;
 						}
 
 						index = 0;
