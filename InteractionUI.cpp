@@ -12,12 +12,8 @@
 
 InteractionUI UI_Interaction;
 
-InteractionUI::InteractionUI()
-{}
-
-InteractionUI::~InteractionUI()
-{}
-
+InteractionUI::InteractionUI(){}
+InteractionUI::~InteractionUI(){}
 void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy, bool advantage)
 {
 	index = 0;
@@ -76,24 +72,26 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		if (player->cur_health <= 0)
 		{
 			std::string dialog;
-			short count = 0;
+			short count = -1;
+			
+			system("cls");
+			Renderer::DisplaySprite(Sprite::DEATH);
+			std::cout << " | DEATH:" << "\n";
+			std::cout << "\n";
 
-			while (count < 3)
+			while (count < 2)
 			{
 				count++;
-				system("cls");
+
 				switch (count)
 				{
 					case 0: dialog = "How sad..."; break;
-					case 1: dialog = "Now, you are one of them... draggin a weapon to and fro."; break;
-					case 2: dialog = "I can't reap your soul.\n | The Tomb of the Giants is out of my domains."; break;
-					case 3: dialog = "I'm sorry, but there will be no \"rest in peace\" for you."; break;
+					case 1: dialog = "Now, you are one of them, draggin a weapon to and fro."; break;
+					case 2: dialog = "There will be no \"rest in peace\" for you."; break;
 				}
-
-				Renderer::DisplaySprite(Sprite::DEATH);
-				std::cout << " | DEATH:" << "\n";
-				std::cout << "\n";
+				
 				Renderer::Dialog(dialog, 20);
+				std::cout << "\n";
 
 				if (!_getch())
 				{
@@ -228,7 +226,6 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		}
 	}
 }
-
 void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
 	index = 0;
@@ -371,8 +368,6 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 		}
 	}
 }
-
-
 bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_ptr<Item> item)
 {
 	bool sceneItemRemoval = false;
@@ -499,12 +494,10 @@ bool InteractionUI::InteractionItem(std::shared_ptr<Player> player, std::shared_
 	}
 	return sceneItemRemoval;
 }
-
 bool InteractionUI::Initialize()
 {
 	return false;
 }
-
 bool InteractionUI::Initialize(std::shared_ptr<Player> player, std::shared_ptr<GameObject> object, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
 {
 	bool result = false;
