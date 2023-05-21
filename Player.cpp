@@ -569,7 +569,7 @@ void Player::UpdateFOV()
 	}
 }
 
-void Entity::ManageInventory()
+void Player::ManageInventory()
 {
 	short index = 0;
 	char input = '\0';
