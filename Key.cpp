@@ -3,9 +3,9 @@
 
 Key::Key(KeyType _type) : Miscellaneous("Key", 5)
 {
-	key_type = _type;
+	keyType = _type;
 
-	switch (key_type)
+	switch (keyType)
 	{
 		case KeyType::PORTAL_KEY:
 			name = "Door Key";

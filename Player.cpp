@@ -36,7 +36,7 @@ Player::~Player()
 	posY = 0;
 }
 
-bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
+bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 {
 
 	switch (input)
@@ -47,7 +47,7 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 			{
 				bool canMoveUp = true;
 
-				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
 					if (std::dynamic_pointer_cast<Wall>(obj))
 					{
@@ -72,7 +72,7 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 			{
 				bool canMoveDown = true;
 
-				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
 					if (std::dynamic_pointer_cast<Wall>(obj))
 					{
@@ -97,7 +97,7 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 			{
 				bool canMoveLeft = true;
 
-				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
 					if (std::dynamic_pointer_cast<Wall>(obj))
 					{
@@ -122,7 +122,7 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 			{
 				bool canMoveRight = true;
 
-				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
 					if (std::dynamic_pointer_cast<Wall>(obj))
 					{

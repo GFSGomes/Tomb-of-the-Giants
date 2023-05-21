@@ -9,7 +9,7 @@ enum class KeyType
 struct Key : Miscellaneous
 {
 
-	KeyType key_type;
+	KeyType keyType;
 
 	Key(KeyType);
 	~Key();

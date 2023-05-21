@@ -4,10 +4,11 @@
 #include "Enemy.hpp"
 #include "Item.hpp"
 #include "Equipment.hpp"
-#include "Portal.hpp"
 #include "Global.hpp"
 #include "Wall.hpp"
+#include "Portal.hpp"
 
+//struct Portal;
 short GridSizeX = 0;
 short GridSizeY = 0;
 
@@ -22,7 +23,7 @@ Grid::~Grid()
 
 }
 
-void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::shared_ptr<Player> player)
+void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::shared_ptr<Player> player)
 {
 	#pragma region GRID_TOP
 	if (CompatibilityMode)
@@ -60,14 +61,14 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 			short count = -1;
 			std::string icon = "\0";
 
-			for (short i = 0; i < SceneOBJ.size(); i++)
+			for (short i = 0; i < SceneOBJs.size(); i++)
 			{
-				if (SceneOBJ[i]->posY == y && SceneOBJ[i]->posX == x)
+				if (SceneOBJs[i]->posY == y && SceneOBJs[i]->posX == x)
 				{
 					count = i;
 
 					// Light
-					if (std::shared_ptr<Light> light = std::dynamic_pointer_cast<Light>(SceneOBJ[i]))
+					if (std::shared_ptr<Light> light = std::dynamic_pointer_cast<Light>(SceneOBJs[i]))
 					{
 						if (light->active)
 						{
@@ -83,9 +84,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 								icon = "·";  // Unicode
 							}
 
-							for (short j = 0; j < SceneOBJ.size(); j++)
+							for (short j = 0; j < SceneOBJs.size(); j++)
 							{
-								if (std::shared_ptr<Wall> wall = std::dynamic_pointer_cast<Wall>(SceneOBJ[j]))
+								if (std::shared_ptr<Wall> wall = std::dynamic_pointer_cast<Wall>(SceneOBJs[j]))
 								{
 									if (wall->posX == light->posX && wall->posY == light->posY)
 									{
@@ -105,7 +106,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 									}
 								}
 
-								if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJ[j]))
+								if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJs[j]))
 								{
 									if (item->posX == light->posX && item->posY == light->posY)
 									{
@@ -127,7 +128,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 									}
 								}
 
-								if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJ[j]))
+								if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJs[j]))
 								{
 									if (enemy->posX == light->posX && enemy->posY == light->posY)
 									{
@@ -149,7 +150,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 									}
 								}
 
-								if (std::shared_ptr<Player> _player = std::dynamic_pointer_cast<Player>(SceneOBJ[j]))
+								if (std::shared_ptr<Player> _player = std::dynamic_pointer_cast<Player>(SceneOBJs[j]))
 								{
 									if (_player->posX == light->posX && _player->posY == light->posY)
 									{
@@ -170,11 +171,11 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 									}
 								}
 								
-								if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJ[j]))
+								if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJs[j]))
 								{
 									if (portal->posX == light->posX && portal->posY == light->posY)
 									{
-										if (portal->is_locked) 
+										if (portal->isLocked)
 										{
 											if (light->near)
 											{
@@ -183,7 +184,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 													icon = "♦";
 											
 												// Caso trancado, nunca deve ser revelado:
-												if (portal->key_type == KeyType::SECRET_KEY)
+												if (portal->keyType == KeyType::SECRET_KEY)
 												{
 													icon = " ";
 												}
@@ -196,7 +197,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 													icon = "♦";
 
 												// Caso trancado, nunca deve ser revelado:
-												if (portal->key_type == KeyType::SECRET_KEY)
+												if (portal->keyType == KeyType::SECRET_KEY)
 												{
 													CompatibilityMode ?
 														icon = "." : // Ascii
@@ -227,9 +228,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						}
 						break; // Impede a prioridade da escuridão
 					}
+					
 					#pragma region DarknessObjectRendering
-
-					if (std::dynamic_pointer_cast<Wall>(SceneOBJ[i]))
+					if (std::dynamic_pointer_cast<Wall>(SceneOBJs[i]))
 					{
 						if (DebugMode)
 						{
@@ -239,9 +240,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						}
 					}
 
-					if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJ[i]))
+					if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJs[i]))
 					{
-						if (SceneOBJ[i]->active)
+						if (SceneOBJs[i]->active)
 						{
 							if (DebugMode)
 							{
@@ -252,9 +253,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						}
 					}
 
-					if (std::dynamic_pointer_cast<Enemy>(SceneOBJ[i]))
+					if (std::dynamic_pointer_cast<Enemy>(SceneOBJs[i]))
 					{
-						if (SceneOBJ[i]->active)
+						if (SceneOBJs[i]->active)
 						{
 							if (DebugMode)
 							{
@@ -266,7 +267,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						break;
 					}
 
-					if (std::dynamic_pointer_cast<Player>(SceneOBJ[i]))
+					if (std::dynamic_pointer_cast<Player>(SceneOBJs[i]))
 					{
 						CompatibilityMode ?
 							icon = "P" :
@@ -274,9 +275,9 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 						break;
 					}
 
-					if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJ[i]))
+					if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJs[i]))
 					{
-						if (portal->is_locked)
+						if (portal->isLocked)
 						{
 							if (DebugMode)
 							{
@@ -295,7 +296,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJ, std::sh
 							}
 						}
 
-						if (portal->key_type == KeyType::SECRET_KEY)
+						if (portal->keyType == KeyType::SECRET_KEY)
 						{
 							icon = " ";
 						}

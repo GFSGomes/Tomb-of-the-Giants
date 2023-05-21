@@ -229,7 +229,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		}
 	}
 }
-void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
+void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 {
 	index = 0;
 
@@ -313,7 +313,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 					{
 						if (player->isTorchActive)
 						{
-							enemy->Behaviour(true, SceneOBJ); // Força o movimento do Inimigo para sair da mesma coordenada que o jogador.
+							enemy->Behaviour(true, SceneOBJs); // Força o movimento do Inimigo para sair da mesma coordenada que o jogador.
 
 							std::cout << "\n";
 
@@ -327,7 +327,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 						{
 							if (DebugMode)
 							{
-								enemy->Behaviour(true, SceneOBJ);
+								enemy->Behaviour(true, SceneOBJs);
 								return;
 							}
 
@@ -340,7 +340,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 
 								_getch();
 
-								enemy->Behaviour(true, SceneOBJ);
+								enemy->Behaviour(true, SceneOBJs);
 
 								return;
 							}
@@ -528,7 +528,7 @@ bool InteractionUI::Initialize()
 {
 	return false;
 }
-bool InteractionUI::Initialize(std::shared_ptr<Player> player, std::shared_ptr<GameObject> object, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
+bool InteractionUI::Initialize(std::shared_ptr<Player> player, std::shared_ptr<GameObject> object, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 {
 	bool result = false;
 
@@ -536,7 +536,7 @@ bool InteractionUI::Initialize(std::shared_ptr<Player> player, std::shared_ptr<G
 
 	if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(object))
 	{
-		InteractionEnemy(player, enemy, SceneOBJ);
+		InteractionEnemy(player, enemy, SceneOBJs);
 	}
 	else if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(object))
 	{

@@ -19,7 +19,7 @@ Enemy::~Enemy()
 
 }
 
-void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObject>> SceneOBJ)
+void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 {
 	short idleness;
 
@@ -35,7 +35,7 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 			{
 				bool canMoveUp = true;
 
-				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
 					//if (std::dynamic_pointer_cast<Wall>(obj))
 					//{
@@ -60,7 +60,7 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 			{
 				bool canMoveDown = true;
 
-				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
 					//if (std::dynamic_pointer_cast<Wall>(obj))
 					//{
@@ -85,7 +85,7 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 			{
 				bool canMoveLeft = true;
 
-				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
 					//if (std::dynamic_pointer_cast<Wall>(obj))
 					//{
@@ -110,7 +110,7 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 			{
 				bool canMoveRight = true;
 
-				for (std::shared_ptr<GameObject> obj : SceneOBJ)
+				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
 					//if (std::dynamic_pointer_cast<Wall>(obj))
 					//{

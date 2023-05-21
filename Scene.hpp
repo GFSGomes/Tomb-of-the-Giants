@@ -18,8 +18,10 @@ struct Scene
 	Grid grid;
 	std::string scene_log;
 	std::shared_ptr<Player> player;
-	std::shared_ptr<Portal> chosen_portal;
-	std::vector<std::shared_ptr<GameObject>> SceneOBJ;
+
+	std::shared_ptr<Portal> Exit;
+	std::vector<std::shared_ptr<Portal>> ScenePORTALs;
+	std::vector<std::shared_ptr<GameObject>> SceneOBJs;
 
 	Scene(short, short);
 	~Scene();
@@ -27,5 +29,5 @@ struct Scene
 	void AddObject(std::shared_ptr<GameObject>);
 	void SpawnObjects();
 	void Interaction();
-	void LoadScene();
+	std::shared_ptr<Portal> LoadScene();
 };
