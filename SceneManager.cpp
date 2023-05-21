@@ -37,6 +37,7 @@ SceneManager::SceneManager()
 	player->SpawnAt(4, 5);
 	scene_0->AddObject(player);
 	scene_0->AddObject(_00_down);
+	scene_0->AddObject(std::make_shared<Key>(KeyType::PORTAL_KEY));
 
 	// SCENE_1:
 	scene_1->AddObject(_01_up);

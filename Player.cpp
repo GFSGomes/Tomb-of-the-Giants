@@ -3,6 +3,7 @@
 #include "Wall.hpp"
 #include "Light.hpp"
 #include "Global.hpp"
+#include <conio.h>
 
 #include "Weapon.hpp"
 #include "Armor.hpp"
@@ -26,14 +27,16 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov
 
 	inventory.AddItem(sword, 1);
 	inventory.AddItem(equip, 1);
-	ChangeEquipment(sword, true, true);
-	ChangeEquipment(equip, true, true);
+
+	sword->equiped = true;
+	equip->equiped = true;
+
+	UpdateStatus(false);
 }
 
 Player::~Player()
 {
-	posX = 0;
-	posY = 0;
+
 }
 
 bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
@@ -561,6 +564,158 @@ void Player::UpdateFOV()
 					FOV[i]->posX = posX + 2;
 					FOV[i]->posY = posY + 3;
 					break;
+			}
+		}
+	}
+}
+
+void Entity::ManageInventory()
+{
+	short index = 0;
+	char input = '\0';
+	bool active = true;
+
+	std::shared_ptr<Item> item = inventory.Initialize();
+
+	while (active)
+	{
+		if (!item)
+		{
+			active = false;
+			return;
+		}
+
+		system("cls");
+		std::cout << "\n";
+		std::cout << " | " << item->name << "\n";
+		Renderer::DisplaySprite(item->sprite);
+		std::cout << "\n";
+
+		std::cout << " | [?] Description: " << "\n";
+		std::cout << " | " << item->description << "\n";
+		std::cout << " | " << "\n";
+		if (std::shared_ptr<Weapon> weapon = std::dynamic_pointer_cast<Weapon>(item))
+		{
+			if (weapon->physical_power != 0) std::cout << " | " << weapon->physical_power << " Physical Power" << "\n";
+			if (weapon->magical_power != 0) std::cout << " | " << weapon->magical_power << " Magical Power" << "\n";
+			if (weapon->accuracy != 0) std::cout << " | " << weapon->accuracy << " Accuracy" << "\n";
+			if (weapon->critical_chance != 0) std::cout << " | " << weapon->critical_chance << " Critical Chance" << "\n";
+			if (weapon->critical_damage != 0) std::cout << " | " << weapon->critical_damage << " Critical Damage" << "\n";
+		}
+		else if (std::shared_ptr<Armor> armor = std::dynamic_pointer_cast<Armor>(item))
+		{
+			if (armor->physical_resistance != 0) std::cout << " | " << armor->physical_resistance << " Physical Resistance" << "\n";
+			if (armor->magical_resistance != 0) std::cout << " | " << armor->magical_resistance << " Magical Resistance" << "\n";
+			if (armor->dodge != 0) std::cout << " | " << armor->dodge << " Dodge" << "\n";
+			if (armor->flee != 0) std::cout << " | " << armor->flee << " Flee" << "\n";
+			if (armor->bonusSTR != 0) std::cout << " | " << armor->bonusSTR << " Bonus STR" << "\n";
+			if (armor->bonusCON != 0) std::cout << " | " << armor->bonusCON << " Bonus CON" << "\n";
+			if (armor->bonusINT != 0) std::cout << " | " << armor->bonusINT << " Bonus INT" << "\n";
+			if (armor->bonusAGI != 0) std::cout << " | " << armor->bonusAGI << " Bonus AGI" << "\n";
+			if (armor->bonusDEX != 0) std::cout << " | " << armor->bonusDEX << " Bonus DEX" << "\n";
+		}
+
+		std::cout << "\n";
+
+		switch (index)
+		{
+			case 0:
+			{
+				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
+				{
+					equip->equiped ?
+						std::cout << " | > Unequip" << "\n" :
+						std::cout << " | > Equip " << "\n";
+				}
+				else
+				{
+					std::cout << " | > Use " << item->name << "\n";
+				}
+				std::cout << " |   Discard" << "\n";
+
+				break;
+			}
+			case 1:
+			{
+				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
+				{
+					equip->equiped ?
+						std::cout << " |   Unequip" << "\n" :
+						std::cout << " |   Equip " << "\n";
+				}
+				else
+				{
+					std::cout << " |   Use " << item->name << "\n";
+				}
+				std::cout << " | > Discard" << "\n";
+			}
+		}
+
+		input = _getch();
+
+		switch (input)
+		{
+			case 'w': case 'W':
+				if (index > 0) index--;
+				break;
+
+			case 's': case 'S':
+				if (index < 1) index++;
+				break;
+
+			case '\r':
+			{
+				switch (index)
+				{
+					case 0:
+					{
+						if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
+						{
+							if (equip->equiped)
+							{
+								ChangeEquipment(equip, false, false);
+							}
+							else
+							{
+								ChangeEquipment(equip, true, false);
+							}
+						}
+
+						if (std::shared_ptr<Potion> potion = std::dynamic_pointer_cast<Potion>(item))
+						{
+							DrinkPotion(potion);
+						}
+
+						break;
+					}
+
+					case 1:
+					{
+						active = false;
+						if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
+						{
+							if (equip->equiped)
+							{
+								ChangeEquipment(equip, false, true);
+							}
+							inventory.DiscardItem(item, 1);
+						}
+						else
+						{
+							inventory.DiscardItem(item);
+						}
+
+						break;
+					}
+				}
+			}
+
+			case 27:
+			{
+				item = nullptr;
+				active = false;
+				ManageInventory();
+				break;
 			}
 		}
 	}

@@ -26,6 +26,7 @@ struct Player : Entity
 	bool Behaviour(char, std::vector<std::shared_ptr<GameObject>>);
 	void CreateFOV();
 	void UpdateFOV();
+	void ManageInventory();
 };
 
 extern Player PLAYER;

@@ -2,6 +2,8 @@
 #include <vector>
 #include <memory>
 
+struct Ability;
+
 enum class Class
 {
 	WARRIOR, ARCHER, ROGUE, WIZARD
@@ -9,11 +11,13 @@ enum class Class
 
 struct Archetype
 {
-	Class name;
+	Class _class;
+	//std::vector<Ability> ability;
 
 	Archetype(Class);
 	~Archetype();
 
 	private:
 	void SetSkillTree();
+	const char * GetClassName();
 };

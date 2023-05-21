@@ -50,7 +50,7 @@ struct Entity : GameObject
 	bool alive;
 	#pragma endregion
 
-	Inventory inventory; //
+	Inventory inventory;
 	std::vector<Ability> abilities;
 	std::shared_ptr<Archetype> archetype;
 
@@ -62,7 +62,6 @@ struct Entity : GameObject
 	void ApplyEquipedItemStats();
 	void ChangeEquipment(std::shared_ptr<Equipment>, bool _shouldEquip = false, bool _hideDialog = true);
 	void DrinkPotion(std::shared_ptr<Potion>);
-	void ManageInventory();
 	void UpdateStatus(bool);
 	void DisplayStatus();
 	void SetLevel(short);

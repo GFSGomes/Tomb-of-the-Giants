@@ -28,10 +28,10 @@ Entity::Entity() :
 	__barrier_turns{0}, barrier_value{0}, _store_cur_health{0},
 	alive{true}
 {
-	UpdateStatus(true);
 
 	// TEMPORARIO:
 	abilities.push_back(Ability::ATTACK);
+	UpdateStatus(true);
 }
 
 Entity::~Entity(){}
@@ -149,7 +149,7 @@ void Entity::ApplyEquipedItemStats()
 					critical_damage += weapon->critical_damage;
 				}
 
-				if (std::shared_ptr<Armor> armor = std::dynamic_pointer_cast<Armor>(equip))
+				else if (std::shared_ptr<Armor> armor = std::dynamic_pointer_cast<Armor>(equip))
 				{
 					physical_resistance += armor->physical_resistance;
 					magical_resistance += armor->magical_resistance;
@@ -295,144 +295,6 @@ void Entity::DrinkPotion(std::shared_ptr<Potion> _potion)
 	if (_getch()){}
 }
 
-void Entity::ManageInventory()
-{
-	short index = 0;
-	char input = '\0';
-	bool active = true;
-
-	std::shared_ptr<Item> item = inventory.Initialize();
-	
-	while (active)
-	{
-		if (!item)
-		{
-			active = false;
-			return;
-		}
-
-		system("cls");
-		std::cout << "\n";
-		std::cout << " | " << item->name << "\n";
-		Renderer::DisplaySprite(item->sprite);
-		std::cout << "\n";
-
-		std::cout << " | [?] Description: " << "\n";
-		std::cout << " | " << item->description << "\n";
-		std::cout << " | " << "\n";
-		if (std::shared_ptr<Weapon> weapon = std::dynamic_pointer_cast<Weapon>(item))
-		{
-			if (weapon->physical_power != 0) std::cout << " | " << weapon->physical_power << " Physical Power" << "\n";
-			if (weapon->magical_power != 0) std::cout << " | " << weapon->magical_power << " Magical Power" << "\n";
-			if (weapon->accuracy != 0) std::cout << " | " << weapon->accuracy << " Accuracy" << "\n";
-			if (weapon->critical_chance != 0) std::cout << " | " << weapon->critical_chance << " Critical Chance" << "\n";
-			if (weapon->critical_damage != 0) std::cout << " | " << weapon->critical_damage << " Critical Damage" << "\n";
-		}
-		std::cout << "\n";
-
-		switch (index)
-		{
-			case 0:
-			{
-				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
-				{
-					equip->equiped ?
-						std::cout << " | > Unequip" << "\n" :
-						std::cout << " | > Equip " << "\n";
-				}
-				else {
-					std::cout << " | > Use " << item->name << "\n";
-				}
-				std::cout << " |   Discard" << "\n";
-					
-				break;
-			}
-			case 1:
-			{
-				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
-				{
-					equip->equiped ?
-						std::cout << " |   Unequip" << "\n" :
-						std::cout << " |   Equip " << "\n";
-				}
-				else
-				{
-					std::cout << " |   Use " << item->name << "\n";
-				}
-				std::cout << " | > Discard" << "\n";
-			}
-		}
-
-		input = _getch();
-
-		switch (input)
-		{
-			case 'w': case 'W':
-				if (index > 0) index--;
-				break;
-
-			case 's': case 'S':
-				if (index < 1) index++;
-				break;
-
-			case '\r':
-			{
-				switch (index)
-				{
-					case 0:
-					{
-						if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
-						{
-							if (equip->equiped)
-							{
-								ChangeEquipment(equip, false, false);
-							}
-							else
-							{
-								ChangeEquipment(equip, true, false);
-							}
-						}
-
-						if (std::shared_ptr<Potion> potion = std::dynamic_pointer_cast<Potion>(item))
-						{
-							DrinkPotion(potion);
-						}
-
-						break;
-					}
-
-					case 1:
-					{
-						active = false;
-						if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
-						{
-							if (equip->equiped)
-							{
-								ChangeEquipment(equip, false, true);
-							}
-							inventory.DiscardItem(item, 1);
-						}
-						else
-						{
-							inventory.DiscardItem(item);
-						}
-
-						break;
-					}
-				}
-			} 
-
-			case 27:
-			{
-				item = nullptr;
-				active = false;
-				ManageInventory();
-				break;
-			}
-		}
-	}
-}
-
 void Entity::DisplayStatus()
 {
 	std::cout << " | " << name << " (" << level << ")" << "\n";
@@ -477,13 +339,13 @@ void Entity::UpdateStatus(bool level_up = false)
 	| 5         |           | Weapon    |           |
 							   
 	| P.Res     | M.Res     | Dodge     | Accuracy  |
-	| CON x 0.5 | CON x 0.1 | AGI x 2.0 | DEX x 1.5 |
+	| CON x 0.5 | CON x 0.1 | AGI x 0.5 | DEX x 0.7 |
 	| AGI x 0.2 | INT x 0.3 |           |           |
 	|           | AGI x 0.1 |           |           |
 	
 	| C. Chance | C. Damage | Flee      |
-	| DEX x 1.0 | DEX x 1.0 | AGI x 1.0 |
-	| AGI x 0.5 |           |           |
+	| DEX x 0.6 | DEX x 0.1 | AGI x 1.0 |
+	| AGI x 0.2 | STR x 0.3 |           |
 	|           |           |           |
 	*/
 	max_health = 10 + (CON * 1.0) + (STR * 0.5);
@@ -495,11 +357,11 @@ void Entity::UpdateStatus(bool level_up = false)
 	physical_resistance = (CON * 0.5) + (AGI * 0.2);
 	magical_resistance  = (INT * 0.5) + (CON * 0.1) + (AGI * 0.1);
 
-	dodge = (AGI * 2);
-	accuracy = (DEX * 1.5);
+	dodge = (AGI * 0.5);
+	accuracy = (DEX * 0.7);
 	
-	critical_damage = (DEX);
-	critical_chance = (DEX) + (AGI * 0.5);
+	critical_damage = (DEX * 0.1) + (STR * 0.3);
+	critical_chance = (DEX * 0.6) + (AGI * 0.2);
 	
 	flee = (AGI);
 
@@ -530,8 +392,10 @@ void Entity::UpdateStatus(bool level_up = false)
 
 		cur_experience += over;
 	}
-
-	ApplyEquipedItemStats();
+	else
+	{
+		ApplyEquipedItemStats();
+	}
 }
 
 void Entity::SetLevel(short _level)

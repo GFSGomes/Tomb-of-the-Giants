@@ -66,9 +66,14 @@ Condition GetCondition(float _accuracy, float _cost, std::shared_ptr<Entity> cas
 
 	if (caster->accuracy + _accuracy >= hit_chance + target->dodge)
 	{
-		hit_chance + target->critical_chance >= 90 ?
-			condition = Condition::CRIT :
+		if ((caster->critical_chance - 100) / (hit_chance + 100) <= 0.505)
+		{
+			condition = Condition::CRIT;
+		}
+		else
+		{
 			condition = Condition::HIT;
+		}
 	}
 	else
 	{
