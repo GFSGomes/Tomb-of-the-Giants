@@ -11,7 +11,7 @@
 #include "Wall.hpp"
 #include "Portal.hpp"
 
-Scene::Scene(short _gridSizeX, short _gridSizeY) : grid{_gridSizeX, _gridSizeY}, asign_log{true}, scene_log{"\0"}, currentScene{false}
+Scene::Scene(short _gridSizeX, short _gridSizeY) : grid{_gridSizeX, _gridSizeY}, scene_log{"\0"}, currentScene{false}, interactionOBJ{nullptr}
 {
 	// +1 é necessário para que a Grid gerada tenha o tamanho literal definido;
 	gridSizeX = _gridSizeX + 1;
@@ -98,24 +98,125 @@ void Scene::SpawnObjects()
 
 void Scene::Interaction()
 {
-	char _input = UI_GameInterface.Input(player, SceneOBJs);
-	bool has_key = false;
+	bool _hasKey{false};
+	bool _removeObject{false};
+	char _input{'\0'};
 
-	if (_input == 13)
+	std::cout << "\n" << "\n";
+
+	if (scene_log != "\0")
 	{
-		for (short i = 0; i < SceneOBJs.size(); i++)
+		Renderer::Dialog(scene_log); // Mostra uma breve mensagem dos arredores;
+	}
+
+	_input = UI_GameInterface.Input(player, SceneOBJs, 0); // Player Input;
+
+	
+	if (interactionOBJ)
+	{	
+		_removeObject = UI_Interaction.Initialize(player, interactionOBJ, SceneOBJs); // Chamada de Interação;
+	}
+
+	for (short i = 0; i < SceneOBJs.size(); i++)
+	{
+		if (std::shared_ptr<GameObject> obj = std::dynamic_pointer_cast<GameObject>(SceneOBJs[i]))
 		{
-			if (std::dynamic_pointer_cast<Wall>(SceneOBJs[i])|| std::dynamic_pointer_cast<Light>(SceneOBJs[i]))
+			if (std::dynamic_pointer_cast<Wall>(obj)) continue; // Ignorando Walls;
+
+			/*** NÃO-INTERAÇÕES ***/
+			if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(obj))
 			{
-				continue;
+				if (!enemy->alive)
+				{
+					SceneOBJs.erase(SceneOBJs.begin() + i);
+					interactionOBJ = nullptr;
+					scene_log = "\0";
+					_input = '\0';
+					i--;
+					break;
+				}
 			}
 
-			if (std::shared_ptr<GameObject> obj = std::dynamic_pointer_cast<GameObject>(SceneOBJs[i]))
+			/*** INTERAÇÕES POR APROXIMAÇÃO ***/
+			if (player->posY - 1 == obj->posY && player->posX == obj->posX || player->posY + 1 == obj->posY && player->posX == obj->posX || player->posY == obj->posY && player->posX - 1 == obj->posX || player->posY == obj->posY && player->posX + 1 == obj->posX)
 			{
-				// Proximidade
-				if (player->posY - 1 == obj->posY && player->posX == obj->posX || player->posY + 1 == obj->posY && player->posX == obj->posX || player->posY == obj->posY && player->posX - 1 == obj->posX || player->posY == obj->posY && player->posX + 1 == obj->posX)
+				// Como o inimigo é teletransportado para longe, a interação não o remove de cena:
+				if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(obj))
 				{
-					if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
+					if (!enemy->alive)
+					{
+						SceneOBJs.erase(SceneOBJs.begin() + i);
+						interactionOBJ = nullptr;
+						scene_log = "\0";
+						i--;
+						break;
+					}
+
+					if (interactionOBJ == enemy)
+					{
+						interactionOBJ = nullptr;
+						scene_log = "\0";
+					}
+
+					if (_input == '\r')
+					{
+						if (!interactionOBJ)
+						{
+							scene_log = "[!] " + enemy->name + " spotted!";
+							interactionOBJ = enemy;
+							_input = '\0';
+						}
+					}
+					else if (player->posX == enemy->lookX && player->posY == enemy->lookY)
+					{
+						if (!interactionOBJ)
+						{
+							scene_log = "[!] " + enemy->name + " found you!";
+							interactionOBJ = enemy;
+						}
+						else
+						{
+							interactionOBJ = nullptr;
+							scene_log = "\0";
+						}
+					}
+					
+				}
+				if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(obj))
+				{
+					if (_input == '\r')
+					{
+						if (_removeObject)
+						{
+							SceneOBJs.erase(SceneOBJs.begin() + i);
+							i--;
+						}
+						interactionOBJ = nullptr;
+						scene_log = "\0";
+						//_input = '\0';
+						break;
+					}
+					else
+					{
+						if (!interactionOBJ)
+						{
+							scene_log = "[!] " + item->name + " found!";
+							interactionOBJ = item;
+						}
+						else
+						{
+							if (interactionOBJ == item)
+							{
+								interactionOBJ = nullptr;
+								scene_log = "\0";
+							}
+						}
+						break;
+					}
+				}
+				if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
+				{
+					if (_input == '\r')
 					{
 						if (portal->isLocked)
 						{
@@ -134,96 +235,50 @@ void Scene::Interaction()
 										i--;
 										portal->isLocked = false;
 										portal->mirror->isLocked = false;
-										has_key = true;
-										break; // break;
+										_hasKey = true;
 									}
 								}
 							}
 
-							if (!has_key)
+							if (!_hasKey)
 							{
-								if (portal->keyType == KeyType::SECRET_KEY)
+								if (portal->keyType != KeyType::SECRET_KEY)
 								{
-									return;
+									scene_log = "[!] This door is locked.";
 								}
-
-								if (asign_log)
-								{
-									scene_log = "[!] This door is locked. Find a key first.";
-								}
+								_input = '\0';
 							}
 							else
 							{
-								if (asign_log)
+								if (portal->keyType == KeyType::SECRET_KEY)
 								{
-									if (portal->keyType == KeyType::SECRET_KEY)
-									{
-										scene_log = "[!] A secrect chamber was opened.";
-										asign_log = !asign_log;
-									}
-									else
-									{
-										scene_log = "[!] The door opened.";
-										asign_log = !asign_log;
-									}
+									scene_log = "[!] A secrect chamber was opened.";
 								}
+								else
+								{
+									scene_log = "[!] Door was opened.";
+								}
+								_input = '\0';
 							}
-
-							asign_log = true;
 						}
 					}
 				}
 			}
-
 			
-		}
-	}
-
-	// Pontual
-	for (std::shared_ptr<GameObject> obj : SceneOBJs)
-	{
-		if (player->posX == obj->posX && player->posY == obj->posY)
-		{
-			/*if (std::dynamic_pointer_cast<Item>(obj))
+			/*** INTERAÇÕES POR SOBREPOSIÇÃO ***/
+			if (player->posY == obj->posX && player->posX == obj->posX)
 			{
-				bool removeObject = UI_Interaction.Initialize(player, obj, SceneOBJs);
-						
-				if (removeObject)
+				if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 				{
-					SceneOBJs.erase(SceneOBJs.begin() + i);
-					i--;
-					Interaction();
-				}
-			}
-			else if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(obj))
-			{
-				if (enemy->alive)
-				{
-					UI_Interaction.Initialize(player, enemy, SceneOBJs);
-							
-					if (!enemy->alive)
+					if (!portal->isLocked)
 					{
-						SceneOBJs.erase(SceneOBJs.begin() + i);
+						// Definindo spawn do player na próxima scena;
+						player->posX = portal->mirror->posX;
+						player->posY = portal->mirror->posY;
+
+						Exit = portal;
+						currentScene = false;
 					}
-				}
-			}*/
-			if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
-			{
-				asign_log = !asign_log;
-
-				if (!portal->isLocked)
-				{	
-					#pragma region FUNCIONANDO
-
-					// Definindo spawn do player na outra scena;
-					player->posX = portal->mirror->posX;
-					player->posY = portal->mirror->posY;
-
-					// Passando o player, caso o mesmo seja null para a proxima cena.
-
-					Exit = portal;
-					currentScene = false;
-					#pragma endregion
 				}
 			}
 		}
@@ -254,15 +309,8 @@ std::shared_ptr<Portal> Scene::LoadScene()
 
 		grid.UpdateGrid(SceneOBJs, player);
 
-		if (scene_log != "\0" && player->state != PlayerState::IDLE)
-		{
-			std::cout << "\n\n";
-			Renderer::Dialog(scene_log, 5);
-		}
+		Interaction(); // Player Input
 		
-		Interaction();
-
-		scene_log = "\0";
 
 		if (IsPaused)
 		{

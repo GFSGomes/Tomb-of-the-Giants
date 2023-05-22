@@ -24,12 +24,12 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov
 	abilities.push_back(Ability::BRUTAL_STRIKE);
 	abilities.push_back(Ability::MANA_SHIELD);
 
-	std::shared_ptr<Weapon> sword = std::make_shared<Weapon>(WeaponType::SWORD, "Short Sword", "Simple, sharp and efficient.", 3);
+	std::shared_ptr<Weapon> sword = std::make_shared<Weapon>(WeaponType::SWORD, "Short Sword", "Simple, sharp and efficient.", 7);
 	std::shared_ptr<Armor> equip = std::make_shared<Armor>(ArmorType::BODY, Sprite::MEDIUM_BODY, "Gambeson", "An armor resistent against cuts.", 3, 1, 5);
 
 	inventory.AddItem(sword, 1);
 	inventory.AddItem(equip, 1);
-	inventory.AddItem(std::make_shared<Key>(KeyType::PORTAL_KEY), 1);
+	//inventory.AddItem(std::make_shared<Key>(KeyType::PORTAL_KEY), 1);
 
 	sword->equiped = true;
 	equip->equiped = true;
@@ -62,7 +62,7 @@ char Player::Behaviour(char _input, std::vector<std::shared_ptr<GameObject>> Sce
 							
 							if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 							{
-								if (!portal->isLocked)
+								if (!portal->isLocked || portal->keyType == KeyType::SECRET_KEY)
 								{
 									canMoveUp = true;
 								}
@@ -96,7 +96,7 @@ char Player::Behaviour(char _input, std::vector<std::shared_ptr<GameObject>> Sce
 							canMoveDown = false;
 							if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 							{
-								if (!portal->isLocked)
+								if (!portal->isLocked || portal->keyType == KeyType::SECRET_KEY)
 								{
 									canMoveDown = true;
 								}
@@ -130,7 +130,7 @@ char Player::Behaviour(char _input, std::vector<std::shared_ptr<GameObject>> Sce
 							canMoveLeft = false;
 							if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 							{
-								if (!portal->isLocked)
+								if (!portal->isLocked || portal->keyType == KeyType::SECRET_KEY)
 								{
 									canMoveLeft = true;
 								}
@@ -164,7 +164,7 @@ char Player::Behaviour(char _input, std::vector<std::shared_ptr<GameObject>> Sce
 							canMoveRight = false;
 							if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 							{
-								if (!portal->isLocked)
+								if (!portal->isLocked || portal->keyType == KeyType::SECRET_KEY)
 								{
 									canMoveRight = true;
 								}
@@ -191,14 +191,14 @@ char Player::Behaviour(char _input, std::vector<std::shared_ptr<GameObject>> Sce
 				isTorchActive = !isTorchActive;
 				UpdateFOV();
 			}
-			break;
-
 			state = PlayerState::IDLE;
+			break;
 		}
 
 		case '\r':
 		{
 			state = PlayerState::IDLE;
+			break;
 		}
 	}
 

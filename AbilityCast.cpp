@@ -175,24 +175,24 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				}
 				if (i == 1)
 				{
-					log += " | Second Hit: ";
+					log += "\n | Second Hit: ";
 				}
 
 				if (caster->accuracy + accuracy >= hit_chance + target->dodge)
 				{
-					if (hit_chance + target->critical_chance >= 90) {
+					if ((caster->critical_chance - 100) / (hit_chance + 100) <= 0.505) {
 						raw_value += (caster->physical_damage * multiplier * caster->critical_damage);
-						log += " Critical Hit!";
+						log += " CRITICAL!";
 					}
 					else
 					{
 						raw_value += (caster->physical_damage * multiplier);
-						log += " Hit!";
+						log += " HIT!";
 					}
 				}
 				else
 				{
-					log += " Miss...";
+					log += " Miss";
 				}
 			}
 

@@ -244,6 +244,7 @@ char GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 					_exp_manip = !_exp_manip;
 					_level_manip = !_level_manip;
 					_torch_manip = !_torch_manip;
+					player->state = PlayerState::IDLE;
 					break;
 				
 				case '1':

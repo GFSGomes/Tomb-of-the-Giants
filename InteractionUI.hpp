@@ -22,7 +22,7 @@ struct InteractionUI : UI
 	bool InteractionItem(std::shared_ptr<Player>, std::shared_ptr<Item>);
 
 	bool Initialize() override;
-	bool Initialize(std::shared_ptr<Player>, std::shared_ptr<GameObject>, std::vector<std::shared_ptr<GameObject>>);
+	bool Initialize(std::shared_ptr<Player> player, std::shared_ptr<GameObject> interactiobObject, std::vector<std::shared_ptr<GameObject>> SceneOBJs);
 };
 
 extern InteractionUI UI_Interaction;
