@@ -6,6 +6,7 @@
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include "Renderer.hpp"
+#include <windows.h>
 
 GameInterfaceUI UI_GameInterface;
 bool IsPaused = false;
@@ -127,30 +128,24 @@ bool GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 	}
 
 	std::cout << "\n";
-	std::cout << "\n";
 
 	if (DebugMode)
 	{
 		if (_resources_manip)
 		{
-			std::cout << " |Rtrn|  Increasing : D" << "\n";
-			std::cout << "\n";
-			std::cout << " |1| HP and MP ++"<< "\n";
-			std::cout << " |2| Exp += 5 * " << player->level << "\n";
-			std::cout << " |3| Level ++" << "\n";
-			std::cout << " |3| Torch += 10" << "\n";
+			std::cout << " |Rtrn| Increasing (o  ) Decreasing" << "\n";
+			std::cout << " |1| (HP/MP)++       | |3| Level UP" << "\n";
+			std::cout << " |2| Exp++           | |4| Torch++" << "\n";
 		}
 		else
 		{
-			std::cout << " |Rtrn|  I : Decreasing" << "\n";
-			std::cout << "\n";
-			std::cout << " |1| HP and MP --" << "\n";
-			std::cout << " |2| Exp = 1 "<< "\n";
-			std::cout << " |3| Level = 1" << "\n";
-			std::cout << " |3| Torch -= 10" << "\n";
+			std::cout << " |Rtrn| Increasing (  o) Decreasing" << "\n";
+			std::cout << " |1| (HP/MP)--       | |3| Level = 0" << "\n";
+			std::cout << " |2| Exp = 0         | |4| Torch--" << "\n";
 		}
 	}
 
+	Sleep(15);
 	input = _getch();
 
 	if (active)

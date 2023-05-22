@@ -8,7 +8,6 @@
 #include "Global.hpp"
 #include "Renderer.hpp"
 #include <conio.h>
-#include <windows.h>
 #include "Wall.hpp"
 #include "Portal.hpp"
 
