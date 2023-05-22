@@ -9,10 +9,12 @@
 #include "Armor.hpp"
 #include "Potion.hpp"
 #include "Renderer.hpp"
+#include "Key.hpp"
+#include "Portal.hpp"
 
 Player PLAYER("PLAYER");
 
-Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov_diameter{5}, fov_state{FOV_STATE::OFF}, FOV{}
+Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov_diameter{5}, fov_state{FovState::OFF}, FOV{}
 {
 	name = _name;
 	CreateFOV();
@@ -27,6 +29,7 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov
 
 	inventory.AddItem(sword, 1);
 	inventory.AddItem(equip, 1);
+	inventory.AddItem(std::make_shared<Key>(KeyType::PORTAL_KEY), 1);
 
 	sword->equiped = true;
 	equip->equiped = true;
@@ -39,10 +42,9 @@ Player::~Player()
 
 }
 
-bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
+char Player::Behaviour(char _input, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 {
-
-	switch (input)
+	switch (_input)
 	{
 		case 'w': case 'W':
 		{
@@ -52,11 +54,19 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 
 				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
-					if (std::dynamic_pointer_cast<Wall>(obj))
+					if (!std::dynamic_pointer_cast<Light>(obj))
 					{
 						if (obj->posX == posX && obj->posY + 1 == posY)
 						{
 							canMoveUp = false;
+							
+							if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
+							{
+								if (!portal->isLocked)
+								{
+									canMoveUp = true;
+								}
+							}
 							continue;
 						}
 					}
@@ -66,6 +76,8 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 					posY--;
 				}
 			}
+			lookDirection = LookDirection::UP;
+			state = PlayerState::MOVING;
 			break;
 		}
 
@@ -77,11 +89,18 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 
 				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
-					if (std::dynamic_pointer_cast<Wall>(obj))
+					if (!std::dynamic_pointer_cast<Light>(obj))
 					{
 						if (obj->posX == posX && obj->posY - 1 == posY)
 						{
 							canMoveDown = false;
+							if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
+							{
+								if (!portal->isLocked)
+								{
+									canMoveDown = true;
+								}
+							}
 							continue;
 						}
 					}
@@ -91,6 +110,8 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 					posY++;
 				}
 			}
+			lookDirection = LookDirection::DOWN;
+			state = PlayerState::MOVING;
 			break;
 		}
 
@@ -102,11 +123,18 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 
 				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
-					if (std::dynamic_pointer_cast<Wall>(obj))
+					if (!std::dynamic_pointer_cast<Light>(obj))
 					{
 						if (obj->posX + 1 == posX && obj->posY == posY)
 						{
 							canMoveLeft = false;
+							if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
+							{
+								if (!portal->isLocked)
+								{
+									canMoveLeft = true;
+								}
+							}
 							continue;
 						}
 					}
@@ -116,6 +144,8 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 					posX--;
 				}
 			}
+			lookDirection = LookDirection::LEFT;
+			state = PlayerState::MOVING;
 			break;
 		}
 
@@ -127,11 +157,18 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 
 				for (std::shared_ptr<GameObject> obj : SceneOBJs)
 				{
-					if (std::dynamic_pointer_cast<Wall>(obj))
+					if (!std::dynamic_pointer_cast<Light>(obj))
 					{
 						if (obj->posX - 1 == posX && obj->posY == posY)
 						{
 							canMoveRight = false;
+							if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
+							{
+								if (!portal->isLocked)
+								{
+									canMoveRight = true;
+								}
+							}
 							continue;
 						}
 					}
@@ -141,6 +178,9 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 					posX++;
 				}
 			}
+
+			lookDirection = LookDirection::RIGHT;
+			state = PlayerState::MOVING;
 			break;
 		}
 
@@ -152,11 +192,13 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 				UpdateFOV();
 			}
 			break;
+
+			state = PlayerState::IDLE;
 		}
 
 		case '\r':
 		{
-			return true;
+			state = PlayerState::IDLE;
 		}
 	}
 
@@ -167,7 +209,7 @@ bool Player::Behaviour(char input, std::vector<std::shared_ptr<GameObject>> Scen
 
 	UpdateFOV();
 
-	return false;
+	return _input;
 }
 
 void Player::CreateFOV()

@@ -11,10 +11,7 @@
 GameInterfaceUI UI_GameInterface;
 bool IsPaused = false;
 
-GameInterfaceUI::GameInterfaceUI() : _resources_manip{true}, _exp_manip{true}, _level_manip{true}, _torch_manip{true}
-{
-
-}
+GameInterfaceUI::GameInterfaceUI() : _resources_manip{true}, _exp_manip{true}, _level_manip{true}, _torch_manip{true}{}
 
 GameInterfaceUI::~GameInterfaceUI()
 {
@@ -111,7 +108,7 @@ bool GameInterfaceUI::Initialize(std::shared_ptr<Player> player)
 	return active;
 }
 
-bool GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
+char GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> SceneOBJs, short _inputDelay)
 {
 	std::cout << "\n";
 	std::cout << "\n";
@@ -133,19 +130,20 @@ bool GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 	{
 		if (_resources_manip)
 		{
-			std::cout << " |Rtrn| Increasing (o  ) Decreasing" << "\n";
+			std::cout << " |Rtrn| Increasing (<  ) Decreasing" << "\n";
 			std::cout << " |1| (HP/MP)++       | |3| Level UP" << "\n";
 			std::cout << " |2| Exp++           | |4| Torch++" << "\n";
 		}
 		else
 		{
-			std::cout << " |Rtrn| Increasing (  o) Decreasing" << "\n";
+			std::cout << " |Rtrn| Increasing (  >) Decreasing" << "\n";
 			std::cout << " |1| (HP/MP)--       | |3| Level = 0" << "\n";
 			std::cout << " |2| Exp = 0         | |4| Torch--" << "\n";
 		}
 	}
 
-	Sleep(15);
+	Sleep(_inputDelay);
+
 	input = _getch();
 
 	if (active)
@@ -331,4 +329,6 @@ bool GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 				return player->Behaviour(input, SceneOBJs);
 		}
 	}
+
+	return input;
 }

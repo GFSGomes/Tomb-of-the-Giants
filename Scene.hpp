@@ -12,7 +12,6 @@ struct Scene
 	short gridSizeX;
 	short gridSizeY;
 
-	bool player_idle;
 	bool asign_log;
 
 	Grid grid;

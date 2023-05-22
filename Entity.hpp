@@ -9,6 +9,11 @@ struct Archetype;
 struct Equipment;
 enum class Ability;
 
+enum class LookDirection
+{
+	UP, DOWN, LEFT, RIGHT
+};
+
 struct Entity : GameObject
 {
 	#pragma region Variables
@@ -49,6 +54,8 @@ struct Entity : GameObject
 	
 	bool alive;
 	#pragma endregion
+
+	LookDirection lookDirection;
 
 	Inventory inventory;
 	std::vector<Ability> abilities;

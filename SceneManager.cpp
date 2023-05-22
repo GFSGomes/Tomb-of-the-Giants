@@ -38,11 +38,7 @@ SceneManager::SceneManager()
 	scene_0->AddObject(player);
 	scene_0->AddObject(_00_down);
 	scene_0->AddObject(std::make_shared<Key>(KeyType::PORTAL_KEY));
-	scene_0->AddObject(std::make_shared<Wall>(WallDirection::HORIZONTAL, 0, 0, 8));
-	scene_0->AddObject(std::make_shared<Wall>(WallDirection::HORIZONTAL, 0, 8, 4));
-	scene_0->AddObject(std::make_shared<Wall>(WallDirection::HORIZONTAL, 5, 8, 4));
-	scene_0->AddObject(std::make_shared<Wall>(WallDirection::VERTICAL, 8, 0, 8));
-	scene_0->AddObject(std::make_shared<Wall>(WallDirection::VERTICAL, 0, 1, 7));
+	scene_0->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
 	// SCENE_1:
 	scene_1->AddObject(_01_up);
 	#pragma endregion
