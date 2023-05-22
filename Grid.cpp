@@ -25,7 +25,7 @@ Grid::~Grid()
 
 void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::shared_ptr<Player> player)
 {
-	#pragma region GRID_TOP
+	/*#pragma region GRID_TOP
 	if (CompatibilityMode)
 	{
 		std::cout << " .-";
@@ -46,15 +46,17 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 		std::cout << "┐";
 		std::cout << "\n";
 	}
-	#pragma endregion
+	#pragma endregion*/
 
 	for (short y = 0; y <= sizeY; y++)
 	{
-		#pragma region GRID_LEFT
+		/*#pragma region GRID_LEFT
 		CompatibilityMode ?
 			std::cout << " | ":
 			std::cout << " │ ";
-		#pragma endregion
+		#pragma endregion*/
+		
+		std::cout << " "; // Temp
 
 		for (short x = 0; x <= sizeX; x++)
 		{
@@ -321,13 +323,15 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 				std::cout << "  ";
 			}
 		}
-		#pragma region GRID_LEFT
+		std::cout << " \n"; // Temp
+
+		/*#pragma region GRID_LEFT
 		CompatibilityMode ?
 			std::cout << "|" << "\n" :
 			std::cout << "│" << "\n";
-		#pragma endregion
+		#pragma endregion*/
 	}
-	#pragma region GRID_BOTTOM
+	/*#pragma region GRID_BOTTOM
 	if (CompatibilityMode)
 	{
 		std::cout << " '-";
@@ -346,5 +350,5 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 		}
 		std::cout << "┘";
 	}
-	#pragma endregion
+	#pragma endregion*/
 }

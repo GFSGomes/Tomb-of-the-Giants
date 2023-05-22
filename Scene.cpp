@@ -25,10 +25,12 @@ Scene::~Scene()
 
 void Scene::AddObject(std::shared_ptr<GameObject> obj)
 {
+	// AddObject simplesmente adiciona GameObjects ao vetor SceneOBJ;
 	SceneOBJs.push_back(obj);
 
 	if (player == nullptr)
 	{
+		// Se o player foi adicionado, adiciona também sua FOV:
 		if (std::dynamic_pointer_cast<Player>(obj))
 		{
 			player = std::dynamic_pointer_cast<Player>(obj);
@@ -42,6 +44,15 @@ void Scene::AddObject(std::shared_ptr<GameObject> obj)
 			}
 		}
 	}
+
+	if (std::shared_ptr<Wall> wall = std::dynamic_pointer_cast<Wall>(obj))
+	{
+		for (std::shared_ptr<Wall> wallbrick : wall->bricks)
+		{
+			SceneOBJs.push_back(wallbrick);
+		}
+	}
+
 	if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 	{
 		ScenePORTALs.push_back(portal);
