@@ -170,7 +170,6 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 										break;
 									}
 								}
-								
 								if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJs[j]))
 								{
 									if (portal->posX == light->posX && portal->posY == light->posY)
@@ -183,10 +182,18 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 													icon = ":" :
 													icon = "♦";
 											
-												// Caso trancado, nunca deve ser revelado:
+												// Mostrado apenas se o player tiver a chave:
 												if (portal->keyType == KeyType::SECRET_KEY)
 												{
 													icon = " ";
+
+													// Bool
+													if (portal->secretReveal)
+													{
+														CompatibilityMode ?
+															icon = ":" :
+															icon = "♦";
+													}
 												}
 											}
 
@@ -204,7 +211,6 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 														icon = "·";  // Unicode
 												}
 											}
-											
 										}
 										else
 										{

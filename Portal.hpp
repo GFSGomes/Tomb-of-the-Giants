@@ -12,6 +12,7 @@ enum class Position
 struct Portal : GameObject
 {
 	bool isLocked;
+	bool secretReveal;
 	std::shared_ptr<Scene> scene;   // Destiny scene to be loaded;
 	std::shared_ptr<Portal> mirror; // Destiny portal - defines player spawn point in the next scene;
 	KeyType keyType;

@@ -2,7 +2,7 @@
 #include "Scene.hpp"
 
 Portal::Portal(Position _position, std::shared_ptr<Scene> _scene, bool _isLocked, KeyType _keyType, short _posX, short _posY)
-	: position{_position}, scene{_scene}, isLocked{_isLocked}, keyType{_keyType}
+	: position{_position}, scene{_scene}, isLocked{_isLocked}, keyType{_keyType}, secretReveal{false}
 {
     
 }

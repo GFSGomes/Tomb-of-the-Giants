@@ -106,7 +106,8 @@ void Scene::Interaction()
 
 	if (scene_log != "\0")
 	{
-		Renderer::Dialog(scene_log); // Mostra uma breve mensagem dos arredores;
+		std::cout << " | " << scene_log << "\n";
+		scene_log = "\0";
 	}
 
 	_input = UI_GameInterface.Input(player, SceneOBJs, 0); // Player Input;
@@ -136,7 +137,10 @@ void Scene::Interaction()
 					break;
 				}
 			}
-
+			if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
+			{
+				
+			}
 			/*** INTERAÇÕES POR APROXIMAÇÃO ***/
 			if (player->posY - 1 == obj->posY && player->posX == obj->posX || player->posY + 1 == obj->posY && player->posX == obj->posX || player->posY == obj->posY && player->posX - 1 == obj->posX || player->posY == obj->posY && player->posX + 1 == obj->posX)
 			{
@@ -193,7 +197,6 @@ void Scene::Interaction()
 						}
 						interactionOBJ = nullptr;
 						scene_log = "\0";
-						//_input = '\0';
 						break;
 					}
 					else
@@ -226,11 +229,6 @@ void Scene::Interaction()
 								{
 									if (_key->keyType == portal->keyType)
 									{
-										if (portal->keyType == KeyType::SECRET_KEY)
-										{
-											grid.secret_portal_reveal = true;
-										}
-
 										player->inventory.DiscardItem(_key, 1, true);
 										i--;
 										portal->isLocked = false;
@@ -262,11 +260,33 @@ void Scene::Interaction()
 							}
 						}
 					}
+					else
+					{
+						if (portal->keyType == KeyType::SECRET_KEY)
+						{
+							if (portal->isLocked)
+							{
+								for (short i = 0; i < player->inventory.Container.size(); i++)
+								{
+									if (std::shared_ptr<Key> _key = std::dynamic_pointer_cast<Key>(player->inventory.Container[i].item))
+									{
+										if (_key->keyType == portal->keyType)
+										{
+											portal->secretReveal = true;
+											_hasKey = true;
+											scene_log = "[!] You found a secret chamber!";
+											_input = '\0';
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 			
 			/*** INTERAÇÕES POR SOBREPOSIÇÃO ***/
-			if (player->posY == obj->posX && player->posX == obj->posX)
+			if (player->posX == obj->posX && player->posY == obj->posY)
 			{
 				if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(obj))
 				{
