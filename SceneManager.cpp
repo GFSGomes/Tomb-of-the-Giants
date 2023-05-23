@@ -10,6 +10,7 @@
 #include "Portal.hpp"
 #include "Scene.hpp"
 #include "Torch.hpp"
+#include "Light.hpp"
 
 bool GameOver = false;
 
@@ -22,7 +23,7 @@ SceneManager::SceneManager()
 
 	std::shared_ptr<Scene> scene_0	= std::make_shared<Scene>(8, 8);
 	std::shared_ptr<Scene> secret_0 = std::make_shared<Scene>(4, 4);
-	std::shared_ptr<Scene> scene_1	= std::make_shared<Scene>(12, 12);
+	std::shared_ptr<Scene> scene_1	= std::make_shared<Scene>(10, 10);
 		
 	std::shared_ptr<Portal> scene_0_down  = std::make_shared<Portal>(Position::DOWN, scene_1, true);
 	std::shared_ptr<Portal> scene_0_right = std::make_shared<Portal>(Position::RIGHT, secret_0, true, KeyType::SECRET_KEY);
@@ -41,6 +42,8 @@ SceneManager::SceneManager()
 	scene_0->AddObject(scene_0_down);
 	scene_0->AddObject(scene_0_right);
 	scene_0->AddObject(std::make_shared<Key>(KeyType::PORTAL_KEY));
+	scene_0->AddObject(std::make_shared<Key>(KeyType::PORTAL_KEY));
+	scene_0->AddObject(std::make_shared<Key>(KeyType::PORTAL_KEY));
 	scene_0->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
 
 	// SCENE_0_SECRET
@@ -52,8 +55,9 @@ SceneManager::SceneManager()
 	// SCENE_1:
 	scene_1->AddObject(scene_1_up);
 	scene_1->AddObject(std::make_shared<Key>(KeyType::SECRET_KEY));
-	scene_0->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
-	scene_0->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
+	scene_1->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
+	scene_1->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
+	scene_1->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
 
 
 	/*** (4) FINDING PORTAL MIRRORS ***/
@@ -67,7 +71,7 @@ SceneManager::SceneManager()
 
 
 	/*** (5) START GAME ***/
-	std::shared_ptr<Portal> activeScene = scene_0->LoadScene();
+	std::shared_ptr<Portal> activeScene = scene_0->LoadScene(); // First Scene;
 	
 	while (true)
 	{

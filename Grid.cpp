@@ -8,7 +8,6 @@
 #include "Wall.hpp"
 #include "Portal.hpp"
 
-//struct Portal;
 short GridSizeX = 0;
 short GridSizeY = 0;
 
@@ -67,21 +66,21 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 				{
 					count = i;
 
-					// Light
+					/*** LIGHT OBJECT RENDERING ***/
 					if (std::shared_ptr<Light> light = std::dynamic_pointer_cast<Light>(SceneOBJs[i]))
 					{
 						if (light->active)
 						{
-							if (light->near) // Antigo proximityReveal
+							if (light->near)
 							{
-								icon = " ";  // Unicode
+								icon = " ";
 							}
 
 							if (player->isTorchActive)
 							{
 								CompatibilityMode ?
-								icon = "." : // Ascii
-								icon = "·";  // Unicode
+									icon = "." : // Ascii
+									icon = "·";  // Unicode
 							}
 
 							for (short j = 0; j < SceneOBJs.size(); j++)
@@ -105,7 +104,6 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 										}
 									}
 								}
-
 								if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJs[j]))
 								{
 									if (item->posX == light->posX && item->posY == light->posY)
@@ -115,41 +113,41 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 										if (light->near)
 										{
 											CompatibilityMode ?
-											icon = "i" :
-											icon = "▴";
+												icon = "i" :
+												icon = "▴";
 										}
 
 										if (player->isTorchActive || DebugMode)
 										{
 											CompatibilityMode ?
-											icon = "i" :
-											icon = "▴";
+												icon = "i" :
+												icon = "▴";
 										}
 									}
 								}
-
 								if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJs[j]))
 								{
 									if (enemy->posX == light->posX && enemy->posY == light->posY)
 									{
-										 /* Monstro - Tocha Acesa */
-
-										if (light->near)
+										if (enemy->active)
 										{
-											CompatibilityMode ?
-												icon = "M" :
-												icon = "○";
-										}
+											if (light->near)
+											{
+												CompatibilityMode ?
+													icon = "M" :
+													icon = "○";
+											}
 
-										if (player->isTorchActive || DebugMode)
-										{
-											CompatibilityMode ?
-												icon = "M" :
-												icon = "○";
+											if (player->isTorchActive || DebugMode)
+											{
+												CompatibilityMode ?
+													icon = "M" :
+													icon = "○";
+											}
 										}
+										break;
 									}
 								}
-
 								if (std::shared_ptr<Player> _player = std::dynamic_pointer_cast<Player>(SceneOBJs[j]))
 								{
 									if (_player->posX == light->posX && _player->posY == light->posY)
@@ -181,7 +179,7 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 												CompatibilityMode ?
 													icon = ":" :
 													icon = "♦";
-											
+
 												// Mostrado apenas se o player tiver a chave:
 												if (portal->keyType == KeyType::SECRET_KEY)
 												{
@@ -231,11 +229,11 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 									}
 								}
 							}
+							break;
 						}
-						break; // Impede a prioridade da escuridão
 					}
 					
-					#pragma region DarknessObjectRendering
+					/*** DARKNESS OBJECT RENDERING ***/
 					if (std::dynamic_pointer_cast<Wall>(SceneOBJs[i]))
 					{
 						if (DebugMode)
@@ -245,7 +243,6 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 								icon = "■";
 						}
 					}
-
 					if (std::shared_ptr<Item> item = std::dynamic_pointer_cast<Item>(SceneOBJs[i]))
 					{
 						if (SceneOBJs[i]->active)
@@ -258,21 +255,15 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 							}
 						}
 					}
-
 					if (std::dynamic_pointer_cast<Enemy>(SceneOBJs[i]))
 					{
-						if (SceneOBJs[i]->active)
+						if (DebugMode)
 						{
-							if (DebugMode)
-							{
-								CompatibilityMode ?
-									icon = "M" :
-									icon = "○";
-							}
+							CompatibilityMode ?
+								icon = "M" :
+								icon = "○";
 						}
-						break;
 					}
-
 					if (std::dynamic_pointer_cast<Player>(SceneOBJs[i]))
 					{
 						CompatibilityMode ?
@@ -280,7 +271,6 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 							icon = "●";
 						break;
 					}
-
 					if (std::shared_ptr<Portal> portal = std::dynamic_pointer_cast<Portal>(SceneOBJs[i]))
 					{
 						if (portal->isLocked)
@@ -307,7 +297,6 @@ void Grid::UpdateGrid(std::vector<std::shared_ptr<GameObject>> SceneOBJs, std::s
 							icon = " ";
 						}
 					}
-					#pragma endregion
 				}
 			}
 

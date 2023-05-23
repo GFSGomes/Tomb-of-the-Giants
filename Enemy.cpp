@@ -23,7 +23,7 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 {
 	short idleness{0};
 
-	_forceMovement ? idleness = 4 : idleness = 25;
+	_forceMovement ? idleness = 4 : idleness = 20;
 
 	short direction = rand() % idleness + 1;
 	

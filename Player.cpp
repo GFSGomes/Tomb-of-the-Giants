@@ -24,7 +24,7 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov
 	abilities.push_back(Ability::BRUTAL_STRIKE);
 	abilities.push_back(Ability::MANA_SHIELD);
 
-	std::shared_ptr<Weapon> sword = std::make_shared<Weapon>(WeaponType::SWORD, "Short Sword", "Simple, sharp and efficient.", 7);
+	std::shared_ptr<Weapon> sword = std::make_shared<Weapon>(WeaponType::SWORD, "Short Sword", "Simple, sharp and efficient.", 15);
 	std::shared_ptr<Armor> equip = std::make_shared<Armor>(ArmorType::BODY, Sprite::MEDIUM_BODY, "Gambeson", "An armor resistent against cuts.", 3, 1, 5);
 
 	inventory.AddItem(sword, 1);

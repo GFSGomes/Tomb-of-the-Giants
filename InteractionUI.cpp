@@ -190,7 +190,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 						{
 							battleEffect = player->UpdateSideEffects();
 
-							if (enemy->alive && player->alive)
+							if (enemy->cur_health <= 0 && player->cur_health <= 0)
 							{
 								StartCombat(player, enemy, !advantage);
 							}
@@ -221,7 +221,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 
 				battleEffect = enemy->UpdateSideEffects();
 
-				if (enemy->alive && player->alive)
+				if (enemy->cur_health <= 0 && player->cur_health <= 0)
 				{
 					StartCombat(player, enemy, !advantage);
 				}
@@ -299,7 +299,7 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 				{
 					case 0:
 					{
-						bool advantage = rand() % 2 + 1; // 0 and 1;
+						bool advantage = rand() % 2; // 0 and 1;
 						StartCombat(player, enemy, advantage);
 						if (enemy->cur_health <= 0)
 						{
@@ -331,12 +331,12 @@ void InteractionUI::InteractionEnemy(std::shared_ptr<Player> player, std::shared
 								return;
 							}
 
-							short flee = rand() % 100 + 1; // 1 a 100
+							short flee = rand() % 101;
 
 							if (player->flee + flee >= 50 + enemy->level)
 							{
 								std::cout << "\n";
-								Renderer::Dialog("Luckily, you were ignored.");
+								Renderer::Dialog("Sucess.");
 
 								_getch();
 
