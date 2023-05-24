@@ -40,7 +40,7 @@ Player::~Player()
 
 }
 
-char Player::Behaviour(char _input, std::vector<std::shared_ptr<GameObject>> SceneOBJs)
+char Player::Behaviour(char _input, std::vector<std::shared_ptr<GameObject>> &SceneOBJs)
 {
 	switch (_input)
 	{
@@ -601,7 +601,7 @@ void Player::UpdateFOV()
 	}
 }
 
-void Player::ManageInventory(std::vector<std::shared_ptr<GameObject>> SceneOBJs)
+void Player::ManageInventory(std::vector<std::shared_ptr<GameObject>> &SceneOBJs)
 {
 	std::shared_ptr<Item> item = inventory.Initialize();
 
@@ -750,12 +750,19 @@ void Player::ManageInventory(std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 								ChangeEquipment(equip, false, true);
 							}
 							inventory.DiscardItem(item, 1);
+							item->posX = posX;
+							item->posY = posY;
 							SceneOBJs.push_back(item);
 						}
 						else
 						{
-							inventory.DiscardItem(item);
-							SceneOBJs.push_back(item);
+							short amount = inventory.DiscardItem(item);
+							item->posX = posX;
+							item->posY = posY;
+							for (short i = 0; i < amount; i++)
+							{
+								SceneOBJs.push_back(item);
+							}
 						}
 						break;
 					}
@@ -764,7 +771,7 @@ void Player::ManageInventory(std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 					{
 						item = nullptr;
 						active = false;
-						ManageInventory();
+						ManageInventory(SceneOBJs);
 						break;
 					}
 				}
@@ -774,7 +781,7 @@ void Player::ManageInventory(std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 			{
 				item = nullptr;
 				active = false;
-				ManageInventory();
+				ManageInventory(SceneOBJs);
 				break;
 			}
 		}

@@ -108,7 +108,7 @@ bool GameInterfaceUI::Initialize(std::shared_ptr<Player> player)
 	return active;
 }
 
-char GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> SceneOBJs, short _inputDelay)
+char GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> &SceneOBJs, short _inputDelay)
 {
 	std::cout << "\n";
 	std::cout << "\n";
@@ -167,7 +167,7 @@ char GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 				break;
 
 			case 'i': case 'I': 
-				player->ManageInventory();
+				player->ManageInventory(SceneOBJs);
 				break;
 
 			case 'o': case 'O': UI_GameSettings.Initialize();
@@ -190,7 +190,7 @@ char GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 						break;
 					
 					case 2: 
-						player->ManageInventory();
+						player->ManageInventory(SceneOBJs);
 						break;
 					
 					case 3: 
@@ -230,7 +230,7 @@ char GameInterfaceUI::Input(std::shared_ptr<Player> player, std::vector<std::sha
 				break;
 
 			case 'i': case 'I': 
-				player->ManageInventory();
+				player->ManageInventory(SceneOBJs);
 				break;
 
 			case 'o': case 'O': 

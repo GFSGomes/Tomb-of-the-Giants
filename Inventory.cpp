@@ -129,12 +129,10 @@ std::shared_ptr<Slot> Inventory::GetSlot(std::shared_ptr<Item> _item)
 short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _usingItem)
 {
 	active = true;
-
-	short discardedAmount{0};
-
 	short confirmation_index = 0;
 	bool confirmation_active = true;
 	char confirmation_input = '\0';
+	short discardedAmout{0};
 
 	short amount = _amount;
 
@@ -174,12 +172,13 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 		}
 
 		// Confirmação
-		/*while (confirmation_active && !_usingItem)
+		while (confirmation_active && !_usingItem)
 		{
 			system("cls");
 			std::cout << "\n";
 			std::cout << " | [!] " << _item->name << " will be discarded:" << "\n";
 			Renderer::DisplaySprite(_item->sprite);
+			std::cout << "\n";
 			std::cout << " | Are you sure?" << "\n";
 			std::cout << " | " << "\n";
 
@@ -217,11 +216,7 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 				{
 					switch (confirmation_index)
 					{
-						case 0:
-						{
-							confirmation_active = false;
-							continue;
-						}
+						case 0: confirmation_active = false; continue;
 						case 1:
 						{
 							active = false;
@@ -237,12 +232,11 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 					return 0;
 				}
 			}
-		}*/
+		}
 
 		if (!Container.empty())
 		{
-			short count = 0;
-			short temp = amount;
+			short count{0};
 
 			// Primeira varredura:
 			for (short i = 0; i < Container.size(); ++i)
@@ -261,6 +255,7 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 					if (amount >= count)
 					{
 						amount = count;
+						discardedAmout = amount;
 					}
 					/* <-- Limitando 'amount' ao somatório dos itens identicos
 					
@@ -294,12 +289,12 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 						Renderer::Dialog(_item->name + " has been discarded.");
 						if (_getch());
 					}
-					return 0;
+					return discardedAmout;
 				}
 			}
 		}
 		
-		return 0;
+		return discardedAmout;
 	}
 }
 

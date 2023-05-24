@@ -20,7 +20,7 @@ struct GameInterfaceUI : UI
 
 	bool Initialize();
 	bool Initialize(std::shared_ptr<Player>);
-	char Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> SceneOBJ, short _inputDelay = 20);
+	char Input(std::shared_ptr<Player> player, std::vector<std::shared_ptr<GameObject>> &SceneOBJs, short _inputDelay = 20);
 };
 
 extern GameInterfaceUI UI_GameInterface;
