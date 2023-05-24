@@ -84,7 +84,6 @@ std::string Entity::UpdateSideEffects()
 		__barrier_turns--;
 	}
 
-
 	if (_stunned_turns == 0)
 	{
 		can_fight = true;
@@ -105,7 +104,7 @@ std::string Entity::UpdateSideEffects()
 		poison_damage = 0;
 	}
 
-	if (cur_health <= _store_cur_health)
+	if (cur_health <= _store_cur_health && _store_cur_health != 0)
 	{
 		// Barrier was broken
 		log += name + "'s MANA SHIELD has been destroyed.";

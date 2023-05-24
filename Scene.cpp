@@ -113,6 +113,7 @@ void Scene::Interaction()
 
 	if (interactionOBJ)
 	{
+		system("cls");
 		_removeObject = UI_Interaction.Initialize(player, interactionOBJ, SceneOBJs); // Chamada de Interação;
 	}
 	else
@@ -180,12 +181,13 @@ void Scene::Interaction()
 						}
 						break;
 					}
-					else if (player->posX == enemy->lookX && player->posY == enemy->lookY)
+					if (player->posX == enemy->lookX && player->posY == enemy->lookY)
 					{
 						if (!interactionOBJ)
 						{
 							scene_log = "[!] " + enemy->name + " found you!";
 							interactionOBJ = enemy;
+							_input = '\0';
 						}
 						else
 						{
@@ -208,7 +210,6 @@ void Scene::Interaction()
 					{
 						if (!interactionOBJ)
 						{
-							scene_log = "[!] " + item->name + " found!";
 							interactionOBJ = item;
 							_input = '\0';
 						}

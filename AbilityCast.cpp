@@ -2,6 +2,7 @@
 #include "Entity.hpp"
 #include <sstream>
 #include <fstream>
+#include <windows.h>
 
 AbilityCast::~AbilityCast()
 {
@@ -175,6 +176,7 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				}
 				if (i == 1)
 				{
+					Sleep(10);
 					log += "\n | Second Hit: ";
 				}
 

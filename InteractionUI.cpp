@@ -19,22 +19,24 @@ InteractionUI::InteractionUI(){}
 InteractionUI::~InteractionUI(){}
 void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy, bool advantage)
 {
+	if (player->cur_health <= 0 || enemy->cur_health <= 0) // Fail safe
+	{
+		return;
+	}
+
 	index = 0;
 	short barLength = 10;
 	short barUnit = 100 / barLength;
 
 	while (active)
 	{
-		#pragma region Rendering
+		/*** RENDERIZAÇÃO ***/
 		system("cls");
-
 		std::cout << " | " << enemy->name << " Lv." << enemy->level << "\n";
 		Renderer::StatusBar("HP", enemy->cur_health, enemy->max_health);
 		Renderer::StatusBar("MP", enemy->cur_mana, enemy->max_mana);
-
 		Renderer::DisplaySprite(enemy->sprite);
 		std::cout << "\n";
-
 		std::cout << " | " << player->name << " Lv." << player->level << "\n";
 		Renderer::StatusBar("HP", player->cur_health, player->max_health);
 		Renderer::StatusBar("MP", player->cur_mana, player->max_mana);
@@ -42,46 +44,50 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 
 		if (battleLog != "\0")
 		{
+			// Se há um log, exibe-o:
 			Renderer::Dialog(battleLog);
-
 			battleLog = "\0";
 
+			// Se há algum efeito, _getch():
 			if (battleEffect != "\0")
 			{
-				_getch();
+				(void)_getch();
 			}
-			if (player->cur_health <= 0 || enemy->cur_health <= 0)
+			// Quando a batalha acaba, _getch():
+			else if (player->cur_health <= 0 || enemy->cur_health <= 0)
 			{
-				_getch();
+				(void)_getch();
 			}
 		}
 
 		if (battleEffect != "\0")
 		{
+			// Se há algum efeito, seu valor é atribuído à 'battleLog' e...
 			battleLog = battleEffect;
-
 			battleEffect = "\0";
 
-			if (player->alive && enemy->alive)
+			if (player->cur_health > 0 || enemy->cur_health > 0)
 			{
 				StartCombat(player, enemy, advantage);
+				return;
+				// A função é chamada novamente, anulando a atual execução;
 			}
 		}
-
 		std::cout << "\n";
 		std::cout << "\n";
-		#pragma endregion
 
-		if (player->cur_health <= 0)
+		/*** RESULTADOS PÓS-BATALHA ***/
+		if (player->cur_health <= 0) // Morte do Jogador
 		{
 			std::string dialog;
 			short count = -1;
-			
 			system("cls");
+			
 			Renderer::DisplaySprite(Sprite::DEATH);
 			std::cout << " | DEATH:" << "\n";
 			std::cout << "\n";
-
+			
+			// Diálogos da Morte
 			while (count < 2)
 			{
 				count++;
@@ -98,49 +104,48 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 
 				if (!_getch())
 				{
-					Sleep(1000);
+					Sleep(500);
 				}
 			}
 
+			// Resets
+			player->__barrier_turns = 0;
+			player->UpdateSideEffects();
 			player->alive = false;
 			GameOver = true;
 			active = false;
 			return;
 		}
-
-		else if (enemy->cur_health <= 0)
+		if (enemy->cur_health <= 0) // Morte do Inimigo:
 		{
-			enemy->alive = false;
+			short exp = enemy->level + player->level + enemy->level * 15;
+
 			system("cls");
 			std::cout << " | " << "\n";
 			std::cout << " | " << enemy->name << " Lv." << enemy->level << "\n";
 			Renderer::StatusBar("HP", enemy->cur_health, enemy->max_health);
-
 			Renderer::DisplaySprite(enemy->sprite);
 
-			short exp = enemy->level + player->level + enemy->level * 15;
-
+			std::cout << "\n";
 			Renderer::Dialog("SUCESS:" + enemy->name + " died!");
-			std::cout << "\n\n";
+			std::cout << "\n";
 			Renderer::Dialog("Exp:" + std::to_string(exp));
 
 			player->__barrier_turns = 0;
 			player->UpdateSideEffects();
 
 			player->cur_experience += exp;
-
 			if (player->cur_experience >= player->max_experience)
-			{
-				player->UpdateStatus(true);
-			}
+			{player->UpdateStatus(true);}
 			_getch();
+			enemy->alive = false;
 			active = false;
 			return;
 		}
 
 		if (advantage)
 		{
-			if (player->alive)
+			if (enemy->cur_health > 0 && player->cur_health > 0)
 			{
 				std::string ability_description = AbilityCast::GetAbility(player->abilities[index])["description"];
 				short ability_accuracy = AbilityCast::GetAbility(player->abilities[index])["accuracy"];
@@ -190,9 +195,10 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 						{
 							battleEffect = player->UpdateSideEffects();
 
-							if (enemy->cur_health <= 0 && player->cur_health <= 0)
+							if (enemy->cur_health > 0 && player->cur_health > 0)
 							{
-								StartCombat(player, enemy, !advantage);
+								StartCombat(player, enemy, false);
+								return;
 							}
 						}
 						break;
@@ -202,7 +208,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 		}
 		else
 		{
-			if (enemy->alive)
+			if (enemy->cur_health > 0 && player->cur_health > 0)
 			{
 				short randomSkill = rand() % enemy->abilities.size();
 
@@ -216,14 +222,13 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 				{
 					battleLog = AbilityCast::Cast(enemy->abilities[0], enemy, player);
 				}
-
 				_getch();
-
 				battleEffect = enemy->UpdateSideEffects();
 
-				if (enemy->cur_health <= 0 && player->cur_health <= 0)
+				if (enemy->cur_health > 0 && player->cur_health > 0)
 				{
-					StartCombat(player, enemy, !advantage);
+					StartCombat(player, enemy, true);
+					return;
 				}
 			}
 		}

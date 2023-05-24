@@ -1,7 +1,7 @@
 #include "Enemy.hpp"
 #include "AbilityCast.hpp"
 #include "Global.hpp"
-#include "Light.hpp"
+#include "Weapon.hpp"
 
 Enemy::Enemy(const char* _name, short _level, Sprite _sprite) : sprite{_sprite}, lookX{posX + 1}, lookY{posY}
 {
@@ -10,6 +10,8 @@ Enemy::Enemy(const char* _name, short _level, Sprite _sprite) : sprite{_sprite},
 	level = _level - 1;
 
 	STR = CON = INT = AGI = DEX = level;
+
+	std::shared_ptr<Weapon> weapon = std::make_shared<Weapon>(WeaponType::SWORD, "Enemy Weapon", "", 4);
 
 	UpdateStatus(true);
 }
