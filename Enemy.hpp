@@ -9,6 +9,7 @@ struct Enemy : Entity
 	short lookX;
 	short lookY;
 
+	std::vector <std::shared_ptr<Item>> drops;
 	Enemy(const char*, short, Sprite);
 	~Enemy();
 

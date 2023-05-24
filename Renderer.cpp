@@ -196,7 +196,6 @@ void Renderer::DisplaySprite(Sprite _sprite)
         |/  \\  /\  /|
         |\__/\\/__\/-|
         \__/  \____-'
-          
 )";
             break;
         }
@@ -227,7 +226,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
              ||  
              ||  Even in the darkest places,
              ||  you can find a spark of hope.
-             [])";
+             []
+)";
 
             break;
         }
@@ -239,7 +239,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
             _
            ]-[
           /---\
-          \___/)";
+          \___/
+)";
 
             break;
         }
@@ -250,7 +251,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
            ]-[
           /---\
           |   |
-          \___/)";
+          \___/
+)";
 
             break;
         }
@@ -262,7 +264,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
            ]-[
           /---\
          /     \
-         \_____/)";
+         \_____/
+)";
 
             break;
         }
@@ -273,7 +276,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
             _
            ]-[
           /---\
-          \___/)";
+          \___/
+)";
 
             break;
         }
@@ -284,7 +288,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
            ]-[
           /---\
           |   |
-          \___/)";
+          \___/
+)";
 
             break;
         }
@@ -296,7 +301,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
            ]-[
           /---\
          /     \
-         \_____/)";
+         \_____/
+)";
 
             break;
         }
@@ -338,11 +344,12 @@ void Renderer::DisplaySprite(Sprite _sprite)
 
         case Sprite::KEY_0:
         {
-            std::cout << R"(             ____
+            std::cout << R"(
+             ____
            .'.--.'.
-           ||.  .||
-           '._--_.'
-              ||
+           ||    ||
+           '.'--'.'
+             '..'
               ||
               ||-.
               || |
@@ -352,7 +359,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
 
         case Sprite::KEY_2:
         {
-            std::cout << R"(              __
+            std::cout << R"(
+              __
              //\\
             ((  ))
              \\//

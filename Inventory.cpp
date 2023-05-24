@@ -126,20 +126,15 @@ std::shared_ptr<Slot> Inventory::GetSlot(std::shared_ptr<Item> _item)
 	return nullptr;
 }
 
-void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _usingItem)
+short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _usingItem)
 {
 	active = true;
 
-	if (_amount == 0)
-	{
-		std::cout << "\n";
-		std::cout << " | [?] How many " << _item->name << " do you'd like to discard?" << "\n";
-		std::cout << " | > ";
-	}
+	short discardedAmount{0};
 
-	short _index = 0;
-	bool _active = true;
-	char _input = '\0';
+	short confirmation_index = 0;
+	bool confirmation_active = true;
+	char confirmation_input = '\0';
 
 	short amount = _amount;
 
@@ -147,35 +142,48 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _us
 	{
 		if (_amount == 0)
 		{
-			std::cin >> amount;
-			if (amount == 0)
-			{
-				active = false;
-				return;
-			}
+			system("cls");
+			std::cout << "\n";
+			std::cout << " | " << _item->name << "\n";
+			Renderer::DisplaySprite(_item->sprite);
+			std::cout << "\n";
+			std::cout << " | [?] How many " << _item->name << " do you'd like to discard?" << "\n";
+			std::cout << " | > Amount:  " << amount << "\n";
 
-			if (!std::cin)
+			switch (_getch())
 			{
-				std::cout << " | [!] Please, enter a integer:" << std::endl;
-				std::cin.clear();
-				std::cout << " | > ";
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				continue;
+				case 'w': case 'W': amount += 10; continue;
+				case 's': case 'S': if (amount >= 10) amount -= 10; continue;
+				case 'a': case 'A': if (amount > 0) amount--; continue;
+				case 'd': case 'D': amount++; continue;
+				
+				case 27:  // Esc
+					active = false; 
+					return 0;
+				
+				case '\r': // Enter
+				{
+					if (amount == 0)
+					{
+						active = false;
+						return 0;
+					}
+					break;
+				}
 			}
 		}
 
 		// Confirmação
-		while (_active && !_usingItem)
+		/*while (confirmation_active && !_usingItem)
 		{
 			system("cls");
 			std::cout << "\n";
 			std::cout << " | [!] " << _item->name << " will be discarded:" << "\n";
 			Renderer::DisplaySprite(_item->sprite);
-			std::cout << "\n";
 			std::cout << " | Are you sure?" << "\n";
 			std::cout << " | " << "\n";
 
-			switch (_index)
+			switch (confirmation_index)
 			{
 				case 0:
 				{
@@ -191,55 +199,56 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _us
 				}
 			}
 
-			_input = _getch();
+			confirmation_input = _getch();
 
-			switch (_input)
+			switch (confirmation_input)
 			{
 				case 'w': case 'W':
 				{
-					if (_index > 0) _index--;
+					if (confirmation_index > 0) confirmation_index--;
 					break;
 				}
 				case 's': case 'S':
 				{
-					if (_index < 1) _index++;
+					if (confirmation_index < 1) confirmation_index++;
 					break;
 				}
 				case '\r':
 				{
-					switch (_index)
+					switch (confirmation_index)
 					{
 						case 0:
 						{
-							_active = false;
+							confirmation_active = false;
 							continue;
 						}
 						case 1:
 						{
 							active = false;
-							_active = false;
-							return;
+							confirmation_active = false;
+							return 0;
 						}
 					}
 				}
 				case 27:
 				{
 					active = false;
-					_active = false;
-					return;
+					confirmation_active = false;
+					return 0;
 				}
 			}
-		}
+		}*/
 
 		if (!Container.empty())
 		{
+			short count = 0;
+			short temp = amount;
+
 			// Primeira varredura:
 			for (short i = 0; i < Container.size(); ++i)
 			{
 				if (Container[i].item->name == _item->name)
 				{
-					short count = 0;
-
 					// Limitando 'amount' ao somatório dos itens identicos -->
 					for (short j = 0; j < Container.size(); j++)
 					{
@@ -249,7 +258,7 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _us
 						}
 					}
 
-					if (amount > count)
+					if (amount >= count)
 					{
 						amount = count;
 					}
@@ -260,7 +269,6 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _us
 					{
 						amount -=  Container[i].item->stack;
 						Container.erase(Container.begin() + i);
-						i--;
 						input = '\0';
 						index = 0;
 						hoveredSlot = nullptr;
@@ -274,7 +282,6 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _us
 						if (Container[i].amount == 0)
 						{
 							Container.erase(Container.begin() + i);
-							i--;
 							input = '\0';
 							index = 0;
 							hoveredSlot = nullptr;
@@ -287,12 +294,12 @@ void Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _us
 						Renderer::Dialog(_item->name + " has been discarded.");
 						if (_getch());
 					}
-					return;
+					return 0;
 				}
 			}
 		}
 		
-		return;
+		return 0;
 	}
 }
 

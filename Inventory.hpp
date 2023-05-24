@@ -26,7 +26,7 @@ struct Inventory
 
 	void AddItem(std::shared_ptr<Item>, short _amount = 1);
 
-	void DiscardItem(std::shared_ptr<Item>, short _amount = 0, bool _itemBeingUse = false);
+	short DiscardItem(std::shared_ptr<Item>, short _amount = 0, bool _itemBeingUse = false);
 
 	void OrganizeSlots();
 

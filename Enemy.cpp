@@ -2,6 +2,7 @@
 #include "AbilityCast.hpp"
 #include "Global.hpp"
 #include "Weapon.hpp"
+#include "Light.hpp"
 
 Enemy::Enemy(const char* _name, short _level, Sprite _sprite) : sprite{_sprite}, lookX{posX + 1}, lookY{posY}
 {

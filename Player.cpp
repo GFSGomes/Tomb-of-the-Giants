@@ -25,8 +25,9 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov
 	abilities.push_back(Ability::MANA_SHIELD);
 
 	std::shared_ptr<Weapon> sword = std::make_shared<Weapon>(WeaponType::SWORD, "Short Sword", "Simple, sharp and efficient.", 6);
-
+	std::shared_ptr<Potion> potion = std::make_shared<Potion>(PotionType::GREATER_HEALTH_POTION);
 	inventory.AddItem(sword, 1);
+	inventory.AddItem(potion, 10);
 	//inventory.AddItem(std::make_shared<Key>(KeyType::PORTAL_KEY), 1);
 
 	sword->equiped = true;
@@ -432,8 +433,6 @@ void Player::UpdateFOV()
 					FOV[i]->posX = posX + 2;
 					FOV[i]->posY = posY - 3;
 					break;
-
-
 				
 				case 10:
 					FOV[i]->posX = posX - 3;
@@ -463,7 +462,6 @@ void Player::UpdateFOV()
 					FOV[i]->posX = posX + 3;
 					FOV[i]->posY = posY - 2;
 					break;
-    
 
 				case 20:
 					FOV[i]->posX = posX - 3;
@@ -494,7 +492,6 @@ void Player::UpdateFOV()
 					FOV[i]->posY = posY - 1;
 					break;
 
-
 				case 30:
 					FOV[i]->posX = posX - 3;
 					FOV[i]->posY = posY + 0;
@@ -508,7 +505,6 @@ void Player::UpdateFOV()
 					FOV[i]->posY = posY + 0;
 					break;
 
-
 				case 34:
 					FOV[i]->posX = posX + 1;
 					FOV[i]->posY = posY + 0;
@@ -521,7 +517,6 @@ void Player::UpdateFOV()
 					FOV[i]->posX = posX + 3;
 					FOV[i]->posY = posY + 0;
 					break;
-
 
 				case 40:
 					FOV[i]->posX = posX - 3;
@@ -581,8 +576,6 @@ void Player::UpdateFOV()
 					FOV[i]->posY = posY + 2;
 					break;
 
-
-
 				case 61:
 					FOV[i]->posX = posX - 2;
 					FOV[i]->posY = posY + 3;
@@ -608,13 +601,13 @@ void Player::UpdateFOV()
 	}
 }
 
-void Player::ManageInventory()
+void Player::ManageInventory(std::vector<std::shared_ptr<GameObject>> SceneOBJs)
 {
+	std::shared_ptr<Item> item = inventory.Initialize();
+
 	short index = 0;
 	char input = '\0';
 	bool active = true;
-
-	std::shared_ptr<Item> item = inventory.Initialize();
 
 	while (active)
 	{
@@ -671,6 +664,7 @@ void Player::ManageInventory()
 					std::cout << " | > Use " << item->name << "\n";
 				}
 				std::cout << " |   Discard" << "\n";
+				std::cout << " |   Back" << "\n";
 
 				break;
 			}
@@ -687,6 +681,24 @@ void Player::ManageInventory()
 					std::cout << " |   Use " << item->name << "\n";
 				}
 				std::cout << " | > Discard" << "\n";
+				std::cout << " |   Back" << "\n";
+				break;
+			}
+			case 2:
+			{
+				if (std::shared_ptr<Equipment> equip = std::dynamic_pointer_cast<Equipment>(item))
+				{
+					equip->equiped ?
+						std::cout << " |   Unequip" << "\n" :
+						std::cout << " |   Equip " << "\n";
+				}
+				else
+				{
+					std::cout << " |   Use " << item->name << "\n";
+				}
+				std::cout << " |   Discard" << "\n";
+				std::cout << " | > Back" << "\n";
+				break;
 			}
 		}
 
@@ -699,7 +711,7 @@ void Player::ManageInventory()
 				break;
 
 			case 's': case 'S':
-				if (index < 1) index++;
+				if (index < 2) index++;
 				break;
 
 			case '\r':
@@ -738,12 +750,21 @@ void Player::ManageInventory()
 								ChangeEquipment(equip, false, true);
 							}
 							inventory.DiscardItem(item, 1);
+							SceneOBJs.push_back(item);
 						}
 						else
 						{
 							inventory.DiscardItem(item);
+							SceneOBJs.push_back(item);
 						}
+						break;
+					}
 
+					case 2:
+					{
+						item = nullptr;
+						active = false;
+						ManageInventory();
 						break;
 					}
 				}

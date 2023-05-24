@@ -32,7 +32,7 @@ struct Player : Entity
 	char Behaviour(char, std::vector<std::shared_ptr<GameObject>>);
 	void CreateFOV();
 	void UpdateFOV();
-	void ManageInventory();
+	void ManageInventory(std::vector<std::shared_ptr<GameObject>> SceneOBJs = {});
 };
 
 extern Player PLAYER;
