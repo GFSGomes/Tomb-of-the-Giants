@@ -3,10 +3,7 @@
 #include "AbilityCast.hpp"
 #include "Inventory.hpp"
 #include "Slot.hpp"
-#include "Weapon.hpp"
-#include "Armor.hpp"
-#include "Potion.hpp"
-#include "Key.hpp"
+#include "ItemDatabase.hpp" // Weapon, Armor, Potion, Key, Torch
 #include <memory>
 #include <conio.h>
 #include <sstream>

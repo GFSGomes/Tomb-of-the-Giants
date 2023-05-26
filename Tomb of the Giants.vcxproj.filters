@@ -129,6 +129,9 @@
     <ClInclude Include="Chest.hpp">
       <Filter>Arquivos de Cabeçalho\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="ItemDatabase.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Grid.cpp">
@@ -220,6 +223,9 @@
     </ClCompile>
     <ClCompile Include="Consumable.cpp">
       <Filter>Arquivos de Origem\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemDatabase.cpp">
+      <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

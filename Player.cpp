@@ -11,6 +11,7 @@
 #include "Renderer.hpp"
 #include "Key.hpp"
 #include "Portal.hpp"
+#include "ItemDatabase.hpp"
 
 Player PLAYER("PLAYER");
 
@@ -23,16 +24,15 @@ Player::Player(const char* _name) : isTorchActive{false}, torchDuration{50}, fov
 	abilities.push_back(Ability::DOUBLE_STRIKE);
 	abilities.push_back(Ability::BRUTAL_STRIKE);
 	abilities.push_back(Ability::MANA_SHIELD);
+	abilities.push_back(Ability::FIREBALL);
+	abilities.push_back(Ability::NONE);
 
-	std::shared_ptr<Weapon> sword = std::make_shared<Weapon>(WeaponType::SWORD, "Short Sword", "Simple, sharp and efficient.", 6);
-	std::shared_ptr<Potion> potion = std::make_shared<Potion>(PotionType::GREATER_HEALTH_POTION);
-	inventory.AddItem(sword, 1);
-	inventory.AddItem(potion, 10);
-	//inventory.AddItem(std::make_shared<Key>(KeyType::PORTAL_KEY), 1);
+	std::shared_ptr<Weapon> weapon = std::make_shared<Weapon>(sword_Zweihander);
+	weapon->equiped = true;
 
-	sword->equiped = true;
+	inventory.AddItem(weapon);
 
-	UpdateStatus(false);
+	UpdateStatus(false); // Também chama -> ApplyEquipedItemStats();
 }
 
 Player::~Player()

@@ -234,6 +234,7 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 			}
 		}
 
+		/*** DESCARTE DE ITENS ***/
 		if (!Container.empty())
 		{
 			short count{0};
@@ -243,7 +244,7 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 			{
 				if (Container[i].item->name == _item->name)
 				{
-					// Limitando 'amount' ao somatório dos itens identicos -->
+					// Limitando 'amount' ao somatório dos itens identicos
 					for (short j = 0; j < Container.size(); j++)
 					{
 						if (Container[j].item->name == _item->name)
@@ -251,15 +252,14 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 							count += Container[j].amount;
 						}
 					}
-
 					if (amount >= count)
 					{
 						amount = count;
 						discardedAmout = amount;
 					}
-					/* <-- Limitando 'amount' ao somatório dos itens identicos
 					
-					Gerenciamento de Itens --> */
+					/*** DESCARTE ***/
+					// 1. Descartando stacks:
 					while (amount > Container[i].item->stack)
 					{
 						amount -=  Container[i].item->stack;
@@ -269,7 +269,7 @@ short Inventory::DiscardItem(std::shared_ptr<Item> _item, short _amount, bool _u
 						hoveredSlot = nullptr;
 						selectedSlot = nullptr;
 					}
-
+					// 2. Descartando o restante:
 					if (amount <= Container[i].amount)
 					{
 						Container[i].amount -= amount;

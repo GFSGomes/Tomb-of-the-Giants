@@ -1,10 +1,10 @@
 #include "Renderer.hpp"
 #include "Global.hpp"
 #include <Windows.h> // Sleep
-#include <conio.h>  // _getch()
-#include <iomanip>  // conversões de precisão
-#include <iostream> // cout / cin
-#include <vector>   // cout / cin
+#include <conio.h>   // _getch()
+#include <iomanip>   // conversões de precisão
+#include <iostream>  // cout / cin
+#include <vector>    // cout / cin
 
 Renderer::Renderer() {
 
@@ -63,7 +63,7 @@ void Renderer::Dialog(std::string _text, short _read_speed)
     }*/
 }
 
-void Renderer::StatusBar(const char* _bar_name, float _cur, float _max)
+void Renderer::StatusBar(const char* _bar_name, float _cur_value, float _max_value)
 {
     std::setprecision(0);
 
@@ -72,7 +72,7 @@ void Renderer::StatusBar(const char* _bar_name, float _cur, float _max)
 
     if (CompatibilityMode)
     {
-        float pct = (_cur / _max) * 100;
+        float pct = (_cur_value / _max_value) * 100;
         
         std::cout << " | " << _bar_name << ": " << " <";
 
@@ -92,7 +92,7 @@ void Renderer::StatusBar(const char* _bar_name, float _cur, float _max)
     }
     else
     {
-        float pct = (_cur / _max) * 100;
+        float pct = (_cur_value / _max_value) * 100;
         
         std::cout << " | " << _bar_name << " |";
 
@@ -108,20 +108,39 @@ void Renderer::StatusBar(const char* _bar_name, float _cur, float _max)
                 std::cout << " ";
             }
         }
-        std::cout << "| " << _cur << " (" << pct << "%)" << "\n";
+        std::cout << "| " << _cur_value << " (" << pct << "%)" << "\n";
     }
 }
 
 void Renderer::DisplaySprite(Sprite _sprite)
 {
-
     switch (_sprite)
     {
-        case Sprite::OH_SWORD:
-        {
+        case Sprite::OH_SWORD:{
+            std::cout << R"(
+              _
+             {o}
+             ]'[
+           ._]_[_.
+           \.+-+./
+             |||
+             |||
+             |||
+             |'|
+             | |
+             | |
+             \ /
+              '
+)";
+        
+        } break;
+        case Sprite::TH_SWORD:{
             std::cout << R"(
              .
             / \
+            | |
+            | |
+            | |
             | |
             | |
             | |
@@ -131,12 +150,13 @@ void Renderer::DisplaySprite(Sprite _sprite)
          .__|||__.
          '--.^.--'
             ] [
+            ] [
+            ] [
             (_)
 )";
+        
         } break;
-
-        case Sprite::OH_AXE:
-        {
+        case Sprite::OH_AXE:{
             std::cout << R"(
              .-.    ___
          .---+=+---''//
@@ -152,21 +172,90 @@ void Renderer::DisplaySprite(Sprite _sprite)
              [_]
 )";
         } break;
-
-        case Sprite::DAGGER:
-        {
+        case Sprite::TH_AXE: {
             std::cout << R"(
-                    -.
-        ____________||_____
-        \ `~~~------||_____[)
-         `"~~-------\*.___.-.
-                     `~---~*'
+                         ____
+         ____    []     /  //
+         \\ '--'_||_'--'   //
+         \\    - == -      //
+         \\    .-++--.    //
+          \\_/   ||   )  //
+           \/    ||   \_//
+                 ||    \/
+                 ||
+                 ||
+                 ||
+                 []
+                 ][
+                 ][
+                 ][
+                 ][
+                 ][
+                 ][
+                 []
+)";
+        } break;
+        case Sprite::Falchion: {
+            std::cout << R"(
+             /'
+ .--.       ||_______...........-'-.....:'/
+|    |''''''||-------------------------'.'
+ '--''''''''||---------.....______..--'
+           ./
+)";
+        } break;
+        case Sprite::Rapier: {
+            std::cout << R"(
+            \()
+             ][
+             ][\
+          o==()/=o
+            'TT'
+             ||
+             ||
+             ||
+             ||
+             ||
+             ||
+             ||
+             ||
+             ||
+             ||
+             '/
+)";
+        } break;
+        case Sprite::DAGGER:{
+            std::cout << R"(
+             (o)
+             ] [ 
+           ._]_[_.
+          '.-+ +-.'
+             |T|
+             |||
+             |||
+             |||
+             |//
+             |/
 )";
             break;
         }
-
-        case Sprite::LIGHT_BODY:
-        {
+        case Sprite::BOW: {
+            std::cout << R"(
+               .
+             //
+            ((
+           / \\
+          /   \\
+         /    //
+        /    /(
+       /    //'
+      /    /(
+     /____//
+    //'''''
+    '
+)";
+        } break;
+        case Sprite::LIGHT_BODY: {
             std::cout << R"(
         ___--''--___
     _.-'\  '-__-'  /'-._
@@ -179,10 +268,9 @@ void Renderer::DisplaySprite(Sprite _sprite)
         /  /'  \   \
         '-------'--'  
 )";
-            break;
-        }
-        case Sprite::MEDIUM_BODY:
-        {
+           
+        } break;
+        case Sprite::MEDIUM_BODY:{
             std::cout << R"(
           __.-----.__
         ///\____.-'/  \
@@ -197,10 +285,9 @@ void Renderer::DisplaySprite(Sprite _sprite)
         |\__/\\/__\/-|
         \__/  \____-'
 )";
-            break;
-        }
-        case Sprite::HEAVY_BODY:
-        {
+           
+        } break;
+        case Sprite::HEAVY_BODY:{
             std::cout << R"(
           __.-----.__
          / \____.-'/ \
@@ -212,29 +299,60 @@ void Renderer::DisplaySprite(Sprite _sprite)
         /'        ' /
         '-________-'
 )";
-            break;
-        }
-        // ITEMS:
+            
+        } break;
+        case Sprite::LIGHT_HEAD: {
+            std::cout << R"(
+            _____
+           /     \
+          /.---.  \
+         //     '-.\
+        //         \\
+        \\  -===-  //
+      .-'\\__/T\__//'-.
+      '-._    |    _.-'
+          '-./ \.-'
+)";
+        } break;
+        case Sprite::MEDIUM_HEAD: {
+            std::cout << R"(
+         .-|'|-.
+       /'  | |  '\
+      /____|+|____\
+     |_____|+|_____|
+      |\< >|+|< >/|
+      ||'--|_|--'||
+      \|         |/
+)";
+        } break;
+        case Sprite::HEAVY_HEAD: {
+            std::cout << R"(
+           _.--+-+-._
+         .'          \
+       /'---..___     \
+      ///.    .-.\    /
+      \\\\\   '-'/   /
+       \\\'_.---'_ _/
+        \.'  \_____-'
+       
+)";
+        } break;
         case Sprite::TORCH: {
             std::cout << R"(
             '(.
            (._)\'
            ')  (,
             \{}/
-             []  You found a Torch.
-             ||  ...
-             ||  
-             ||  Even in the darkest places,
-             ||  you can find a spark of hope.
+             []
+             ||
+             ||
+             ||
+             ||
+             ||
              []
 )";
-
-            break;
-        }
-
-
-        case Sprite::MINOR_HEALTH_POTION:
-        {
+        } break;
+        case Sprite::MINOR_HEALTH_POTION:{
             std::cout << R"(
             _
            ]-[
@@ -242,10 +360,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
           \___/
 )";
 
-            break;
-        }
-        case Sprite::MEDIUM_HEALTH_POTION:
-        {
+        } break;
+        case Sprite::MEDIUM_HEALTH_POTION: {
             std::cout << R"(
             _
            ]-[
@@ -254,11 +370,9 @@ void Renderer::DisplaySprite(Sprite _sprite)
           \___/
 )";
 
-            break;
-        }
-
-        case Sprite::GREATER_HEALTH_POTION:
-        {
+            
+        }break;
+        case Sprite::GREATER_HEALTH_POTION:{
             std::cout << R"(
             _
            ]-[
@@ -267,11 +381,9 @@ void Renderer::DisplaySprite(Sprite _sprite)
          \_____/
 )";
 
-            break;
-        }
-
-        case Sprite::MINOR_MANA_POTION:
-        {
+            
+        } break;
+        case Sprite::MINOR_MANA_POTION:{
             std::cout << R"(
             _
            ]-[
@@ -279,10 +391,9 @@ void Renderer::DisplaySprite(Sprite _sprite)
           \___/
 )";
 
-            break;
-        }
-        case Sprite::MEDIUM_MANA_POTION:
-        {
+            
+        }break;
+        case Sprite::MEDIUM_MANA_POTION:{
             std::cout << R"(
             _
            ]-[
@@ -290,12 +401,8 @@ void Renderer::DisplaySprite(Sprite _sprite)
           |   |
           \___/
 )";
-
-            break;
-        }
-
-        case Sprite::GREATER_MANA_POTION:
-        {
+        }break;
+        case Sprite::GREATER_MANA_POTION:{
             std::cout << R"(
             _
            ]-[
@@ -304,79 +411,65 @@ void Renderer::DisplaySprite(Sprite _sprite)
          \_____/
 )";
 
-            break;
-        }
-
-        case Sprite::CANDLE:
-        {
+            
+        } break;
+        case Sprite::CANDLE: {
             std::cout << R"(
-        # # # # # # # #   
-    # # # # # # # # # # # #  
-  # # # # + + + + + + # # # #  
-  # # + + + - - - - + + + # #  
-# # # + + - - - - - - + + # # # 
-# # + + - - -     - - - + + # # 
-# # + + - -   .(    - - + + # # 
-# # + + - -   (.)'  - - + + # # 
-# # + + + - - [ ] - - + + + # # 
-# # # + + + - | | - + + + # # # 
-  # # + + + + | | + + + + # # 
-  # # # # + + | | + + # # # # 
-    # # # # # | | # # # # #  
-        # # # |_| # # #
+            # # # # # # # #   
+        # # # # # # # # # # # #  
+      # # # # + + + + + + # # # #  
+      # # + + + - - - - + + + # #  
+    # # # + + - - - - - - + + # # # 
+    # # + + - - -     - - - + + # # 
+    # # + + - -   .(    - - + + # # 
+    # # + + - -   (.)'  - - + + # # 
+    # # + + + - - [ ] - - + + + # # 
+    # # # + + + - | | - + + + # # # 
+      # # + + + + | | + + + + # # 
+      # # # # + + | | + + # # # # 
+        # # # # # | | # # # # #  
+            # # # |_| # # #
 )";
         } break;
-
-        case Sprite::KEY_1:
-        {
+        case Sprite::KEY_0:{
             std::cout << R"(
-                 ____
-                / __ \
-                \(  )/
-                 \\//
-                  ||
-                  ||
-                  ||-.
-                  ||[
-                  ||-'
+             __
+            //\\
+           ((  ))
+            \\//
+             ||
+             ||
+             ||-.
+             ||(
+             ||-'
 )";
         } break;
-
-        case Sprite::KEY_0:
-        {
+        case Sprite::KEY_1:{
             std::cout << R"(
-             ____
-           .'.--.'.
-           ||    ||
-           '.'--'.'
-             '..'
-              ||
-              ||-.
-              || |
-              ||-'
+            ____
+           / __ \
+           \(  )/
+            \\//
+             ||
+             ||
+             ||-.
+             ||[
+             ||-'
 )";
         } break;
-
-        case Sprite::KEY_2:
-        {
+        case Sprite::KEY_2:{
             std::cout << R"(
-              __
-             //\\
-            ((  ))
-             \\//
-              ||
-              ||
-              ||-.
-              ||(
-              ||-'
+          .------.
+          |--[]--|
+          |__  __|
+             ||
+             ||
+             ||-.
+             || |
+             ||-'
 )";
         } break;
-
-
-
-        // MONSTERS
-        case Sprite::SKELETON_GIANT:
-        {
+        case Sprite::SKELETON_GIANT:{
             std::cout << R"(
                      -.           
      .-~~~-.        /  '~..__..-~;
@@ -390,9 +483,7 @@ void Renderer::DisplaySprite(Sprite _sprite)
        '-'    / /                 
 )";
         } break;
-
-        case Sprite::SKELETON_FOOTMAN:
-        {
+        case Sprite::SKELETON_FOOTMAN:{
             std::cout << R"(
             .-~-.      
            /     \     
@@ -407,9 +498,7 @@ void Renderer::DisplaySprite(Sprite _sprite)
 )";
 
         } break;
-
-        case Sprite::SPIDER:
-        {
+        case Sprite::SPIDER:{
             std::cout << R"(
             .  .
          . / __ \ .
@@ -420,11 +509,7 @@ void Renderer::DisplaySprite(Sprite _sprite)
 )";
 
         } break;
-
-        // SYMBOLS
-
-        case Sprite::TITLE:
-        {
+        case Sprite::TITLE:{
             std::cout << R"(
                                  ____     __ 
                                  \\  '--'_||_'--.
@@ -445,9 +530,7 @@ void Renderer::DisplaySprite(Sprite _sprite)
    \\....// \\ \\..\\ ||  || \\. \\..//   []
 )";
         } break;
-
-        case Sprite::DEATH:
-        {
+        case Sprite::DEATH: {
             std::cout << R"(    
                                            .--.   _.._______         
                                           /--.'\  \..------._\       

@@ -143,7 +143,8 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 			return;
 		}
 
-		if (advantage)
+		/*** TURNOS ***/
+		if (advantage) // Player
 		{
 			if (enemy->cur_health > 0 && player->cur_health > 0)
 			{
@@ -206,7 +207,7 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 				}
 			}
 		}
-		else
+		else // Turno Inimigo
 		{
 			if (enemy->cur_health > 0 && player->cur_health > 0)
 			{
@@ -222,7 +223,9 @@ void InteractionUI::StartCombat(std::shared_ptr<Player> player, std::shared_ptr<
 				{
 					battleLog = AbilityCast::Cast(enemy->abilities[0], enemy, player);
 				}
+
 				_getch();
+
 				battleEffect = enemy->UpdateSideEffects();
 
 				if (enemy->cur_health > 0 && player->cur_health > 0)

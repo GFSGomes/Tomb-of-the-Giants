@@ -1,8 +1,8 @@
 #include "Enemy.hpp"
 #include "AbilityCast.hpp"
 #include "Global.hpp"
-#include "Weapon.hpp"
 #include "Light.hpp"
+#include "ItemDatabase.hpp" // Weapon, Armor, Potion, Key, Torch
 
 Enemy::Enemy(const char* _name, short _level, Sprite _sprite) : sprite{_sprite}, lookX{posX + 1}, lookY{posY}
 {
@@ -12,9 +12,21 @@ Enemy::Enemy(const char* _name, short _level, Sprite _sprite) : sprite{_sprite},
 
 	STR = CON = INT = AGI = DEX = level;
 
-	std::shared_ptr<Weapon> weapon = std::make_shared<Weapon>(WeaponType::SWORD, "Enemy Weapon", "", 4);
+	std::shared_ptr<Armor> body = std::make_shared<Armor>(heavyBody_ironPlate);
+	std::shared_ptr<Armor> head = std::make_shared<Armor>(heavyHead_bascinet);
+	std::shared_ptr<Armor> legs = std::make_shared<Armor>(heavyLegs_greaves);
+	std::shared_ptr<Armor> arms = std::make_shared<Armor>(heavyArms_steelGaunlets);
+	body->equiped = true;
+	head->equiped = true;
+	legs->equiped = true;
+	arms->equiped = true;
 
-	UpdateStatus(true);
+	inventory.AddItem(body);
+	inventory.AddItem(head);
+	inventory.AddItem(legs);
+	inventory.AddItem(arms);
+
+	UpdateStatus(true); // Também chama -> ApplyEquipedItemStats()
 }
 
 Enemy::~Enemy()
@@ -60,7 +72,6 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 			}
 			break;
 		}
-
 		case 2:
 		{
 			if (posY < GridSizeY - 1)
@@ -88,7 +99,6 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 			}
 			break;
 		}
-
 		case 3:
 		{
 			if (posX > 0)
@@ -116,7 +126,6 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 			}
 			break;
 		}
-
 		case 4:
 		{
 			if (posX < GridSizeX - 1)
@@ -147,4 +156,9 @@ void Enemy::Behaviour(bool _forceMovement, std::vector<std::shared_ptr<GameObjec
 		default:
 			break;
 	}
+}
+
+std::vector<std::shared_ptr<Item>> Enemy::DropItem()
+{
+	return {};
 }

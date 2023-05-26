@@ -2,7 +2,12 @@
 #include "Global.hpp"
 #include "Renderer.hpp"
 
-GameObject::GameObject() : name{'\0'}, description{'\0'}, posX{-1}, posY{-1}, active{true}, force_spawn_at_zero{false}, sprite{Sprite::NONE}
+GameObject::GameObject() : 
+	name{'\0'}, description{'\0'}, 
+	posX{-1}, posY{-1}, // GameObjects inicializados em (x: -1, y:-1) surgirão em posição aleatória
+	active{true}, 
+	force_spawn_at_zero{false}, 
+	sprite{Sprite::NONE}
 {
 
 }
@@ -23,6 +28,6 @@ void GameObject::SpawnAt(short _posX, short _posY)
 
 void GameObject::SpawnRandom()
 {
-	posX = rand() % (GridSizeX); // Parenteses são importantes
-	posY = rand() % (GridSizeY); // Parenteses são importantes
+	posX = rand() % GridSizeX;
+	posY = rand() % GridSizeY;
 }

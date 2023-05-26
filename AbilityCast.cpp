@@ -131,10 +131,10 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				case Condition::HIT: case Condition::CRIT:
 				{
 					condition == Condition::CRIT ?
-						raw_value = (caster->physical_damage * multiplier * caster->critical_damage) + base_value :
+						raw_value = (caster->physical_damage * multiplier + (caster->critical_damage * (caster->physical_damage/100))) + base_value :
 						raw_value = (caster->physical_damage * multiplier) + base_value;
 
-					applyed_value = ((raw_value * 100) + caster->level) / (100 + target->physical_resistance + target->level);
+					applyed_value = raw_value * (100/(100 + target->physical_resistance + target->level));
 
 					out << std::fixed << applyed_value;
 
@@ -183,7 +183,7 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				if (caster->accuracy + accuracy >= hit_chance + target->dodge)
 				{
 					if ((caster->critical_chance - 100) / (hit_chance + 100) <= 0.505) {
-						raw_value += (caster->physical_damage * multiplier * caster->critical_damage);
+						raw_value = (caster->physical_damage * multiplier + (caster->critical_damage * (caster->physical_damage / 100))) + base_value;
 						log += " CRITICAL!";
 					}
 					else
@@ -198,7 +198,7 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				}
 			}
 
-			applyed_value = ((raw_value * 100) + caster->level) / (100 + target->physical_resistance + target->level);
+			applyed_value = raw_value * (100/(100 + target->physical_resistance + target->level));
 
 			out << std::fixed << applyed_value;
 
@@ -216,10 +216,10 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				case Condition::HIT: case Condition::CRIT:
 				{
 					condition == Condition::CRIT ?
-					raw_value = (caster->physical_damage * multiplier * caster->critical_damage) + base_value :
-					raw_value = (caster->physical_damage * multiplier) + base_value;
+						raw_value = (caster->physical_damage * multiplier + (caster->critical_damage * (caster->physical_damage / 100))) + base_value:
+						raw_value = (caster->physical_damage * multiplier) + base_value;
 
-					applyed_value = ((raw_value * 100) + caster->level) / (100 + target->physical_resistance + target->level);
+					applyed_value = raw_value * (100/(100 + target->physical_resistance + target->level));
 
 					out << std::fixed << applyed_value;
 
@@ -272,8 +272,7 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				{
 					raw_value = (caster->magical_damage * multiplier) + base_value;
 
-					applyed_value = ((raw_value * 100) + caster->level) / (100 + target->magical_resistance + target->level);
-
+					applyed_value = raw_value * (100 / (100 + target->magical_resistance + target->level));
 
 					out << std::fixed << applyed_value;
 
@@ -344,10 +343,10 @@ std::string AbilityCast::Cast(Ability ability, std::shared_ptr<Entity> caster, s
 				case Condition::HIT: case Condition::CRIT:
 				{
 					condition == Condition::CRIT ?
-						raw_value = (caster->physical_damage * multiplier * caster->critical_damage) + base_value :
+						raw_value = (caster->physical_damage * multiplier + (caster->critical_damage * (caster->physical_damage / 100))) + base_value :
 						raw_value = (caster->physical_damage * multiplier) + base_value;
 
-					applyed_value = ((raw_value * 100) + caster->level) / (100 + target->physical_resistance + target->level);
+					applyed_value = raw_value * (100/(100 + target->physical_resistance + target->level));
 
 					out << std::fixed << applyed_value;
 

@@ -3,19 +3,17 @@
 
 enum class WeaponType
 {
-	AXE, SWORD, DAGGER, STAFF, BOW
+	OH_AXE, TH_AXE, OH_SWORD, TH_SWORD, DAGGER, STAFF, BOW
 };
 
 struct Weapon : Equipment
 {
 	WeaponType weaponType;
-	
 	float physical_power;
 	float magical_power;
 	short accuracy;
 	float critical_chance;
 	float critical_damage;
 
-	Weapon(WeaponType, const char*, const char*, float, float _bonus_magical = 0, short _accuracy = 0, float _critical_change = 0, float _critical_damage = 0);
-	~Weapon();
+	Weapon(WeaponType weaponType, const char* name, const char* description, float bonus_physical, float bonus_magical = 0, short accuracy = 0, float critical_change = 0, float critical_damage = 0);
 };

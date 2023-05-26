@@ -23,8 +23,8 @@ struct Armor : Equipment
 	float dodge;
 	float flee;
 
-	Armor(ArmorType, Sprite, const char*, const char*, float _physical_resistance = 0,
-		float _magical_resistance = 0, float _dodge = 0, float _flee = 0, 
-		short _STR = 0, short _CON = 0, short _INT = 0, short _AGI = 0, short _DEX = 0);
+	Armor(ArmorType armor_type, Sprite armor_sprite, const char* name, const char* description, float physical_resistance = 0,
+		float magical_resistance = 0, float dodge = 0, float flee = 0, 
+		short STR = 0, short CON = 0, short INT = 0, short AGI = 0, short DEX = 0);
 	~Armor();
 };

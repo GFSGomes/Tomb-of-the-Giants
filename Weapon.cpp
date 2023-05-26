@@ -20,19 +20,32 @@ Weapon::Weapon(
 
 	switch (weaponType)
 	{
-		case WeaponType::SWORD:
+		case WeaponType::OH_SWORD:
 			sprite = Sprite::OH_SWORD;
 			break;
-		case WeaponType::AXE:
+		case WeaponType::TH_SWORD:
+			sprite = Sprite::TH_SWORD;
+			break;
+		case WeaponType::OH_AXE:
 			sprite = Sprite::OH_AXE;
+			break;
+		case WeaponType::TH_AXE:
+			sprite = Sprite::TH_AXE;
+			break;
+		case WeaponType::BOW:
+			sprite = Sprite::BOW;
 			break;
 		case WeaponType::DAGGER:
 			sprite = Sprite::DAGGER;
 			break;
 	}
-}
 
-Weapon::~Weapon()
-{
-
+	if (name == "Falchion")
+	{
+		sprite = Sprite::Falchion;
+	}
+	else if (name == "Rapier")
+	{
+		sprite = Sprite::Rapier;
+	}
 }

@@ -1,16 +1,16 @@
 #include "SceneManager.hpp"
-#include "Key.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
-#include "Renderer.hpp"
-#include "Potion.hpp"
-#include "Weapon.hpp"
-#include "Armor.hpp"
 #include "Wall.hpp"
 #include "Portal.hpp"
 #include "Scene.hpp"
-#include "Torch.hpp"
 #include "Light.hpp"
+//#include "Weapon.hpp"
+//#include "Armor.hpp"
+//#include "Torch.hpp"
+//#include "Potion.hpp"
+//#include "Key.hpp"
+#include "ItemDatabase.hpp"
 
 bool GameOver = false;
 
@@ -25,9 +25,9 @@ SceneManager::SceneManager()
 	std::shared_ptr<Scene> secret_0 = std::make_shared<Scene>(4, 4);
 	std::shared_ptr<Scene> scene_1	= std::make_shared<Scene>(10, 10);
 		
-	std::shared_ptr<Portal> scene_0_down  = std::make_shared<Portal>(Position::DOWN, scene_1, true);
+	std::shared_ptr<Portal> scene_0_down  = std::make_shared<Portal>(Position::DOWN, scene_1);
 	std::shared_ptr<Portal> scene_0_right = std::make_shared<Portal>(Position::RIGHT, secret_0, true, KeyType::SECRET_KEY);
-	std::shared_ptr<Portal> secret_0_left = std::make_shared<Portal>(Position::LEFT, scene_0, false);
+	std::shared_ptr<Portal> secret_0_left = std::make_shared<Portal>(Position::LEFT, scene_0);
 	std::shared_ptr<Portal> scene_1_up	  = std::make_shared<Portal>(Position::UP, scene_0);
 	
 	/*** (2) PORTAL PUSH_BACKS ***/
@@ -37,24 +37,22 @@ SceneManager::SceneManager()
 	PORTALs.push_back(scene_1_up);
 
 	/*** (3) SCENE OBJECT PUSH_BACKS ***/
+	// A adição de itens na cena deve ser feita criando um ponteiro para o objeto externo desejado **
 	player->SpawnAt(4, 5);
 	scene_0->AddObject(player);
 	scene_0->AddObject(scene_0_down);
 	scene_0->AddObject(scene_0_right);
-	scene_0->AddObject(std::make_shared<Key>(KeyType::PORTAL_KEY));
-	scene_0->AddObject(std::make_shared<Key>(KeyType::PORTAL_KEY));
-	scene_0->AddObject(std::make_shared<Key>(KeyType::PORTAL_KEY));
-	scene_0->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
+	scene_0->AddObject(std::make_shared<Key>(portalKey));
+	scene_0->AddObject(std::make_shared<Weapon>(sword_Rapier));
+	scene_0->AddObject(std::make_shared<Weapon>(sword_Zweihander));
+	scene_0->AddObject(std::make_shared<Weapon>(axe_battleAxe));
 
 	// SCENE_0_SECRET
 	secret_0->AddObject(secret_0_left);
-	secret_0->AddObject(std::make_shared<Potion>(PotionType::MINOR_HEALTH_POTION));
-	secret_0->AddObject(std::make_shared<Potion>(PotionType::MINOR_HEALTH_POTION));
-	secret_0->AddObject(std::make_shared<Potion>(PotionType::MINOR_MANA_POTION));
 
 	// SCENE_1:
 	scene_1->AddObject(scene_1_up);
-	scene_1->AddObject(std::make_shared<Key>(KeyType::SECRET_KEY));
+	scene_1->AddObject(std::make_shared<Key>(secretKey));
 	scene_1->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
 	scene_1->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));
 	scene_1->AddObject(std::make_shared<Enemy>("Skeleton", 1, Sprite::SKELETON_FOOTMAN));

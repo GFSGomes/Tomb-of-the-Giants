@@ -381,9 +381,9 @@ std::shared_ptr<Portal> Scene::LoadScene()
 
 			for (short i = 0; i < SceneOBJs.size(); i++)
 			{
-				if (std::dynamic_pointer_cast<Enemy>(SceneOBJs[i]))
+				if (std::shared_ptr<Enemy> enemy = std::dynamic_pointer_cast<Enemy>(SceneOBJs[i]))
 				{
-					std::cout << SceneOBJs[i]->name << "\n ";
+					std::cout << enemy->name << " - P. Res.: " << enemy->physical_resistance << "\n ";
 				}
 			}
 		}

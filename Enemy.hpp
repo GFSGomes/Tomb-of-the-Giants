@@ -2,6 +2,7 @@
 #include "Entity.hpp"
 
 struct Light;
+struct Item;
 
 struct Enemy : Entity
 {
@@ -14,4 +15,5 @@ struct Enemy : Entity
 	~Enemy();
 
 	void Behaviour(bool, std::vector<std::shared_ptr<GameObject>>);
+	std::vector<std::shared_ptr<Item>> DropItem();
 };

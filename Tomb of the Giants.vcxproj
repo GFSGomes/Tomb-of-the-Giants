@@ -158,6 +158,7 @@
     <ClInclude Include="InteractionUI.hpp" />
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="Item.hpp" />
+    <ClInclude Include="ItemDatabase.hpp" />
     <ClInclude Include="Key.hpp" />
     <ClInclude Include="Light.hpp" />
     <ClInclude Include="MainMenuUI.hpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="InteractionUI.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemDatabase.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MainMenuUI.cpp" />
